@@ -1,0 +1,20 @@
+rules:
+- id: comparing-with-unordered-data-structure
+  patterns:
+    - pattern-either: 
+      - pattern: |
+          await asyncio.sleep(1)
+      - pattern: |
+          time.sleep(10)
+  message: |
+
+  fix: |
+
+  languages:
+  - python
+
+  metadata:
+    references:
+    - TODO
+    
+  severity: WARNING

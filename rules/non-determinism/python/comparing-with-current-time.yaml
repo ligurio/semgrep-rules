@@ -1,0 +1,37 @@
+rules:
+- id: comparing-with-current-time
+  patterns:
+    - pattern-either: 
+      - pattern: |
+              assert(datetime.now() == $X)
+      - pattern: |
+              datetime.now() <> $X
+      - pattern: |
+              datetime.now() > $X
+      - pattern: |
+              datetime.now() < $X
+      - pattern: |
+              datetime.now() >= $X
+      - pattern: |
+              datetime.now() <= $X
+      - pattern: |
+              time.now() == $X
+      - pattern: |
+              time.now() <> $X
+      - pattern: |
+              time.now() > $X
+      - pattern: |
+              time.now() < $X
+      - pattern: |
+              time.now() >= $X
+      - pattern: |
+              time.now() <= $X
+  message: |
+      - TODO
+    
+  fix: |
+
+  languages:
+  - python
+    
+  severity: WARNING

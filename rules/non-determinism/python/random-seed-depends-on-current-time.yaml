@@ -1,0 +1,19 @@
+rules:
+- id: random-seed-depends-on-current-time
+  patterns:
+    - pattern-either: 
+      - pattern: |
+          random.seed(..., time.now(), ...)
+      - pattern: |
+          random.seed(..., datetime.now(), ...)
+  message: |
+    random seed depends on non-constant value
+  languages:
+  - python
+  fix: |
+
+  metadata:
+    references:
+    - TODO
+    
+  severity: WARNING

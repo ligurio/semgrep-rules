@@ -1,0 +1,18 @@
+rules:
+- id: synchronization-with-sleep
+  patterns:
+    - pattern-either: 
+      - pattern: |
+          time.Sleep($X : int)
+      - pattern: |
+          context.WithTimeout(..., ($X : int), ...)
+  message: |
+    sleeping is not a synchronization
+  metadata:
+    references:
+    - TODO
+  languages:
+  - python
+  fix: |
+    
+  severity: WARNING

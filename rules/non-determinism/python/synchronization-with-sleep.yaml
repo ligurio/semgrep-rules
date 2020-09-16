@@ -1,0 +1,32 @@
+rules:
+- id: synchronization-with-sleep
+  patterns:
+    - pattern-not: time.sleep($F(...))
+    - pattern-either: 
+      - pattern: |
+              await asyncio.sleep($X: int)
+      - pattern: |
+              await asyncio.sleep($X: float)
+      - pattern: |
+              time.sleep($X: int)
+      - pattern: |
+              time.sleep($X: float)
+      - pattern: |
+              selenium.webdriver.set_page_load_timeout($X: int)
+      - pattern: |
+              selenium.webdriver.set_page_load_timeout($X: float)
+      - pattern: |
+              selenium.webdriver.set_script_timeout($X: int)
+      - pattern: |
+              selenium.webdriver.set_script_timeout($X: float)
+  message: |
+    sleeping is not a synchronization
+  metadata:
+    references:
+    - https://stackoverflow.com/a/45347766/3665613
+    - https://seleniumcamp.com/talk/deep-dive-into-selenium-waits/
+  languages:
+  - python
+  fix: |
+    
+  severity: WARNING

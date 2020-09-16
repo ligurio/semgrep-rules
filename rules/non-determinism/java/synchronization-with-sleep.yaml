@@ -1,0 +1,15 @@
+rules:
+- id: synchronization-with-sleep
+  patterns:
+    - pattern-either: 
+      - pattern: |
+          Thread.sleep($X)
+  message: |
+    Sleeping is not a synchronization.
+  metadata:
+    references:
+    - https://martinfowler.com/articles/nonDeterminism.html
+    - https://enterprisecraftsmanship.com/posts/non-determinism-tests/
+  fix: |
+    
+  severity: WARNING
