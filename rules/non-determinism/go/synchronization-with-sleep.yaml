@@ -12,7 +12,7 @@ rules:
     references:
     - TODO
   languages:
-  - python
+  - go
   fix: |
     
   severity: WARNING
