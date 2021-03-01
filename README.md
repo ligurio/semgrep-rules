@@ -22,9 +22,9 @@ $ semgrep -f rules/<type>/<lang>/ .
 | Rule                                    | Python | Go   | Java  |
 |:---------------------------------------:|:------:|:----:|:-----:|
 | assumption-timezone                     |  Yes   |      |       |
-| comparing-with-current-time             |  Yes   |      | Yes   |
-| comparing-with-float-numbers            |  Yes   |      |       |
-| comparing-with-unordered-data-structure |  Yes   |      |       |
+| use-current-time                        |  Yes   |      | Yes   |
+| use-float-numbers                       |  Yes   |      |       |
+| use-unordered-data-structure            |  Yes   |      |       |
 | missed-retries-on-access                |  Yes   |      |       |
 | random-seed-depends-on-current-time     |  Yes   |      |       |
 | synchronization-with-sleep              |  Yes   | Yes  | Yes   |

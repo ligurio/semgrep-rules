@@ -1,5 +1,5 @@
 rules:
-- id: comparing-with-current-time
+- id: use-current-time
   patterns:
     - pattern-either: 
       - pattern: |

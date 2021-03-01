@@ -2,7 +2,7 @@
 # https://en.wikipedia.org/wiki/Associative_property#Nonassociativity_of_floating_point_calculation
 
 rules:
-- id: comparing-float-numbers
+- id: use-float-numbers
   patterns:
     - pattern-either: 
       - pattern: |

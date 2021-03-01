@@ -1,5 +1,5 @@
 rules:
-- id: comparing-with-unordered-data-structure
+- id: use-unordered-data-structure
   patterns:
     - pattern-either: 
       - pattern: |
