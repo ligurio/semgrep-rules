@@ -1,3 +1,7 @@
 # rule-id: use-unordered-data-structure
+a = set()
+set('abracadabra')
+c = set('abracadabra')
 
-# Sets are mutable unordered sequence of unique elements whereas frozensets are immutable sets.
+# rule-id: use-unordered-data-structure
+b = dict()
