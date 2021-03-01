@@ -13,5 +13,10 @@ rules:
 
   languages:
   - python
+
+  metadata:
+    references:
+    - https://en.wikipedia.org/wiki/IEEE_754
+    - https://www.nccs.nasa.gov/images/FloatingPoint_consistency.pdf
     
   severity: WARNING
