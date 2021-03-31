@@ -32,8 +32,15 @@ $ semgrep -f rules/<type>/<lang>/ .
 
 ### References:
 
+#### Non-Determinism in Tests
+
 - **An empirical analysis of flaky tests** - Qingzhou  Luo, Farah  Hariri, Lamyaa  Eloussi, Darko  Marinov
 - **Empirical Analysis of Factors and their Effect on Test Flakiness - Practitioners’ Perceptions** - Azeem Ahmad, Ola Leifler, Kristian Sandahl
 - **Root Causing Flaky Tests in a Large-Scale Industrial Setting** - Wing Lam, Patrice Godefroid, Suman Nath, Anirudh Santhiar, Suresh Thummalapenta
 - **What is the Vocabulary of Flaky Tests?** - Gustavo Pinto, Breno Miranda, Supun Dissanayake, Marcelo d'Amorim, Christoph Treude, Antonia Bertolino
 - **Eradicating Non-Determinism in Tests** - Martin Fowler
+
+#### Error handling
+
+- **The Do's and Don'ts of Error Handling** - Joe Armstrong (GOTO 2018)
+- **Finding Error-Handling Bugs in Systems Code Using Static Analysis** - Cindy Rubio-González, Ben Liblit
