@@ -20,7 +20,7 @@ rules:
       - pattern: |
               selenium.webdriver.set_script_timeout($X: float)
   message: |
-    sleeping is not a synchronization
+    Tests uses sleep, instead of the flexible wait method.
   metadata:
     references:
     - https://stackoverflow.com/a/45347766/3665613
