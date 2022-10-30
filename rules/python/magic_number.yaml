@@ -1,5 +1,5 @@
 rules:
-- id: magic-numbers
+- id: magic_number
   patterns:
     - pattern: assert $X == $Y
   message: Don't use magic numbers.
