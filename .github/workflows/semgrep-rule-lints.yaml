@@ -1,0 +1,18 @@
+name: semgrep-rule-lints
+
+on:
+  pull_request:
+
+jobs:
+  semgrep:
+    runs-on: ubuntu-latest
+    name: semgrep-rule-lints
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+
+      - name: Setup semgrep
+        run: pip3 install semgrep
+
+      - name: Check semgrep rules
+        run: semgrep --validate --config rules/
