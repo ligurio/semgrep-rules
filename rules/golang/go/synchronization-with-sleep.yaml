@@ -3,7 +3,7 @@ rules:
   patterns:
   - pattern-either:
     - pattern: |
-        time.Sleep($X : int)
+        time.Sleep($X)
     - pattern: |
         context.WithTimeout(..., ($X : int), ...)
     - pattern: |
@@ -20,8 +20,5 @@ rules:
         ...
   - pattern-inside: func $FUNC(...){ ... }
   message: Using `time.Sleep` for synchronizations is generally considered bad practice.
-  metadata:
-    references:
-    - TODO
   languages: [go]
   severity: WARNING
