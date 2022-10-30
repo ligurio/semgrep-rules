@@ -1,0 +1,6 @@
+rules:
+- id: pcall_with_method
+  pattern: pcall($OBJ.$F)
+  message: Use pcall(self.func, self).
+  languages: [lua]
+  severity: WARNING
