@@ -1,35 +1,33 @@
 rules:
-- id: unordered_data_struct
-  patterns:
-    - pattern-either: 
-      - pattern: |
-          set($X)
-      - pattern: |
-          dict($X)
-      - pattern: |
-          set()
-      - pattern: |
-          dict()
-  message: |
-    Sets are mutable unordered sequence of unique elements.
-  fix: |
-    Please consider using OrderedDict() or OrderedSet() or use the sorted()
-    function which returns a new sorted list while leaving the source unaltered or
-    use PYTHONHASHSEED to set random seed.
+  - id: unordered_data_struct
+    patterns:
+      - pattern-either:
+          - pattern: set($X)
+          - pattern: dict($X)
+          - pattern: set()
+          - pattern: dict()
+    message: |
+      Sets are mutable unordered sequence of unique elements.
+    fix: |
+      Please consider using OrderedDict() or OrderedSet() or use the sorted()
+      function which returns a new sorted list while leaving the source
+      unaltered or use PYTHONHASHSEED to set random seed.
 
-    From the origin to Python 3.2, iteration order was arbitrary but deterministic
-    (in CPython, it was not guaranteed to be determinstic in other implementations).
-    From Python 3.3 to Python 3.5, iteration order was non-determinstic (across runs,
-    it was deterministic per-process instance).
-    In Python 3.6 it's unspecified but deterministic and follows insertion order (in CPython).
-    In Python 3.7, Python 3.6's behaviour was specified and documented.
-  languages:
-    - python
-  metadata:
-    references:
-    - https://pypi.org/project/ordered-set/
-    - https://docs.python.org/3/library/functions.html#sorted
-    - https://docs.python.org/3/library/collections.html#collections.OrderedDict
-    - https://stackoverflow.com/questions/30585108/disable-hash-randomization-from-within-python-program
-    - https://www.youtube.com/watch?v=p33CVV29OG8
-  severity: WARNING
+      From the origin to Python 3.2, iteration order was arbitrary but
+      deterministic (in CPython, it was not guaranteed to be determinstic in
+      other implementations).
+      From Python 3.3 to Python 3.5, iteration order was non-determinstic
+      (across runs, it was deterministic per-process instance).
+      In Python 3.6 it's unspecified but deterministic and follows insertion
+      order (in CPython).
+      In Python 3.7, Python 3.6's behaviour was specified and documented.
+    languages:
+      - python
+    metadata:
+      references:
+        - https://pypi.org/project/ordered-set/
+        - https://docs.python.org/3/library/functions.html#sorted
+        - https://docs.python.org/3/library/collections.html#collections.OrderedDict
+        - https://stackoverflow.com/questions/30585108/disable-hash-randomization-from-within-python-program
+        - https://www.youtube.com/watch?v=p33CVV29OG8
+    severity: WARNING
