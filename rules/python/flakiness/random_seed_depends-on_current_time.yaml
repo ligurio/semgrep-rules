@@ -1,5 +1,5 @@
 rules:
-- id: random-seed-depends-on-current-time
+- id: random_seed_depends_on_current_time
   patterns:
     - pattern-either: 
       - pattern: |
@@ -10,10 +10,4 @@ rules:
     random seed depends on non-constant value
   languages:
   - python
-  fix: |
-
-  metadata:
-    references:
-    - TODO
-    
   severity: WARNING

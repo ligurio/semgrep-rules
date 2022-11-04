@@ -1,5 +1,5 @@
 rules:
-- id: missed-retries-on-access
+- id: missed_retries
   patterns:
     - pattern-either: 
       - pattern: |
@@ -12,12 +12,7 @@ rules:
           urllib3.PoolManager()
   message: |
     No retries on access to resources. Some functions doesn't have retry
-    options (like psycopg2.connect()) so you need to implement youself.
+    options (like "psycopg2.connect()") so you need to implement youself.
   languages:
   - python
-  fix: |
-
-  metadata:
-    references:
-    - TODO
   severity: WARNING

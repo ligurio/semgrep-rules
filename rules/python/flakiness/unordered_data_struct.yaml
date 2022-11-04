@@ -1,5 +1,5 @@
 rules:
-- id: use-unordered-data-structure
+- id: unordered_data_struct
   patterns:
     - pattern-either: 
       - pattern: |
@@ -12,7 +12,6 @@ rules:
           dict()
   message: |
     Sets are mutable unordered sequence of unique elements.
-
   fix: |
     Please consider using OrderedDict() or OrderedSet() or use the sorted()
     function which returns a new sorted list while leaving the source unaltered or
@@ -24,10 +23,8 @@ rules:
     it was deterministic per-process instance).
     In Python 3.6 it's unspecified but deterministic and follows insertion order (in CPython).
     In Python 3.7, Python 3.6's behaviour was specified and documented.
-
   languages:
     - python
-
   metadata:
     references:
     - https://pypi.org/project/ordered-set/
@@ -35,5 +32,4 @@ rules:
     - https://docs.python.org/3/library/collections.html#collections.OrderedDict
     - https://stackoverflow.com/questions/30585108/disable-hash-randomization-from-within-python-program
     - https://www.youtube.com/watch?v=p33CVV29OG8
-    
   severity: WARNING

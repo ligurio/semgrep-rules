@@ -1,5 +1,5 @@
 rules:
-- id: use-current-time
+- id: cmp_current_time
   patterns:
     - pattern-either: 
       - pattern: |
@@ -32,18 +32,13 @@ rules:
               time.clock() <= $X
       - pattern: |
               timeit.timeit()
-  message: |
-    TODO
-    
+  message: cmp_current_time
   fix: |
     Use timeit.default_timer instead of timeit.timeit.
-
   languages:
   - python
-
   metadata:
     references:
     - https://docs.python.org/3/library/timeit.html#timeit.default_timer
     - https://stackoverflow.com/questions/7370801/how-to-measure-elapsed-time-in-python
-    
   severity: WARNING
