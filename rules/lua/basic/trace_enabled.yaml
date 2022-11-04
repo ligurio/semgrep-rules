@@ -1,0 +1,7 @@
+rules:
+- id: trace_enabled
+  patterns:
+    - pattern: debug.sethook(...)
+  message: Using debug.sethook() will slowdown your code.
+  languages: [lua]
+  severity: INFO
