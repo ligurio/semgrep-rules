@@ -1,15 +1,13 @@
 rules:
-- id: tz_assumption
-  patterns:
-    - pattern-either: 
-      - pattern: |
-              time.tzset(...)
-      - pattern: |
-              pytz.timezone(...)
-  message: |
-    Does your test requests for the current time? In which timezone? You should not
-    make assumptions that your test will always run in the same timezone as
-    developed.
-  languages:
-  - python
-  severity: WARNING
+  - id: tz_assumption
+    patterns:
+      - pattern-either:
+          - pattern: time.tzset(...)
+          - pattern: pytz.timezone(...)
+    message: |
+      Does your test requests for the current time? In which timezone? You
+      should not make assumptions that your test will always run in the same
+      timezone as developed.
+    languages:
+      - python
+    severity: WARNING
