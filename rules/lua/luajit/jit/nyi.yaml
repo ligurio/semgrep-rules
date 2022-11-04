@@ -1,0 +1,30 @@
+rules:
+  - id: nyi
+    pattern-either:
+      - pattern: dofile(...)              # never 2.1 stitch
+      - pattern: error(...)               # never
+      - pattern: load(...)                # never 2.1 stitch
+      - pattern: loadfile(...)            # never 2.1 stitch
+      - pattern: loadstring(...)          # never 2.1 stitch
+      - pattern: string.dump(...)         # never 2.1 stitch
+      - pattern: ffi.cdef(...)            # never 2.1 stitch
+      - pattern: ffi.load(...)            # never 2.1 stitch
+      - pattern: ffi.metatype(...)        # never 2.1 stitch
+      - pattern: debug.$FUNC(...)         # never
+      - pattern: jit.$FUNC(...)           # never
+      - pattern: os.$FUNC(...)            # never
+      - pattern: package.$FUNC(...)       # never
+      - pattern: coroutine.$FUNC(...)     # never
+      - pattern: buffer.encode(...)
+      - pattern: buffer.decode(...)
+    message: |
+      All aspects of Lua are implemented in LuaJIT's interpreter, but not all of
+      them are implemented in LuaJIT's JIT compiler.
+
+      This function is not JIT-compiled (yet), will always fall back to the
+      interpreter or will not be JIT-compiled, even in future versions.
+    languages: [lua]
+    metadata:
+      references:
+        - http://web.archive.org/web/20220717120825/http://wiki.luajit.org/NYI
+    severity: INFO
