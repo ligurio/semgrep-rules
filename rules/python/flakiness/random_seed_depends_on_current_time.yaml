@@ -1,0 +1,14 @@
+rules:
+  - id: random_seed_depends_on_current_time
+    patterns:
+      - pattern: random.seed($T)
+      - pattern-either:
+          - pattern: $T = datetime.now()
+          - pattern: $T = time.time()
+          - pattern: $T = time.clock()
+          - pattern: $T = timeit.timeit()
+    message: |
+        Random seed depends on non-constant value.
+    languages:
+      - python
+    severity: WARNING
