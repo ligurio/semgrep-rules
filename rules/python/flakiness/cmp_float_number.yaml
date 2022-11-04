@@ -2,21 +2,17 @@
 # https://en.wikipedia.org/wiki/Associative_property#Nonassociativity_of_floating_point_calculation
 
 rules:
-- id: use-float-numbers
+- id: cmp_float_numbers
   patterns:
     - pattern-either: 
       - pattern: |
               1.0000 == 1.0000
   message: |
     PEP-485, using math.isclose and cmath.isclose functions is recommended
-  fix: |
-
   languages:
   - python
-
   metadata:
     references:
     - https://en.wikipedia.org/wiki/IEEE_754
     - https://www.nccs.nasa.gov/images/FloatingPoint_consistency.pdf
-    
   severity: WARNING

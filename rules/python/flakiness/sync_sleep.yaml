@@ -1,5 +1,5 @@
 rules:
-- id: synchronization-with-sleep
+- id: sync_sleep
   patterns:
     - pattern-not: time.sleep($F(...))
     - pattern-either: 
@@ -27,6 +27,4 @@ rules:
     - https://seleniumcamp.com/talk/deep-dive-into-selenium-waits/
   languages:
   - python
-  fix: |
-    
   severity: WARNING

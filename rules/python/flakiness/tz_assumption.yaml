@@ -1,5 +1,5 @@
 rules:
-- id: assumption-timezone
+- id: tz_assumption
   patterns:
     - pattern-either: 
       - pattern: |
@@ -10,11 +10,6 @@ rules:
     Does your test requests for the current time? In which timezone? You should not
     make assumptions that your test will always run in the same timezone as
     developed.
-  metadata:
-    references:
-    - TODO
   languages:
   - python
-  fix: |
-    
   severity: WARNING
