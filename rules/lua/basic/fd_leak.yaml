@@ -1,0 +1,19 @@
+rules:
+  - id: fd_leak
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              $FD = io.open(...)
+              ...
+          - pattern-inside: |
+              $FD = io.popen(...)
+              ...
+          - pattern-inside: |
+              $FD = io.tmpfile()
+              ...
+      - pattern-not: $FD:close()
+      - pattern-not: io.close($FD)
+    message:
+      The file object "$FD" opened without corresponding close.
+    languages: [lua]
+    severity: ERROR
