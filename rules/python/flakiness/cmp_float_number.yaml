@@ -1,18 +1,21 @@
-# TODO: floating point additions are not associative. (X + Y) + Z is not the same as X + (Y + Z).
-# https://en.wikipedia.org/wiki/Associative_property#Nonassociativity_of_floating_point_calculation
-
 rules:
-- id: cmp_float_numbers
-  patterns:
-    - pattern-either: 
-      - pattern: |
-              1.0000 == 1.0000
-  message: |
-    PEP-485, using math.isclose and cmath.isclose functions is recommended
-  languages:
-  - python
-  metadata:
-    references:
-    - https://en.wikipedia.org/wiki/IEEE_754
-    - https://www.nccs.nasa.gov/images/FloatingPoint_consistency.pdf
-  severity: WARNING
+  - id: cmp_float_numbers
+    patterns:
+      - pattern-either:
+          - pattern-inside: ... <> ...
+          - pattern-inside: ... > ...
+          - pattern-inside: ... < ...
+          - pattern-inside: ... >= ...
+          - pattern-inside: ... <= ...
+          - pattern-inside: ... == ...
+      - pattern-regex: ([1-9][0-9]*[eE][1-9][0-9]*|(([1-9][0-9]*\.)|(\.[0-9]+))([0-9]*)?([eE][\-\+]?[1-9][0-9]*)?)
+    message: |
+        PEP-485, using math.isclose() and cmath.isclose() functions is
+        recommended.
+    languages:
+      - python
+    metadata:
+      references:
+        - https://en.wikipedia.org/wiki/IEEE_754
+        - https://www.nccs.nasa.gov/images/FloatingPoint_consistency.pdf
+    severity: WARNING
