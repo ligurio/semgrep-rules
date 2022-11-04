@@ -17,21 +17,18 @@ To run all semgrep rules:
 $ semgrep --config rules/<lang>/
 ```
 
-### Non-Determinism
+### Flakiness
 
 Non-determinism is a source of test flakiness.
 
-**References**
-
-- **An empirical analysis of flaky tests** - Qingzhou  Luo, Farah  Hariri,
-Lamyaa  Eloussi, Darko  Marinov
-- **Empirical Analysis of Factors and their Effect on Test Flakiness -
-Practitioners’ Perceptions** - Azeem Ahmad, Ola Leifler, Kristian Sandahl
-- **Root Causing Flaky Tests in a Large-Scale Industrial Setting** - Wing Lam,
-Patrice Godefroid, Suman Nath, Anirudh Santhiar, Suresh Thummalapenta
-- **What is the Vocabulary of Flaky Tests?** - Gustavo Pinto, Breno Miranda,
-Supun Dissanayake, Marcelo d'Amorim, Christoph Treude, Antonia Bertolino
+<details>
+  <summary>References</summary>
+- **An empirical analysis of flaky tests** - Qingzhou  Luo, Farah  Hariri, Lamyaa  Eloussi, Darko  Marinov
+- **Empirical Analysis of Factors and their Effect on Test Flakiness - Practitioners’ Perceptions** - Azeem Ahmad, Ola Leifler, Kristian Sandahl
+- **Root Causing Flaky Tests in a Large-Scale Industrial Setting** - Wing Lam, Patrice Godefroid, Suman Nath, Anirudh Santhiar, Suresh Thummalapenta
+- **What is the Vocabulary of Flaky Tests?** - Gustavo Pinto, Breno Miranda, Supun Dissanayake, Marcelo d'Amorim, Christoph Treude, Antonia Bertolino
 - **Eradicating Non-Determinism in Tests** - Martin Fowler
+</details>
 
 ### Error handling
 
@@ -43,14 +40,10 @@ given by [Dan Luu](https://danluu.com/postmortem-lessons/):
 See also [Aspirator](https://github.com/diy1/aspirator), a simple tool that
 finds serious bugs in Java exception handler.
 
-**References**
-
+<details>
+  <summary>References</summary>
 - **The Do's and Don'ts of Error Handling** - Joe Armstrong (GOTO 2018)
-- **Finding Error-Handling Bugs in Systems Code Using Static Analysis** - Cindy
-Rubio-González, Ben Liblit
-- **Simple Testing Can Prevent Most Critical Failures: An Analysis of
-Production Failures in Distributed Data-Intensive Systems** - Ding Yuan, Yu
-Luo, Xin Zhuang, Guilherme Renna Rodrigues, Xu Zhao, Yongle Zhang, Pranay U.
-Jain, and Michael Stumm, University of Toronto (USENIX)
-- **Improving the Quality of Error-Handling Code in Systems Software using
-Function-Local Information** - Suman Saha
+- **Finding Error-Handling Bugs in Systems Code Using Static Analysis** - Cindy Rubio-González, Ben Liblit
+- **Simple Testing Can Prevent Most Critical Failures: An Analysis of Production Failures in Distributed Data-Intensive Systems** - Ding Yuan, Yu Luo, Xin Zhuang, Guilherme Renna Rodrigues, Xu Zhao, Yongle Zhang, Pranay U. Jain, and Michael Stumm, University of Toronto (USENIX)
+- **Improving the Quality of Error-Handling Code in Systems Software using Function-Local Information** - Suman Saha
+</details>
