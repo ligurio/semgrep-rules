@@ -1,0 +1,10 @@
+rules:
+  - id: jit_off
+    patterns:
+      - pattern: jit.off(...)
+    message: Должны быть серьёзные причины для выключения JIT-компиляции.
+    languages: [lua]
+    metadata:
+      references:
+        - https://luajit.org/ext_jit.html
+    severity: INFO
