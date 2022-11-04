@@ -1,0 +1,29 @@
+rules:
+  - id: partial
+    pattern-either:
+      - pattern: getfenv(...)         # 2.1 partial
+      - pattern: next(...)            # 2.1 partial
+      - pattern: print(...)           # partial
+      - pattern: select(...)          # partial
+      - pattern: tonumber(...)        # partial
+      - pattern: tostring(...)        # partial
+      - pattern: xpcall(...)          # partial
+      - pattern: string.find(...)     # 2.1 partial
+      - pattern: string.format(...)   # 2.1 partial
+      - pattern: table.insert(...)    # partial
+      - pattern: ffi.cast(...)        # partial
+      - pattern: ffi.errno(...)       # partial
+      - pattern: ffi.new(...)         # partial
+      - pattern: ffi.sizeof(...)      # partial
+      - pattern: ffi.typeof(...)      # partial
+    message: |
+      All aspects of Lua are implemented in LuaJIT's interpreter, but not all of
+      them are implemented in LuaJIT's JIT compiler.
+
+      Function bay be JIT-compiled, depending on the circumstances. Otherwise
+      will fall back to the interpreter or stitch.
+    languages: [lua]
+    metadata:
+      references:
+        - http://web.archive.org/web/20220717120825/http://wiki.luajit.org/NYI
+    severity: INFO
