@@ -1,0 +1,48 @@
+rules:
+  - id: "2.1"
+    pattern-either:
+      - pattern: collectgarbage()           # 2.1 stitch
+      - pattern: gcinfo()                   # 2.1 stitch
+      - pattern: newproxy()                 # 2.1 stitch
+      - pattern: require(...)               # 2.1 stitch
+      - pattern: setfenv(...)               # 2.1 stitch
+      - pattern: unpack(...)                # 2.1 stitch
+      - pattern: string.char(...)           # 2.1
+      - pattern: string.gmatch(...)         # 2.1 stitch
+      - pattern: string.gsub(...)           # 2.1 stitch
+      - pattern: string.lower(...)          # 2.1
+      - pattern: string.match(...)          # 2.1 stitch
+      - pattern: string.rep(...)            # 2.1
+      - pattern: string.reverse(...)        # 2.1
+      - pattern: string.upper(...)          # 2.1
+      - pattern: table.concat(...)          # 2.1
+      - pattern: table.foreachi(...)        # 2.1 bytecode
+      - pattern: table.maxn(...)            # 2.1 stitch
+      - pattern: table.pack(...)            # 2.1 stitch
+      - pattern: table.remove(...)          # 2.1 bytecode
+      - pattern: table.sort(...)            # 2.1 stitch
+      - pattern: table.unpack(...)          # 2.1 stitch
+      - pattern: math.fmod(...)             # 2.1 stitch
+      - pattern: math.frexp(...)            # 2.1 stitch
+      - pattern: math.randomseed(...)       # 2.1 stitch
+      - pattern: io.close(...)              # 2.1 stitch
+      - pattern: io.input(...)              # 2.1 stitch
+      - pattern: io.lines(...)              # 2.1 stitch
+      - pattern: io.open(...)               # 2.1 stitch
+      - pattern: io.output(...)             # 2.1 stitch
+      - pattern: io.popen(...)              # 2.1 stitch
+      - pattern: io.read(...)               # 2.1 stitch
+      - pattern: io.tmpfile()               # 2.1 stitch
+      - pattern: io.type(...)               # 2.1 stitch
+      - pattern: bit.tohex(...)             # 2.1
+      - pattern: ffi.gc(...)                # 2.1
+    message: |
+      All aspects of Lua are implemented in LuaJIT's interpreter, but not all of
+      them are implemented in LuaJIT's JIT compiler.
+
+      This function is compiled starting with LuaJIT 2.1.
+    languages: [lua]
+    metadata:
+      references:
+        - http://web.archive.org/web/20220717120825/http://wiki.luajit.org/NYI
+    severity: INFO
