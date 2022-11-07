@@ -1,27 +1,27 @@
 rules:
-- id: print
-  pattern-either:
-    - patterns:
-      - pattern: print(...)
-      - pattern-not: |
-          $T = {...}
-          print(..., $T, ...)
-    - patterns:
-      - pattern: print(...)
-      - pattern-not: |
-          $F = function() ... end
-          print(..., $F, ...)
-    - patterns:
-      - pattern: print(...)
-      - pattern-not: |
-          function $F() ... end
-          print(..., $F, ...)
-    - patterns:
-      - pattern: print(...)
-      - pattern-not: |
-          $CO = coroutine.create(...)
-          print(..., $CO, ...)
-  message: |
+  - id: print
+    pattern-either:
+      - patterns:
+          - pattern: print(...)
+          - pattern-not: |
+              $T = {...}
+              print(..., $T, ...)
+      - patterns:
+          - pattern: print(...)
+          - pattern-not: |
+              $F = function() ... end
+              print(..., $F, ...)
+      - patterns:
+          - pattern: print(...)
+          - pattern-not: |
+              function $F() ... end
+              print(..., $F, ...)
+      - patterns:
+          - pattern: print(...)
+          - pattern-not: |
+              $CO = coroutine.create(...)
+              print(..., $CO, ...)
+    message: |
       "print()" is not capable for printing Lua tables, functions and threads.
-  languages: [lua]
-  severity: INFO
+    languages: [lua]
+    severity: INFO

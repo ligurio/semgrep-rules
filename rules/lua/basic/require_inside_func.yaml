@@ -1,19 +1,19 @@
 rules:
-- id: require_inside_func
-  pattern-either:
-    - pattern: |
-        function(...)
-        ...
-        require($M)
-        ...
-        end
-    - pattern: |
-        function $NAME(...)
-        ...
-        require($M)
-        ...
-        end
-  message: |
-    Function "require()" shouldn't  be used inside functions.
-  languages: [lua]
-  severity: INFO
+  - id: require_inside_func
+    pattern-either:
+      - pattern: |
+          function(...)
+          ...
+          require($M)
+          ...
+          end
+      - pattern: |
+          function $NAME(...)
+          ...
+          require($M)
+          ...
+          end
+    message: |
+      Function "require()" shouldn't  be used inside functions.
+    languages: [lua]
+    severity: INFO
