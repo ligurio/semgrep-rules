@@ -1,9 +1,10 @@
 ## semgrep rules
 
 This repo holds patterns for finding non-determinism and missed error handling
-in Python and Go source code.
+in C, Python and Go source code, and rules for Lua source code.
 
-The rules currently supports [semgrep](https://semgrep.dev/).
+The rules currently supports [semgrep](https://semgrep.dev/) and
+[coccinelle](https://coccinelle.gitlabpages.inria.fr/website/).
 
 To run a single semgrep rule:
 
@@ -15,6 +16,12 @@ To run all semgrep rules:
 
 ```
 $ semgrep --config rules/<lang>/
+```
+
+To run a single coccinelle rule:
+
+```
+$ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources/tarantool/src/
 ```
 
 ### Flakiness
