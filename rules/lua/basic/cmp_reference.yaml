@@ -1,0 +1,23 @@
+rules:
+  - id: cmp_reference
+    pattern-either:
+      - pattern: $OBJ1 < ...
+      - pattern: $OBJ1 > ...
+      - pattern: $OBJ1 == ...
+      - pattern: $OBJ1 <= ...
+      - pattern: $OBJ1 >= ...
+      - pattern: $OBJ1 ~= ...
+      - pattern: ... < $OBJ1
+      - pattern: ... > $OBJ1
+      - pattern: ... == $OBJ1
+      - pattern: ... <= $OBJ1
+      - pattern: ... >= $OBJ1
+      - pattern: ... ~= $OBJ1
+      - pattern-either:
+          - pattern: $OBJ1 = coroutine.create(...)
+          - pattern: $OBJ1 = function(...) ... end
+    message:
+      It is not possible to compare tables, threads and functions when
+      "__eq", "__lt" and "le" methods are undefined.
+    languages: [lua]
+    severity: WARNING
