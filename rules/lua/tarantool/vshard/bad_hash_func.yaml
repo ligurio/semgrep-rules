@@ -1,0 +1,17 @@
+rules:
+  - id: bad_hash_func
+    patterns:
+      - pattern: |
+          $M = require("vshard")
+          ...
+          $M.router.$F(...)
+      - metavariable-regex:
+          metavariable: '$F'
+          regex: '.*(bucket_id_strcrc32).*'
+    message: Use vshard.router.bucket_id_mpcrc32().
+    languages: [lua]
+    metadata:
+      references:
+        - https://www.tarantool.io/ru/doc/latest/reference/reference_rock/vshard/vshard_router/#lua-function.vshard.router.bucket_id_strcrc32
+        - https://github.com/tarantool/doc/issues/1153
+    severity: WARNING
