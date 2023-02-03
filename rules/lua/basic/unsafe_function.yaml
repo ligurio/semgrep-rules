@@ -2,6 +2,7 @@ rules:
   - id: unsafe_function
     pattern-either:
       - pattern: os.execute(...)
+      - pattern: io.popen(...)
       - pattern: loadstring(...)
       - pattern: load(...)
       - pattern: loadfile(...)

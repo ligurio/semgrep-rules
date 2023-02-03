@@ -2,6 +2,9 @@
 os.execute("")
 
 -- ruleid: unsafe_function
+io.popen("")
+
+-- ruleid: unsafe_function
 load("")
 
 -- ruleid: unsafe_function
