@@ -1,0 +1,9 @@
+rules:
+  - id: pcall_err_handling
+    patterns:
+      - pattern: $RES, $ERR = pcall(...)
+      - pattern-not: if $RES then ... end
+      - pattern-not: if $ERR then ... end
+    message: pcall_err_handling
+    languages: [lua]
+    severity: INFO
