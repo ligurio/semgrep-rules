@@ -24,6 +24,37 @@ To run a single coccinelle rule:
 $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources/tarantool/src/
 ```
 
+### Lua rules
+
+#### General rules
+
+- `basic/cmp_by_reference`
+- `basic/fd_leak`
+- `basic/func_inside_func`
+- `basic/loadstring`
+- `basic/magic_number`
+- `basic/pcall_err_handling`
+- `basic/pcall_with_method`
+- `basic/print`
+- `basic/require_inside_func`
+- `basic/trace_enabled`
+- `basic/unsafe_function`
+- `basic/use_fd_after_close`
+- `basic/writing_to_file_in_read_mode`
+
+#### LuaJIT-specific rules
+
+- `luajit/jit_off`
+- `luajit/jit/nyi`
+- `luajit/jit/2.1`
+- `luajit/jit/partial`
+
+#### Tarantool-specific rules
+
+- `tarantool/crypto/insecure-hash-algorithm`
+- `tarantool/digest/insecure-hash-algorithm`
+- `tarantool/vshard/bad_hash_func`
+
 ### Flakiness
 
 Non-determinism is a source of test flakiness.
