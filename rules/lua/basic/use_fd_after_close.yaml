@@ -1,0 +1,43 @@
+rules:
+  - id: use_fd_after_close
+    patterns:
+      - pattern-either:
+          - pattern: |
+              $FD = io.open(...)
+              ...
+              $FD:close()
+          - pattern: |
+              $FD = io.open(...)
+              ...
+              io.close($FD)
+          - pattern: |
+              $FD = io.popen(...)
+              ...
+              $FD:close()
+          - pattern: |
+              $FD = io.popen(...)
+              ...
+              io.close($FD)
+          - pattern: |
+              $FD = io.lines(...)
+              ...
+              $FD:close()
+          - pattern: |
+              $FD = io.lines(...)
+              ...
+              io.close($FD)
+      - pattern-either:
+          - pattern: $FD:read(...)
+          - pattern: $FD:write(...)
+          - pattern: $FD:seek(...)
+          - pattern: $FD:flush(...)
+          - pattern: $FD:lines(...)
+          - pattern: $FD:setvbuf(...)
+          - pattern: io.flush($FD)
+          - pattern: io.read($FD)
+          - pattern: io.write($FD)
+          - pattern: io.input($FD)
+          - pattern: io.output($FD)
+    message: use_fd_after_close
+    languages: [lua]
+    severity: ERROR
