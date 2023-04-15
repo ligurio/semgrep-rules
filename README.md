@@ -51,6 +51,7 @@ $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources
 
 #### Tarantool-specific rules
 
+- `tarantool/box/box_cfg_raw_access`
 - `tarantool/crypto/insecure-hash-algorithm`
 - `tarantool/digest/insecure-hash-algorithm`
 - `tarantool/vshard/bad_hash_func`
