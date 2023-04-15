@@ -1,0 +1,9 @@
+rules:
+  - id: box_cfg_raw_access
+    pattern: box.cfg.$OPT = $VALUE
+    message: box_cfg_raw_access
+    languages: [lua]
+    metadata:
+      references:
+        - https://github.com/tarantool/tarantool/issues/2867
+    severity: WARNING
