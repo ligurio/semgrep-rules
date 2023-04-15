@@ -1,0 +1,10 @@
+rules:
+  - id: grant_guest_full_access
+    patterns:
+      - pattern: box.schema.user.grant('guest', $PRIVELEGE, 'universe')
+    message: Пользователю guest не предоставляют полный доступ на universe.
+    languages: [lua]
+    metadata:
+      references:
+        - https://www.tarantool.io/ru/doc/latest/book/admin/access_control/
+    severity: WARNING
