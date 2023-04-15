@@ -1,0 +1,11 @@
+rules:
+  - id: set_trigger_once
+    patterns:
+      - pattern: box.$SPACE:before_replace(...)
+      - pattern-not: box.$SPACE:before_replace($NEW, $OLD)
+    message: set_trigger_once
+    languages: [lua]
+    metadata:
+      references:
+        - https://www.tarantool.io/en/doc/latest/concepts/triggers/
+    severity: WARNING
