@@ -1,0 +1,24 @@
+rules:
+  - id: missed_if_not_exist
+    pattern-either:
+      - patterns:
+          - pattern-inside: box.schema.space.create(...)
+          - pattern-not: box.schema.space.create($NAME, { ..., if_not_exists = true, ... })
+      - patterns:
+          - pattern-inside: box.schema.func.create(...)
+          - pattern-not: box.schema.func.create($NAME, { ..., if_not_exists = true, ... })
+      #- pattern: |
+      #    $SPACE = box.schema.space.create(...)
+      #    $SPACE:create_index($NAME, { if_not_exists = true })
+    message: if_not_exist
+    languages: [lua]
+    severity: WARNING
+
+# TODO: box.schema.user.grant()
+# https://www.tarantool.io/en/doc/latest/reference/reference_lua/box_schema/user_grant/
+# box.schema.user.create()
+# https://www.tarantool.io/en/doc/latest/reference/reference_lua/box_schema/user_create/
+# box.schema.role.grant()
+# https://www.tarantool.io/en/doc/latest/reference/reference_lua/box_schema/role_grant/
+# box.schema.sequence.create()
+# https://www.tarantool.io/en/doc/latest/how-to/db/sequences/

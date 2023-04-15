@@ -53,6 +53,7 @@ $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources
 
 - `tarantool/box/box_cfg_raw_access`
 - `tarantool/box/grant_guest_full_access`
+- `tarantool/box/missed_if_not_exist`
 - `tarantool/box/set_trigger_once`
 - `tarantool/crypto/insecure-hash-algorithm`
 - `tarantool/digest/insecure-hash-algorithm`
