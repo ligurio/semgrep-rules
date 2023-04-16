@@ -1,0 +1,23 @@
+packs:
+  tarantool:
+    - box_cfg_raw_access
+    - grant_guest_full_access
+    - missed_if_not_exist
+    - set_trigger_once
+    - insecure-hash-algorithm
+    - insecure-hash-algorithm
+    - bad_hash_func
+  lua:
+    - cmp_by_reference
+    - fd_leak
+    - func_inside_func
+    - loadstring
+    - magic_number
+    - pcall_err_handling
+    - pcall_with_method
+    - print
+    - require_inside_func
+    - trace_enabled
+    - unsafe_function
+    - use_fd_after_close
+    - writing_to_file_in_read_mode
