@@ -32,6 +32,7 @@ $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources
 - `basic/fd_leak`
 - `basic/func_inside_func`
 - `basic/immutable_looping_variables`
+- `basic/init_rng_without_seed`
 - `basic/loadstring`
 - `basic/magic_number`
 - `basic/pcall_err_handling`
