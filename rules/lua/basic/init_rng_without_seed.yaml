@@ -1,0 +1,14 @@
+rules:
+  - id: init_rng_without_seed
+    patterns:
+      - pattern: |
+          ...
+          math.random(...)
+          ...
+      - pattern-not: |
+          ...
+          math.random()
+          ...
+    message: math.random() is used without random seed.
+    languages: [lua]
+    severity: INFO
