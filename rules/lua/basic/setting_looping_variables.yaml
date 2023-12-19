@@ -1,0 +1,34 @@
+rules:
+  - id: setting_looping_variables
+    patterns:
+      - pattern-inside: |
+          for $K, $V in ... do
+            ...
+          end
+          for $K in ... do
+            ...
+          end
+      - pattern-not: |
+          for $K in ... do
+            ...
+            $K = ...
+            ...
+          end
+          for $K, $V in ... do
+            ...
+            $V = ...
+            ...
+            $K = ...
+            ...
+          end
+    message: |
+      In a loop the looping variables key and value are locals. So reassigning
+      them, it just changes the value referenced by the local variable. After
+      the first run of the loop, locals run out of scope and are discarded.
+      To change the value in the table reference to the table itself like
+      `t[key] = "hello"`.
+    metadata:
+      references:
+        - http://www.lua.org/manual/5.4/manual.html#3.3.5
+    languages: [lua]
+    severity: WARNING
