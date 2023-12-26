@@ -1,24 +1,26 @@
 rules:
-- id: synchronization-with-sleep
-  patterns:
-  - pattern-either:
-    - pattern: |
-        time.Sleep($X)
-    - pattern: |
-        context.WithTimeout(..., ($X : int), ...)
-    - pattern: |
-        ...
-        go func(...) {
-        ...
-        }(...)
-        time.Sleep(...)
-        ...
-    - pattern: |
-        ...
-        go $FOO(...)
-        time.Sleep(...)
-        ...
-  - pattern-inside: func $FUNC(...){ ... }
-  message: Using `time.Sleep` for synchronizations is generally considered bad practice.
-  languages: [go]
-  severity: WARNING
+  - id: synchronization-with-sleep
+    patterns:
+      - pattern-either:
+          - pattern: |
+              time.Sleep($X)
+          - pattern: |
+              context.WithTimeout(..., ($X : int), ...)
+          - pattern: |
+              ...
+              go func(...) {
+              ...
+              }(...)
+              time.Sleep(...)
+              ...
+          - pattern: |
+              ...
+              go $FOO(...)
+              time.Sleep(...)
+              ...
+      - pattern-inside: func $FUNC(...){ ... }
+    message: |
+      Using `time.Sleep` for synchronizations is generally considered bad
+      practice.
+    languages: [go]
+    severity: WARNING

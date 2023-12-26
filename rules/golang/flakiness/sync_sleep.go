@@ -1,6 +1,6 @@
 go longOperation.Start()
 
-// rule-id: synchronization-with-sleep
+// rule-id: sync_sleep
 time.Sleep(5 * time.Second)
 
 if !longOperation.IsDone() {
@@ -15,7 +15,7 @@ if res != expected {
 
 go longOperation.Start()
 
-// rule-id: synchronization-with-sleep
+// rule-id: sync_sleep
 ctx, cancel := context.WithTimeout(context.Background(), 5 * time.Second)
 defer cancel()
 
