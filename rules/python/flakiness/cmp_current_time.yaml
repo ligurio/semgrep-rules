@@ -1,44 +1,25 @@
 rules:
-- id: cmp_current_time
-  patterns:
-    - pattern-either: 
-      - pattern: |
-              assert(datetime.now() == $X)
-      - pattern: |
-              datetime.now() <> $X
-      - pattern: |
-              datetime.now() > $X
-      - pattern: |
-              datetime.now() < $X
-      - pattern: |
-              datetime.now() >= $X
-      - pattern: |
-              datetime.now() <= $X
-      - pattern: |
-              time.now() == $X
-      - pattern: |
-              time.now() <> $X
-      - pattern: |
-              time.now() > $X
-      - pattern: |
-              time.now() < $X
-      - pattern: |
-              time.now() >= $X
-      - pattern: |
-              time.now() <= $X
-      - pattern: |
-              time.time() <= $X
-      - pattern: |
-              time.clock() <= $X
-      - pattern: |
-              timeit.timeit()
-  message: cmp_current_time
-  fix: |
-    Use timeit.default_timer instead of timeit.timeit.
-  languages:
-  - python
-  metadata:
-    references:
-    - https://docs.python.org/3/library/timeit.html#timeit.default_timer
-    - https://stackoverflow.com/questions/7370801/how-to-measure-elapsed-time-in-python
-  severity: WARNING
+  - id: cmp_current_time
+    patterns:
+      - pattern-either:
+          - pattern-inside: ... <> ...
+          - pattern-inside: ... > ...
+          - pattern-inside: ... < ...
+          - pattern-inside: ... >= ...
+          - pattern-inside: ... <= ...
+          - pattern-inside: ... == ...
+      - pattern-either:
+          - pattern: $T = datetime.now()
+          - pattern: $T = time.time()
+          - pattern: $T = time.clock()
+          - pattern: $T = timeit.timeit()
+    message: cmp_current_time
+    languages:
+      - python
+    metadata:
+      references:
+        - https://docs.python.org/3/library/datetime.html
+        - https://docs.python.org/3/library/time.html
+        - https://docs.python.org/3/library/timeit.html
+        - https://stackoverflow.com/questions/7370801/how-to-measure-elapsed-time-in-python
+    severity: WARNING

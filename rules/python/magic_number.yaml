@@ -1,10 +1,18 @@
 rules:
-- id: magic_number
-  patterns:
-    - pattern: assert $X == $Y
-  message: Don't use magic numbers.
-  languages: [python]
-  metadata:
-    references:
-    - https://twitter.com/sqaunderhood/status/766911352958963712
-  severity: WARNING
+  - id: magic_number
+    patterns:
+      - pattern-either:
+          - pattern: ... < ...
+          - pattern: ... > ...
+          - pattern: ... == ...
+          - pattern: ... != ...
+          - pattern: ... <= ...
+          - pattern: ... >= ...
+          - pattern: $FN(..., ..., ...)
+      - pattern-regex: \d
+    message: Don't use magic numbers.
+    languages: [python]
+    metadata:
+      references:
+        - https://twitter.com/sqaunderhood/status/766911352958963712
+    severity: WARNING

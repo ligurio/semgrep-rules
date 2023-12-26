@@ -1,18 +1,18 @@
 rules:
-- id: missed_retries
-  patterns:
-    - pattern-either: 
-      - pattern: |
-          requests.adapters.HTTPAdapter()
-      - pattern: |
-          requests.adapters.HTTPAdapter(max_retries=$X)
-      - pattern: |
-          urllib3.PoolManager(..., retries=$X)
-      - pattern: |
-          urllib3.PoolManager()
-  message: |
-    No retries on access to resources. Some functions doesn't have retry
-    options (like "psycopg2.connect()") so you need to implement youself.
-  languages:
-  - python
-  severity: WARNING
+  - id: missed_retries
+    patterns:
+      - pattern-either:
+          - pattern: |
+              requests.adapters.HTTPAdapter()
+          - pattern: |
+              requests.adapters.HTTPAdapter(max_retries=$X)
+          - pattern: |
+              urllib3.PoolManager(..., retries=$X)
+          - pattern: |
+              urllib3.PoolManager()
+    message: |
+        No retries on access to resources. Some functions doesn't have retry
+        options (like "psycopg2.connect()") so you need to implement youself.
+    languages:
+      - python
+    severity: WARNING

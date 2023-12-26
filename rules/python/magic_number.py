@@ -1,17 +1,19 @@
+import math
+
 i = 2
-f = 0.2
-s = "hello"
 
 # ruleid: magic_number
 assert(4 == i)
 # ruleid: magic_number
-assert(4 == f)
+assert(4 >= i)
 # ruleid: magic_number
-assert(4 == s)
-
+assert(4 <= i)
 # ruleid: magic_number
 assert(i == 4)
 # ruleid: magic_number
-assert(f == 4)
+assert(i != 4)
 # ruleid: magic_number
-assert(s == 4)
+assert(i == 4)
+
+# ruleid: magic_number
+math.sin(4)
