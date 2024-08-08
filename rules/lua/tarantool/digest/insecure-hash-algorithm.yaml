@@ -1,18 +1,7 @@
 rules:
   - id: insecure-hash-algorithm-md4
-    pattern: |
-      $M = require("digest")
-      ...
-      $M.md4(...)
-    fix-regex:
-      regex: md5
-      replacement: sha256
-    message: |
-      Detected use of an insecure MD4 hash function.
-      This function have known vulnerabilities and is considered deprecated.
-      Consider using "SHA256" or a similar function instead.
-    languages: [lua]
     metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
       references:
         - https://www.tarantool.io/en/doc/latest/reference/reference_lua/digest/
       cwe:
@@ -20,9 +9,35 @@ rules:
       owasp:
         - A03:2017 - Sensitive Data Exposure
         - A02:2021 - Cryptographic Failures
+    message: |
+      Detected use of an insecure MD4 hash function.
+      This function have known vulnerabilities and is considered deprecated.
+      Consider using "SHA256" or a similar function instead.
+    languages: [lua]
     severity: WARNING
+    pattern: |
+      $M = require("digest")
+      ...
+      $M.md4(...)
+    fix-regex:
+      regex: md5
+      replacement: sha256
 
   - id: insecure-hash-algorithm-md5
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/digest/
+        - https://tools.ietf.org/html/rfc6151
+        - https://crypto.stackexchange.com/questions/44151/how-does-the-flame-malware-take-advantage-of-md5-collision
+      cwe: "CWE-327: Use of a Broken or Risky Cryptographic Algorithm"
+      owasp: "A3: Sensitive Data Exposure"
+    message: |
+      Detected MD5 hash algorithm which is considered insecure. MD5 is not
+      collision resistant and is therefore not suitable as a cryptographic
+      signature. Use SHA256 or SHA3 instead.
+    languages: [lua]
+    severity: WARNING
     pattern: |
       $M = require("digest")
       ...
@@ -30,34 +45,10 @@ rules:
     fix-regex:
       regex: md5
       replacement: sha256
-    message: |
-      Detected MD5 hash algorithm which is considered insecure. MD5 is not
-      collision resistant and is therefore not suitable as a cryptographic
-      signature. Use SHA256 or SHA3 instead.
-    languages: [lua]
-    metadata:
-      references:
-        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/digest/
-        - https://tools.ietf.org/html/rfc6151
-        - https://crypto.stackexchange.com/questions/44151/how-does-the-flame-malware-take-advantage-of-md5-collision
-      cwe: "CWE-327: Use of a Broken or Risky Cryptographic Algorithm"
-      owasp: "A3: Sensitive Data Exposure"
-    severity: WARNING
 
   - id: insecure-hash-algorithm-sha1
-    pattern: |
-      $M = require("digest")
-      ...
-      $M.sha1(...)
-    fix-regex:
-      regex: sha1
-      replacement: sha256
-    message: |
-      Detected SHA1 hash algorithm which is considered insecure. SHA1 is not
-      collision resistant and is therefore not suitable as a cryptographic
-      signature. Use SHA256 or SHA3 instead.
-    languages: [lua]
     metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
       references:
         - https://www.tarantool.io/en/doc/latest/reference/reference_lua/digest/
         - https://www.schneier.com/blog/archives/2012/10/when_will_we_se.html
@@ -67,4 +58,16 @@ rules:
       owasp:
         - A03:2017 - Sensitive Data Exposure
         - A02:2021 - Cryptographic Failures
+    message: |
+      Detected SHA1 hash algorithm which is considered insecure. SHA1 is not
+      collision resistant and is therefore not suitable as a cryptographic
+      signature. Use SHA256 or SHA3 instead.
+    languages: [lua]
     severity: WARNING
+    pattern: |
+      $M = require("digest")
+      ...
+      $M.sha1(...)
+    fix-regex:
+      regex: sha1
+      replacement: sha256

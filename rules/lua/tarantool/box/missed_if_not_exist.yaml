@@ -1,5 +1,10 @@
 rules:
   - id: missed_if_not_exist
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+    message: if_not_exist
+    languages: [lua]
+    severity: WARNING
     pattern-either:
       - patterns:
           - pattern-inside: box.schema.space.create(...)
@@ -10,9 +15,6 @@ rules:
       #- pattern: |
       #    $SPACE = box.schema.space.create(...)
       #    $SPACE:create_index($NAME, { if_not_exists = true })
-    message: if_not_exist
-    languages: [lua]
-    severity: WARNING
 
 # TODO: box.schema.user.grant()
 # https://www.tarantool.io/en/doc/latest/reference/reference_lua/box_schema/user_grant/

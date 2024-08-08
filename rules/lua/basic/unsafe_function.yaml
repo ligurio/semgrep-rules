@@ -1,5 +1,11 @@
 rules:
   - id: unsafe_function
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+    message: Using unsafe function.
+    # https://fuzz-introspector.readthedocs.io/en/latest/user-guides/analyse-sink-function.html
+    languages: [lua]
+    severity: WARNING
     pattern-either:
       - pattern: os.execute(...)
       - pattern: io.popen(...)
@@ -8,6 +14,3 @@ rules:
       - pattern: loadfile(...)
       - pattern: dofile(...)
       - pattern: os.remove(...)
-    message: Using unsafe function.
-    languages: [lua]
-    severity: WARNING

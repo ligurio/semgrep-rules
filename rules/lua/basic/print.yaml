@@ -1,5 +1,11 @@
 rules:
   - id: print
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+    message: |
+      "print()" is not capable for printing Lua tables, functions and threads.
+    languages: [lua]
+    severity: INFO
     pattern-either:
       - patterns:
           - pattern: print(...)
@@ -21,7 +27,3 @@ rules:
           - pattern-not: |
               $CO = coroutine.create(...)
               print(..., $CO, ...)
-    message: |
-      "print()" is not capable for printing Lua tables, functions and threads.
-    languages: [lua]
-    severity: INFO

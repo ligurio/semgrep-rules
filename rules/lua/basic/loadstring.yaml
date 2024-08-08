@@ -1,12 +1,7 @@
 rules:
   - id: loadstring
-    pattern-either:
-      - patterns:
-          - pattern-not: loadstring("...")
-          - pattern: loadstring(...)
-      - patterns:
-          - pattern-not: load("...")
-          - pattern: load(...)
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
     message: >-
       Detected the use of loadstring(). loadstring() can be dangerous if used
       to evaluate dynamic content. If this content can be input from outside the
@@ -14,3 +9,10 @@ rules:
       content is not definable by external sources.
     languages: [lua]
     severity: WARNING
+    pattern-either:
+      - patterns:
+          - pattern-not: loadstring("...")
+          - pattern: loadstring(...)
+      - patterns:
+          - pattern-not: load("...")
+          - pattern: load(...)

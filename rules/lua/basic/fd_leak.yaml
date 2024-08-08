@@ -1,5 +1,13 @@
 rules:
   - id: fd_leak
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      references:
+        - https://cwe.mitre.org/data/definitions/403.html
+    message:
+      The file object "$FD" opened without corresponding close.
+    languages: [lua]
+    severity: ERROR
     patterns:
       - pattern-either:
           - pattern-inside: |
@@ -13,7 +21,3 @@ rules:
               ...
       - pattern-not: $FD:close()
       - pattern-not: io.close($FD)
-    message:
-      The file object "$FD" opened without corresponding close.
-    languages: [lua]
-    severity: ERROR

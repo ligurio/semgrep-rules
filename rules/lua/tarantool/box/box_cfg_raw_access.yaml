@@ -1,9 +1,11 @@
 rules:
   - id: box_cfg_raw_access
-    pattern: box.cfg.$OPT = $VALUE
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/box_cfg/
+        - https://github.com/tarantool/tarantool/issues/2867
     message: box_cfg_raw_access
     languages: [lua]
-    metadata:
-      references:
-        - https://github.com/tarantool/tarantool/issues/2867
     severity: WARNING
+    pattern: box.cfg.$OPT = $VALUE

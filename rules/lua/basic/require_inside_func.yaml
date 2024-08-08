@@ -1,5 +1,11 @@
 rules:
   - id: require_inside_func
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+    message: |
+      Function "require()" shouldn't  be used inside functions.
+    languages: [lua]
+    severity: INFO
     pattern-either:
       - pattern: |
           function(...)
@@ -13,7 +19,3 @@ rules:
           require($M)
           ...
           end
-    message: |
-      Function "require()" shouldn't  be used inside functions.
-    languages: [lua]
-    severity: INFO

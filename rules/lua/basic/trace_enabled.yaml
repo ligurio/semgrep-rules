@@ -1,7 +1,9 @@
 rules:
   - id: trace_enabled
-    patterns:
-      - pattern: debug.sethook(...)
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
     message: Using `debug.sethook()` will slowdown your code.
     languages: [lua]
     severity: INFO
+    patterns:
+      - pattern: debug.sethook(...)

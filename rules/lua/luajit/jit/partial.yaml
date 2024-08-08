@@ -20,7 +20,7 @@ rules:
       All aspects of Lua are implemented in LuaJIT's interpreter, but not all of
       them are implemented in LuaJIT's JIT compiler.
 
-      Function bay be JIT-compiled, depending on the circumstances. Otherwise
+      Function may be JIT-compiled, depending on the circumstances. Otherwise
       will fall back to the interpreter or stitch.
     languages: [lua]
     metadata:

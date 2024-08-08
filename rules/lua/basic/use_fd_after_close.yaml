@@ -1,5 +1,22 @@
+# Фалсит ужасно.
+# home.sergeyb.sources.semgrep-rules.rules.lua.tarantool.fio.use_fd_after_close
+#    use_fd_after_close
+
+#     10┆ endpoints = {string.format("http://%s:2379", os.getenv('ETCD_HOST') or 'etcd')};
+#      ⋮┆----------------------------------------
+#     10┆ endpoints = {string.format("http://%s:2379", os.getenv('ETCD_HOST') or 'etcd')};
+#      ⋮┆----------------------------------------
+#     10┆ endpoints = {string.format("http://%s:2379", os.getenv('ETCD_HOST') or 'etcd')};
+#      ⋮┆----------------------------------------
+#     10┆ endpoints = {string.format("http://%s:2379", os.getenv('ETCD_HOST') or 'etcd')};
+
 rules:
   - id: use_fd_after_close
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+    message: use_fd_after_close
+    languages: [lua]
+    severity: ERROR
     patterns:
       - pattern-either:
           - pattern: |
@@ -38,6 +55,3 @@ rules:
           - pattern: io.write($FD)
           - pattern: io.input($FD)
           - pattern: io.output($FD)
-    message: use_fd_after_close
-    languages: [lua]
-    severity: ERROR

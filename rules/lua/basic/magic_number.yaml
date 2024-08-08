@@ -1,5 +1,10 @@
 rules:
   - id: magic_number
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+    message: magic_number
+    languages: [lua]
+    severity: INFO
     patterns:
       - pattern-either:
           - pattern: ... < ...
@@ -12,6 +17,3 @@ rules:
           - pattern: ... and ...
           - pattern: $FN(..., ..., ...)
       - pattern-regex: \d
-    message: magic_number
-    languages: [lua]
-    severity: INFO

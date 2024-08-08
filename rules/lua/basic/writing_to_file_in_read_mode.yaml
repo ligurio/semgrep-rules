@@ -1,5 +1,12 @@
 rules:
   - id: writing_to_file_in_read_mode
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+    message: |
+      The file object "$FD" was opened in read mode, but is being
+      written to. This will cause a runtime error.
+    severity: ERROR
+    languages: [lua]
     patterns:
       - pattern: |
           $FD = io.open($NAME, $MODE)
@@ -8,8 +15,3 @@ rules:
       - metavariable-pattern:
           metavariable: $MODE
           pattern-regex: "r"
-    message: |
-      The file object "$FD" was opened in read mode, but is being
-      written to. This will cause a runtime error.
-    severity: ERROR
-    languages: [lua]

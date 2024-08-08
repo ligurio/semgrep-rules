@@ -1,5 +1,11 @@
 rules:
   - id: func_inside_func
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+    message: |
+      Function shouldn't  be declared inside functions.
+    languages: [lua]
+    severity: INFO
     pattern-either:
       - pattern-inside: |
           $FN1 = function(...)
@@ -32,7 +38,3 @@ rules:
           end
           ...
           end
-    message: |
-      Function shouldn't  be declared inside functions.
-    languages: [lua]
-    severity: INFO

@@ -1,8 +1,8 @@
 -- ruleid: init_rng_without_seed
-math.random()
+math.randomseed()
 
 -- ok: init_rng_without_seed
-math.random(os.time())
+math.randomseed(os.time())
 
 -- ok: init_rng_without_seed
-math.random(384)
+math.randomseed(384)

@@ -1,17 +1,5 @@
 rules:
   - id: insecure-hash-algorithm
-    pattern-either:
-      - pattern: |
-          $M = require("crypto")
-          ...
-          $M.cipher.des.$MODE.encrypt(...)
-    fix-regex:
-      regex: des
-      replacement: aes
-    message: |
-      Detected DES cipher algorithm which is insecure. The algorithm is
-      considered weak and has been deprecated. Use AES instead.
-    languages: [lua]
     metadata:
       references:
         - https://www.tarantool.io/en/doc/latest/reference/reference_lua/crypto/
@@ -20,4 +8,16 @@ rules:
         - A02:2021 - Cryptographic Failures
       cwe:
         - "CWE-327: Use of a Broken or Risky Cryptographic Algorithm"
+    message: |
+      Detected DES cipher algorithm which is insecure. The algorithm is
+      considered weak and has been deprecated. Use AES instead.
+    languages: [lua]
     severity: WARNING
+    pattern-either:
+      - pattern: |
+          $M = require("crypto")
+          ...
+          $M.cipher.des.$MODE.encrypt(...)
+    fix-regex:
+      regex: des
+      replacement: aes
