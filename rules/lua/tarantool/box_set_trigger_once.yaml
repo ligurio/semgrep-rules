@@ -1,5 +1,5 @@
 rules:
-  - id: set_trigger_once
+  - id: box_set_trigger_once
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       references:

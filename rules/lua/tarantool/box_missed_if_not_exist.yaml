@@ -1,5 +1,5 @@
 rules:
-  - id: missed_if_not_exist
+  - id: box_missed_if_not_exist
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
     message: if_not_exist

@@ -1,5 +1,5 @@
 rules:
-  - id: grant_guest_full_access
+  - id: box_grant_guest_full_access
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       references:
