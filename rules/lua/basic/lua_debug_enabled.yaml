@@ -1,5 +1,5 @@
 rules:
-  - id: trace_enabled
+  - id: lua_debug_enabled
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
     message: Using `debug.sethook()` will slowdown your code.

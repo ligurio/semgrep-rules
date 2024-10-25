@@ -1,5 +1,5 @@
 rules:
-  - id: writing_to_file_in_read_mode
+  - id: lua_writing_to_file_in_read_mode
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
     message: |

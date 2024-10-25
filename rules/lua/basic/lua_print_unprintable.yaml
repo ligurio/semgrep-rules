@@ -1,5 +1,5 @@
 rules:
-  - id: print
+  - id: lua_print_unprintable
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
     message: |

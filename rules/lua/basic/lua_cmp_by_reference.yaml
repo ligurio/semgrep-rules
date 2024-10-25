@@ -1,5 +1,5 @@
 rules:
-  - id: cmp_reference
+  - id: lua_cmp_by_reference
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       references:

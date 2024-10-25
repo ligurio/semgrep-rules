@@ -11,10 +11,10 @@
 #     10┆ endpoints = {string.format("http://%s:2379", os.getenv('ETCD_HOST') or 'etcd')};
 
 rules:
-  - id: use_fd_after_close
+  - id: lua_use_fd_after_close
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
-    message: use_fd_after_close
+    message: lua_use_fd_after_close
     languages: [lua]
     severity: ERROR
     patterns:

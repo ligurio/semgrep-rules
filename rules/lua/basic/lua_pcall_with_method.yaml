@@ -1,5 +1,5 @@
 rules:
-  - id: pcall_with_method
+  - id: lua_pcall_with_method
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
     message: Use pcall(self.func, self).

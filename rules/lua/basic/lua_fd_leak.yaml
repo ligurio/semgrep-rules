@@ -1,5 +1,5 @@
 rules:
-  - id: fd_leak
+  - id: lua_fd_leak
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       references:

@@ -1,5 +1,5 @@
 rules:
-  - id: magic_number
+  - id: lua_magic_number
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
     message: magic_number

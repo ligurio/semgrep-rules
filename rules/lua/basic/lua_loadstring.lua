@@ -1,7 +1,7 @@
 local c = "os.exec('cat /etc/passwd')"
 
--- ruleid: loadstring
+-- ruleid: lua_loadstring
 loadstring(c)
 
--- ok: loadstring
+-- ok: lua_loadstring
 loadstring("os.exec('cat /etc/passwd')")

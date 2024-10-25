@@ -1,18 +1,18 @@
 local fn = function() return end
 
--- ruleid: pcall_err_handling
+-- ruleid: lua_pcall_err_handling
 local ok, err = pcall(fn)
 if ok then
     return
 end
 
--- ruleid: pcall_err_handling
+-- ruleid: lua_pcall_err_handling
 local ok, err = pcall(fn)
 if err then
     return
 end
 
--- ok: pcall_err_handling
+-- ok: lua_pcall_err_handling
 local ok, err = pcall(fn)
 if ok then
     return

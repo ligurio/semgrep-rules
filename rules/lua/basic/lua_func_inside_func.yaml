@@ -1,5 +1,5 @@
 rules:
-  - id: func_inside_func
+  - id: lua_func_inside_func
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
     message: |

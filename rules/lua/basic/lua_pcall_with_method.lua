@@ -11,5 +11,5 @@ end
 local object = new()
 object:print_str() --> Hello, world!
 
--- ok: pcall_with_method
+-- ok: lua_pcall_with_method
 pcall(object.print_str, object)

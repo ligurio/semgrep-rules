@@ -1,5 +1,5 @@
 rules:
-  - id: pcall_err_handling
+  - id: lua_pcall_err_handling
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
     message: pcall_err_handling

@@ -1,5 +1,5 @@
 rules:
-  - id: setting_looping_variables
+  - id: lua_setting_looping_variables
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       references:
