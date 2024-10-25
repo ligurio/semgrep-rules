@@ -1,5 +1,5 @@
 rules:
-  - id: partial
+  - id: luajit_partial_compilation
     pattern-either:
       - pattern: getfenv(...)         # 2.1 partial
       - pattern: next(...)            # 2.1 partial

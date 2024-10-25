@@ -1,5 +1,5 @@
 rules:
-  - id: nyi
+  - id: luajit_nyi
     pattern-either:
       - pattern: dofile(...)              # never 2.1 stitch
       - pattern: error(...)               # never

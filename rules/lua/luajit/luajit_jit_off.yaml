@@ -1,5 +1,5 @@
 rules:
-  - id: jit_off
+  - id: luajit_jit_off
     patterns:
       - pattern: jit.off(...)
     message: Должны быть серьёзные причины для выключения JIT-компиляции.
