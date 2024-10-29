@@ -73,7 +73,7 @@ $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources
 | [lua_unsafe_function](rules/lua/basic/lua_unsafe_function.yaml) |  |
 | [lua_use_fd_after_close](rules/lua/basic/lua_use_fd_after_close.yaml) | File descriptors leak. |
 | [lua_writing_to_file_in_read_mode](rules/lua/basic/lua_writing_to_file_in_read_mode.yaml) | Writing to a file opened in read-only mode. |
-| [2.1](rules/lua/luajit/2.1.yaml) |  |
+| [luajit_2.1](rules/lua/luajit/luajit_2.1.yaml) |  |
 | [luajit_jit_off](rules/lua/luajit/luajit_jit_off.yaml) |  |
 | [luajit_nyi](rules/lua/luajit/luajit_nyi.yaml) |  |
 | [luajit_partial_compilation](rules/lua/luajit/luajit_partial_compilation.yaml) |  |
