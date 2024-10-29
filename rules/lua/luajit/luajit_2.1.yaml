@@ -1,5 +1,5 @@
 rules:
-  - id: "2.1"
+  - id: "luajit_2.1"
     pattern-either:
       - pattern: collectgarbage()           # 2.1 stitch
       - pattern: gcinfo()                   # 2.1 stitch
