@@ -2,6 +2,7 @@ rules:
   - id: tarantool_box_cfg_raw_access
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
+      description: Raw access to a `box.cfg` table.
       references:
         - https://www.tarantool.io/en/doc/latest/reference/reference_lua/box_cfg/
         - https://github.com/tarantool/tarantool/issues/2867

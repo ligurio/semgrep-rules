@@ -2,6 +2,7 @@ rules:
   - id: tarantool_box_grant_guest_full_access
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
+      description: Full access for a guest user to universe.
       references:
         - https://www.tarantool.io/ru/doc/latest/book/admin/access_control/
     message: Пользователю guest предоставляют полный доступ на universe.
