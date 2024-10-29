@@ -2,7 +2,8 @@ rules:
   - id: lua_magic_number
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
-    message: magic_number
+      description: Using magic numbers.
+    message: Using magic numbers.
     languages: [lua]
     severity: INFO
     patterns:

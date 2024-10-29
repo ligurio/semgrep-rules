@@ -2,6 +2,7 @@ rules:
   - id: lua_func_inside_func
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
+      description: A function is defined inside another function.
     message: |
       Function shouldn't  be declared inside functions.
     languages: [lua]

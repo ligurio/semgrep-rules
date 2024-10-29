@@ -2,6 +2,7 @@ rules:
   - id: lua_writing_to_file_in_read_mode
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
+      description: Writing to a file opened in read-only mode.
     message: |
       The file object "$FD" was opened in read mode, but is being
       written to. This will cause a runtime error.

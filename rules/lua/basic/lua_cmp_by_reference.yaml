@@ -2,6 +2,7 @@ rules:
   - id: lua_cmp_by_reference
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
+      description: Compare uncomparable.
       references:
         - https://www.lua.org/manual/5.3/manual.html#pdf-rawequal
     message:

@@ -14,7 +14,8 @@ rules:
   - id: lua_use_fd_after_close
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
-    message: lua_use_fd_after_close
+      description: File descriptors leak.
+    message: File descriptors leak.
     languages: [lua]
     severity: ERROR
     patterns:

@@ -2,6 +2,7 @@ rules:
   - id: lua_loadstring
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
+      description: Using `loadstring()`.
     message: >-
       Detected the use of loadstring(). loadstring() can be dangerous if used
       to evaluate dynamic content. If this content can be input from outside the

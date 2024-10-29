@@ -2,6 +2,7 @@ rules:
   - id: lua_init_rng_without_seed
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
+      description: Sergey Bronnikov <estetus@gmail.com>
     message: math.random() is used without random seed.
     languages: [lua]
     severity: INFO

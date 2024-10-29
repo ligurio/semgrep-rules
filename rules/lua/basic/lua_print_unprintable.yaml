@@ -2,6 +2,7 @@ rules:
   - id: lua_print_unprintable
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
+      description: Print unprintable.
     message: |
       "print()" is not capable for printing Lua tables, functions and threads.
     languages: [lua]

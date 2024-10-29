@@ -2,6 +2,7 @@ rules:
   - id: lua_pcall_with_method
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
+      description: Use pcall(self.func, self).
     message: Use pcall(self.func, self).
     languages: [lua]
     severity: WARNING

@@ -2,6 +2,7 @@ rules:
   - id: lua_setting_looping_variables
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
+      description: Mutate immutable variables.
       references:
         - http://www.lua.org/manual/5.4/manual.html#3.3.5
     message: |

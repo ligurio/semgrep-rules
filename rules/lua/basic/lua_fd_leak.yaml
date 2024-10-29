@@ -2,6 +2,7 @@ rules:
   - id: lua_fd_leak
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
+      description: File descriptors leaks.
       references:
         - https://cwe.mitre.org/data/definitions/403.html
     message:

@@ -2,7 +2,8 @@ rules:
   - id: lua_pcall_err_handling
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
-    message: pcall_err_handling
+      description: Ignoring `pcall` results handling.
+    message: Ignoring `pcall` results handling.
     languages: [lua]
     severity: INFO
     patterns:

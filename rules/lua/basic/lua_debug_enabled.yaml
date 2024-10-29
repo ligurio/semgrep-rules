@@ -2,6 +2,7 @@ rules:
   - id: lua_debug_enabled
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
+      description: Using `debug.sethook()`.
     message: Using `debug.sethook()` will slowdown your code.
     languages: [lua]
     severity: INFO

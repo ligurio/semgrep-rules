@@ -2,6 +2,7 @@ rules:
   - id: lua_require_inside_func
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
+      description: Import is used inside a function.
     message: |
       Function "require()" shouldn't  be used inside functions.
     languages: [lua]
