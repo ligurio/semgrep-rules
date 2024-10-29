@@ -1,5 +1,5 @@
 rules:
-  - id: box_set_trigger_once
+  - id: tarantool_box_set_trigger_once
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       references:

@@ -1,5 +1,5 @@
 rules:
-  - id: bad_hash_func
+  - id: tarantool_bad_hash_func
     patterns:
       - pattern: |
           $M = require("vshard")

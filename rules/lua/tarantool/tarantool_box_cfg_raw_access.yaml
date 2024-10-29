@@ -1,5 +1,5 @@
 rules:
-  - id: box_cfg_raw_access
+  - id: tarantool_box_cfg_raw_access
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       references:

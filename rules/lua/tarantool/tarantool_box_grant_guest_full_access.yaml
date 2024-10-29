@@ -1,5 +1,5 @@
 rules:
-  - id: box_grant_guest_full_access
+  - id: tarantool_box_grant_guest_full_access
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       references:
