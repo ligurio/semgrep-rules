@@ -24,42 +24,95 @@ To run a single coccinelle rule:
 $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources/tarantool/src/
 ```
 
-### Lua rules
+### Lua
 
-#### General rules
-
-- `basic/cmp_by_reference`
-- `basic/fd_leak`
-- `basic/func_inside_func`
-- `basic/immutable_looping_variables`
-- `basic/init_rng_without_seed`
-- `basic/loadstring`
-- `basic/magic_number`
-- `basic/pcall_err_handling`
-- `basic/pcall_with_method`
-- `basic/print`
-- `basic/require_inside_func`
-- `basic/trace_enabled`
-- `basic/unsafe_function`
-- `basic/use_fd_after_close`
-- `basic/writing_to_file_in_read_mode`
-
-#### LuaJIT-specific rules
-
-- `luajit/jit_off`
-- `luajit/jit/nyi`
-- `luajit/jit/2.1`
-- `luajit/jit/partial`
-
-#### Tarantool-specific rules
-
-- `tarantool/box/box_cfg_raw_access`
-- `tarantool/box/grant_guest_full_access`
-- `tarantool/box/missed_if_not_exist`
-- `tarantool/box/set_trigger_once`
-- `tarantool/crypto/insecure-hash-algorithm`
-- `tarantool/digest/insecure-hash-algorithm`
-- `tarantool/vshard/bad_hash_func`
+| ID | Description |
+| -- | ----------- |
+| [lua_builtin_global_write](rules/lua/basic/lua_builtin_global_write.yaml) | Global write. |
+| [lua_cmp_by_reference](rules/lua/basic/lua_cmp_by_reference.yaml) | Compare uncomparable. |
+| [lua_cmp_float_numbers](rules/lua/basic/lua_cmp_float_numbers.yaml) | Compare float numbers. |
+| [lua_comparison_precedence](rules/lua/basic/lua_comparison_precedence.yaml) | Comparison precedence. |
+| [lua_debug_enabled](rules/lua/basic/lua_debug_enabled.yaml) | Using `debug.sethook()`. |
+| [lua_deprecated_api](rules/lua/basic/lua_deprecated_api.yaml) | Using deprecated Lua function(s). |
+| [lua_deprecated_global](rules/lua/basic/lua_deprecated_global.yaml) | Using deprecated globals. |
+| [lua_duplicate_condition](rules/lua/basic/lua_duplicate_condition.yaml) | Duplicate conditions. |
+| [lua_duplicate_function](rules/lua/basic/lua_duplicate_function.yaml) | Duplicate functions. |
+| [lua_unsafe_function](rules/lua/basic/lua_duplicate_local.yaml) | Duplicate locals. |
+| [lua_fd_leak](rules/lua/basic/lua_fd_leak.yaml) | File descriptors leaks. |
+| [lua_for_range](rules/lua/basic/lua_for_range.yaml) | Incorrect `for` bounds. |
+| [lua_format_string](rules/lua/basic/lua_format_string.yaml) | Mistakes in a format string. |
+| [lua_func_inside_func](rules/lua/basic/lua_func_inside_func.yaml) | A function is defined inside another function. |
+| [lua_function_unused](rules/lua/basic/lua_function_unused.yaml) | Unused function. |
+| [lua_global_used_as_local](rules/lua/basic/lua_global_used_as_local.yaml) | Global is used as a local. |
+| [lua_implicit_return](rules/lua/basic/lua_implicit_return.yaml) | Implicit return. |
+| [lua_import_unused](rules/lua/basic/lua_import_unused.yaml) | Unused import. |
+| [lua_init_rng_without_seed](rules/lua/basic/lua_init_rng_without_seed.yaml) | math.random() is used without random seed. |
+| [lua_integer_parsing](rules/lua/basic/lua_integer_parsing.yaml) | Incorrect using integers. |
+| [lua_loadstring](rules/lua/basic/lua_loadstring.yaml) | Using `loadstring()`. |
+| [lua_local_shadow](rules/lua/basic/lua_local_shadow.yaml) | Using local shadow. |
+| [lua_local_unused](rules/lua/basic/lua_local_unused.yaml) | Unused local. |
+| [lua_magic_number](rules/lua/basic/lua_magic_number.yaml) | Using magic numbers. |
+| [lua_misleading_and_or](rules/lua/basic/lua_misleading_and_or.yaml) | Misleading `and` and `or`. |
+| [lua_multi_line_statement](rules/lua/basic/lua_multi_line_statement.yaml) | Multiline statement. |
+| [lua_pcall_err_handling](rules/lua/basic/lua_pcall_err_handling.yaml) | Ignoring `pcall` results handling. |
+| [lua_pcall_with_method](rules/lua/basic/lua_pcall_with_method.yaml) | Use pcall(self.func, self). |
+| [lua_placeholder_write](rules/lua/basic/lua_placeholder_read.yaml) | Placeholder read. |
+| [lua_print_unprintable](rules/lua/basic/lua_print_unprintable.yaml) | Print unprintable. |
+| [lua_require_inside_func](rules/lua/basic/lua_require_inside_func.yaml) | Import is used inside a function. |
+| [lua_same_line_statement](rules/lua/basic/lua_same_line_statement.yaml) | Same line statement. |
+| [lua_setting_looping_variables](rules/lua/basic/lua_setting_looping_variables.yaml) | Mutate immutable variables. |
+| [lua_table_first_index](rules/lua/basic/lua_table_first_index.yaml) | Using index 0 in tables. |
+| [lua_table_len](rules/lua/basic/lua_table_len.yaml) | Using `#` for a table length. |
+| [lua_table_literal](rules/lua/basic/lua_table_literal.yaml) | Table literal. |
+| [lua_table_operations](rules/lua/basic/lua_table_operations.yaml) | Table operations. |
+| [lua_unbalanced_assignment](rules/lua/basic/lua_unbalanced_assignment.yaml) | Unbalanced assignment. |
+| [lua_uninitialized_local](rules/lua/basic/lua_uninitialized_local.yaml) | Non-initialized local. |
+| [lua_unknown_global](rules/lua/basic/lua_unknown_global.yaml) | Using unknown global variable. |
+| [lua_unknown_type](rules/lua/basic/lua_unknown_type.yaml) | Unknown type. |
+| [lua_unreachable_code](rules/lua/basic/lua_unreachable_code.yaml) | Unreachable code. |
+| [lua_unsafe_function](rules/lua/basic/lua_unsafe_function.yaml) |  |
+| [lua_use_fd_after_close](rules/lua/basic/lua_use_fd_after_close.yaml) | File descriptors leak. |
+| [lua_writing_to_file_in_read_mode](rules/lua/basic/lua_writing_to_file_in_read_mode.yaml) | Writing to a file opened in read-only mode. |
+| [2.1](rules/lua/luajit/2.1.yaml) |  |
+| [luajit_jit_off](rules/lua/luajit/luajit_jit_off.yaml) |  |
+| [luajit_nyi](rules/lua/luajit/luajit_nyi.yaml) |  |
+| [luajit_partial_compilation](rules/lua/luajit/luajit_partial_compilation.yaml) |  |
+| [tarantool_box_cfg_raw_access](rules/lua/tarantool/tarantool_box_cfg_raw_access.yaml) |  |
+| [tarantool_box_grant_guest_full_access](rules/lua/tarantool/tarantool_box_grant_guest_full_access.yaml) |  |
+| [tarantool_box_insert_nil](rules/lua/tarantool/tarantool_box_insert_nil.yaml) |  |
+| [tarantool_box_missed_if_not_exist](rules/lua/tarantool/tarantool_box_missed_if_not_exist.yaml) |  |
+| [tarantool_box_once](rules/lua/tarantool/tarantool_box_once.yaml) |  |
+| [tarantool_box_select_nil](rules/lua/tarantool/tarantool_box_select_nil.yaml) |  |
+| [tarantool_box_set_trigger_once](rules/lua/tarantool/tarantool_box_set_trigger_once.yaml) |  |
+| [tarantool_box_space_format](rules/lua/tarantool/tarantool_box_space_format.yaml) |  |
+| [tarantool_crypto_insecure_hash_algorithm](rules/lua/tarantool/tarantool_crypto_insecure_hash_algorithm.yaml) |  |
+| [insecure-hash-algorithm-md5](rules/lua/tarantool/tarantool_digest_insecure_hash_algorithm.yaml) |  |
+| [insecure-hash-algorithm-sha1](rules/lua/tarantool/tarantool_digest_insecure_hash_algorithm.yaml) |  |
+| [tarantool_digest_insecure_hash_algorithm](rules/lua/tarantool/tarantool_digest_insecure_hash_algorithm.yaml) |  |
+| [tarantool_fiber_missed_name](rules/lua/tarantool/tarantool_fiber_missed_name.yaml) |  |
+| [tarantool_fiber_missed_testcancel](rules/lua/tarantool/tarantool_fiber_missed_testcancel.yaml) |  |
+| [tarantool_fiber_missed_timeout](rules/lua/tarantool/tarantool_fiber_missed_timeout.yaml) |  |
+| [tarantool_fiber_missed_yield](rules/lua/tarantool/tarantool_fiber_missed_yield.yaml) |  |
+| [tarantool_fiber_sync_sleep](rules/lua/tarantool/tarantool_fiber_sync_sleep.yaml) |  |
+| [tarantool_fio_bad_file_permission](rules/lua/tarantool/tarantool_fio_bad_file_permission.yaml) |  |
+| [tarantool_fio_fd_leak](rules/lua/tarantool/tarantool_fio_fd_leak.yaml) |  |
+| [tarantool_fio_use_fd_after_close](rules/lua/tarantool/tarantool_fio_use_fd_after_close.yaml) |  |
+| [tarantool_fio_writing_to_file_in_read_mode](rules/lua/tarantool/tarantool_fio_writing_to_file_in_read_mode.yaml) |  |
+| [tarantool_http_client_no_cert_validation](rules/lua/tarantool/tarantool_http_client_no_cert_validation.yaml) |  |
+| [tarantool_http_client_response_json](rules/lua/tarantool/tarantool_http_client_response_json.yaml) |  |
+| [tarantool_luatest_missed_test_prefix](rules/lua/tarantool/tarantool_luatest_missed_test_prefix.yaml) |  |
+| [tarantool_net_box_fd_leak](rules/lua/tarantool/tarantool_net_box_fd_leak.yaml) |  |
+| [tarantool_net_box_missed_timeout](rules/lua/tarantool/tarantool_net_box_missed_timeout.yaml) |  |
+| [tarantool_popen_enabled_shell](rules/lua/tarantool/tarantool_popen_enabled_shell.yaml) |  |
+| [tarantool_popen_fd_leak](rules/lua/tarantool/tarantool_popen_fd_leak.yaml) |  |
+| [tarantool_popen_use_fd_after_close](rules/lua/tarantool/tarantool_popen_use_fd_after_close.yaml) |  |
+| [tarantool_socket_bind_to_all_interfaces](rules/lua/tarantool/tarantool_socket_bind_to_all_interfaces.yaml) |  |
+| [tarantool_socket_fd_leak](rules/lua/tarantool/tarantool_socket_fd_leak.yaml) |  |
+| [tarantool_socket_fd_leak](rules/lua/tarantool/tarantool_socket_fd_leak.yaml) |  |
+| [tarantool_socket_missed_timeout](rules/lua/tarantool/tarantool_socket_missed_timeout.yaml) |  |
+| [tarantool_socket_use_fd_after_close](rules/lua/tarantool/tarantool_socket_use_fd_after_close.yaml) |  |
+| [tarantool_bad_hash_func](rules/lua/tarantool/tarantool_vshard_bad_hash_func.yaml) |  |
+| [tarantool_no_timeouts](rules/lua/tarantool/tarantool_vshard_missed_timeout.yaml) |  |
 
 ### Flakiness
 
