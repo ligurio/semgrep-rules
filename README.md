@@ -77,42 +77,40 @@ $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources
 | [luajit_jit_off](rules/lua/luajit/luajit_jit_off.yaml) |  |
 | [luajit_nyi](rules/lua/luajit/luajit_nyi.yaml) |  |
 | [luajit_partial_compilation](rules/lua/luajit/luajit_partial_compilation.yaml) |  |
-| [tarantool_box_cfg_raw_access](rules/lua/tarantool/tarantool_box_cfg_raw_access.yaml) |  |
-| [tarantool_box_grant_guest_full_access](rules/lua/tarantool/tarantool_box_grant_guest_full_access.yaml) |  |
-| [tarantool_box_insert_nil](rules/lua/tarantool/tarantool_box_insert_nil.yaml) |  |
-| [tarantool_box_missed_if_not_exist](rules/lua/tarantool/tarantool_box_missed_if_not_exist.yaml) |  |
-| [tarantool_box_once](rules/lua/tarantool/tarantool_box_once.yaml) |  |
-| [tarantool_box_select_nil](rules/lua/tarantool/tarantool_box_select_nil.yaml) |  |
-| [tarantool_box_set_trigger_once](rules/lua/tarantool/tarantool_box_set_trigger_once.yaml) |  |
+| [tarantool_box_cfg_raw_access](rules/lua/tarantool/tarantool_box_cfg_raw_access.yaml) | Raw access to a `box.cfg` table. |
+| [tarantool_box_grant_guest_full_access](rules/lua/tarantool/tarantool_box_grant_guest_full_access.yaml) | Full access for a guest user to universe. |
+| [tarantool_box_insert_nil](rules/lua/tarantool/tarantool_box_insert_nil.yaml) | Insert a `nil` to a space. |
+| [tarantool_box_missed_if_not_exist](rules/lua/tarantool/tarantool_box_missed_if_not_exist.yaml) | Option `if_not_exists` is missed. |
+| [tarantool_box_once](rules/lua/tarantool/tarantool_box_once.yaml) | Using `box.once()`. |
+| [tarantool_box_select_nil](rules/lua/tarantool/tarantool_box_select_nil.yaml) | Using `nil` in `:select()`. |
+| [tarantool_box_set_trigger_once](rules/lua/tarantool/tarantool_box_set_trigger_once.yaml) | Set trigger only once. |
 | [tarantool_box_space_format](rules/lua/tarantool/tarantool_box_space_format.yaml) |  |
-| [tarantool_crypto_insecure_hash_algorithm](rules/lua/tarantool/tarantool_crypto_insecure_hash_algorithm.yaml) |  |
-| [insecure-hash-algorithm-md5](rules/lua/tarantool/tarantool_digest_insecure_hash_algorithm.yaml) |  |
+| [tarantool_crypto_insecure_hash_algorithm](rules/lua/tarantool/tarantool_crypto_insecure_hash_algorithm.yaml) | Using insecure hash algorithm. |
 | [insecure-hash-algorithm-sha1](rules/lua/tarantool/tarantool_digest_insecure_hash_algorithm.yaml) |  |
+| [tarantool_digest_insecure_hash_algorithm](rules/lua/tarantool/tarantool_digest_insecure_hash_algorithm.yaml) | Using insecure hash algorithm. |
 | [tarantool_digest_insecure_hash_algorithm](rules/lua/tarantool/tarantool_digest_insecure_hash_algorithm.yaml) |  |
-| [tarantool_fiber_missed_name](rules/lua/tarantool/tarantool_fiber_missed_name.yaml) |  |
-| [tarantool_fiber_missed_testcancel](rules/lua/tarantool/tarantool_fiber_missed_testcancel.yaml) |  |
-| [tarantool_fiber_missed_timeout](rules/lua/tarantool/tarantool_fiber_missed_timeout.yaml) |  |
-| [tarantool_fiber_missed_yield](rules/lua/tarantool/tarantool_fiber_missed_yield.yaml) |  |
-| [tarantool_fiber_sync_sleep](rules/lua/tarantool/tarantool_fiber_sync_sleep.yaml) |  |
-| [tarantool_fio_bad_file_permission](rules/lua/tarantool/tarantool_fio_bad_file_permission.yaml) |  |
-| [tarantool_fio_fd_leak](rules/lua/tarantool/tarantool_fio_fd_leak.yaml) |  |
-| [tarantool_fio_use_fd_after_close](rules/lua/tarantool/tarantool_fio_use_fd_after_close.yaml) |  |
-| [tarantool_fio_writing_to_file_in_read_mode](rules/lua/tarantool/tarantool_fio_writing_to_file_in_read_mode.yaml) |  |
-| [tarantool_http_client_no_cert_validation](rules/lua/tarantool/tarantool_http_client_no_cert_validation.yaml) |  |
-| [tarantool_http_client_response_json](rules/lua/tarantool/tarantool_http_client_response_json.yaml) |  |
-| [tarantool_luatest_missed_test_prefix](rules/lua/tarantool/tarantool_luatest_missed_test_prefix.yaml) |  |
-| [tarantool_net_box_fd_leak](rules/lua/tarantool/tarantool_net_box_fd_leak.yaml) |  |
-| [tarantool_net_box_missed_timeout](rules/lua/tarantool/tarantool_net_box_missed_timeout.yaml) |  |
-| [tarantool_popen_enabled_shell](rules/lua/tarantool/tarantool_popen_enabled_shell.yaml) |  |
-| [tarantool_popen_fd_leak](rules/lua/tarantool/tarantool_popen_fd_leak.yaml) |  |
-| [tarantool_popen_use_fd_after_close](rules/lua/tarantool/tarantool_popen_use_fd_after_close.yaml) |  |
-| [tarantool_socket_bind_to_all_interfaces](rules/lua/tarantool/tarantool_socket_bind_to_all_interfaces.yaml) |  |
-| [tarantool_socket_fd_leak](rules/lua/tarantool/tarantool_socket_fd_leak.yaml) |  |
-| [tarantool_socket_fd_leak](rules/lua/tarantool/tarantool_socket_fd_leak.yaml) |  |
-| [tarantool_socket_missed_timeout](rules/lua/tarantool/tarantool_socket_missed_timeout.yaml) |  |
-| [tarantool_socket_use_fd_after_close](rules/lua/tarantool/tarantool_socket_use_fd_after_close.yaml) |  |
-| [tarantool_bad_hash_func](rules/lua/tarantool/tarantool_vshard_bad_hash_func.yaml) |  |
-| [tarantool_no_timeouts](rules/lua/tarantool/tarantool_vshard_missed_timeout.yaml) |  |
+| [tarantool_fiber_missed_name](rules/lua/tarantool/tarantool_fiber_missed_name.yaml) | Fiber name is not set. |
+| [tarantool_fiber_missed_testcancel](rules/lua/tarantool/tarantool_fiber_missed_testcancel.yaml) | Fiber method `:testcancel()` is missed. |
+| [tarantool_fiber_missed_timeout](rules/lua/tarantool/tarantool_fiber_missed_timeout.yaml) | Timeout is missed in a fiber method. |
+| [tarantool_fiber_missed_yield](rules/lua/tarantool/tarantool_fiber_missed_yield.yaml) | Fiber yield is missed. |
+| [tarantool_fio_bad_file_permission](rules/lua/tarantool/tarantool_fio_bad_file_permission.yaml) | Bad file permissions. |
+| [tarantool_fio_fd_leak](rules/lua/tarantool/tarantool_fio_fd_leak.yaml) | File descriptor leaks. |
+| [tarantool_fio_use_fd_after_close](rules/lua/tarantool/tarantool_fio_use_fd_after_close.yaml) | Using file descriptor after close. |
+| [tarantool_fio_writing_to_file_in_read_mode](rules/lua/tarantool/tarantool_fio_writing_to_file_in_read_mode.yaml) | Writing to a file opened with read-only mode. |
+| [tarantool_http_client_no_cert_validation](rules/lua/tarantool/tarantool_http_client_no_cert_validation.yaml) | Certificate validation is disabled. |
+| [tarantool_http_client_response_json](rules/lua/tarantool/tarantool_http_client_response_json.yaml) | Method `:json()` can raise an error. |
+| [tarantool_luatest_missed_test_prefix](rules/lua/tarantool/tarantool_luatest_missed_test_prefix.yaml) | A test prefix is missed a test title. |
+| [tarantool_net_box_fd_leak](rules/lua/tarantool/tarantool_net_box_fd_leak.yaml) | File descriptor leaks. |
+| [tarantool_net_box_missed_timeout](rules/lua/tarantool/tarantool_net_box_missed_timeout.yaml) | Timeout is not set. |
+| [tarantool_popen_enabled_shell](rules/lua/tarantool/tarantool_popen_enabled_shell.yaml) | Shell is enabled in `popen`. |
+| [tarantool_popen_fd_leak](rules/lua/tarantool/tarantool_popen_fd_leak.yaml) | File descriptor leaks. |
+| [tarantool_popen_use_fd_after_close](rules/lua/tarantool/tarantool_popen_use_fd_after_close.yaml) | Using file descriptor after close. |
+| [tarantool_socket_bind_to_all_interfaces](rules/lua/tarantool/tarantool_socket_bind_to_all_interfaces.yaml) | Socket bind to `0.0.0.0` or `::`. |
+| [tarantool_socket_fd_leak](rules/lua/tarantool/tarantool_socket_fd_leak.yaml) | File descriptor leaks. |
+| [tarantool_socket_missed_timeout](rules/lua/tarantool/tarantool_socket_missed_timeout.yaml) | Timeout is not set. |
+| [tarantool_socket_use_fd_after_close](rules/lua/tarantool/tarantool_socket_use_fd_after_close.yaml) | Using socket handler after close. |
+| [tarantool_bad_hash_func](rules/lua/tarantool/tarantool_vshard_bad_hash_func.yaml) | Sharding hash algorithm is bad. |
+| [tarantool_no_timeouts](rules/lua/tarantool/tarantool_vshard_missed_timeout.yaml) | Timeout is not set. |
 
 ### Flakiness
 
