@@ -1,5 +1,8 @@
 rules:
   - id: luajit_jit_off
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: JIT compilation is turned off.
     patterns:
       - pattern: jit.off(...)
     message: Должны быть серьёзные причины для выключения JIT-компиляции.

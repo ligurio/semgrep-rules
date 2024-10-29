@@ -1,5 +1,8 @@
 rules:
   - id: luajit_nyi
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Function is not JIT-compiled.
     pattern-either:
       - pattern: dofile(...)              # never 2.1 stitch
       - pattern: error(...)               # never

@@ -1,5 +1,8 @@
 rules:
   - id: luajit_partial_compilation
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Function may be JIT-compiled, depending on the circumstances.
     pattern-either:
       - pattern: getfenv(...)         # 2.1 partial
       - pattern: next(...)            # 2.1 partial
