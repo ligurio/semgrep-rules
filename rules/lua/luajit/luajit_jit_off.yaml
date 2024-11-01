@@ -3,11 +3,10 @@ rules:
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       description: JIT compilation is turned off.
+      references:
+        - https://luajit.org/ext_jit.html
     patterns:
       - pattern: jit.off(...)
     message: Должны быть серьёзные причины для выключения JIT-компиляции.
     languages: [lua]
-    metadata:
-      references:
-        - https://luajit.org/ext_jit.html
     severity: INFO

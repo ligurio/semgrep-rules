@@ -48,7 +48,6 @@ $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources
 | [lua_import_unused](rules/lua/basic/lua_import_unused.yaml) | Unused import. |
 | [lua_init_rng_without_seed](rules/lua/basic/lua_init_rng_without_seed.yaml) | math.random() is used without random seed. |
 | [lua_integer_parsing](rules/lua/basic/lua_integer_parsing.yaml) | Incorrect using integers. |
-| [lua_loadstring](rules/lua/basic/lua_loadstring.yaml) | Using `loadstring()`. |
 | [lua_local_shadow](rules/lua/basic/lua_local_shadow.yaml) | Using local shadow. |
 | [lua_local_unused](rules/lua/basic/lua_local_unused.yaml) | Unused local. |
 | [lua_magic_number](rules/lua/basic/lua_magic_number.yaml) | Using magic numbers. |
@@ -70,13 +69,13 @@ $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources
 | [lua_unknown_global](rules/lua/basic/lua_unknown_global.yaml) | Using unknown global variable. |
 | [lua_unknown_type](rules/lua/basic/lua_unknown_type.yaml) | Unknown type. |
 | [lua_unreachable_code](rules/lua/basic/lua_unreachable_code.yaml) | Unreachable code. |
-| [lua_unsafe_function](rules/lua/basic/lua_unsafe_function.yaml) |  |
+| [lua_unsafe_function](rules/lua/basic/lua_unsafe_function.yaml) | Unsafe function. |
 | [lua_use_fd_after_close](rules/lua/basic/lua_use_fd_after_close.yaml) | File descriptors leak. |
 | [lua_writing_to_file_in_read_mode](rules/lua/basic/lua_writing_to_file_in_read_mode.yaml) | Writing to a file opened in read-only mode. |
-| [luajit_2.1](rules/lua/luajit/luajit_2.1.yaml) |  |
-| [luajit_jit_off](rules/lua/luajit/luajit_jit_off.yaml) |  |
-| [luajit_nyi](rules/lua/luajit/luajit_nyi.yaml) |  |
-| [luajit_partial_compilation](rules/lua/luajit/luajit_partial_compilation.yaml) |  |
+| [luajit_2.1](rules/lua/luajit/luajit_2.1.yaml) | Function is compiled starting with LuaJIT 2.1. |
+| [luajit_jit_off](rules/lua/luajit/luajit_jit_off.yaml) | JIT compilation is turned off. |
+| [luajit_nyi](rules/lua/luajit/luajit_nyi.yaml) | Function is not JIT-compiled. |
+| [luajit_partial_compilation](rules/lua/luajit/luajit_partial_compilation.yaml) | Function may be JIT-compiled, depending on the circumstances. |
 | [tarantool_box_cfg_raw_access](rules/lua/tarantool/tarantool_box_cfg_raw_access.yaml) | Raw access to a `box.cfg` table. |
 | [tarantool_box_grant_guest_full_access](rules/lua/tarantool/tarantool_box_grant_guest_full_access.yaml) | Full access for a guest user to universe. |
 | [tarantool_box_insert_nil](rules/lua/tarantool/tarantool_box_insert_nil.yaml) | Insert a `nil` to a space. |
@@ -85,10 +84,13 @@ $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources
 | [tarantool_box_select_nil](rules/lua/tarantool/tarantool_box_select_nil.yaml) | Using `nil` in `:select()`. |
 | [tarantool_box_set_trigger_once](rules/lua/tarantool/tarantool_box_set_trigger_once.yaml) | Set trigger only once. |
 | [tarantool_box_space_format](rules/lua/tarantool/tarantool_box_space_format.yaml) |  |
+| [tarantool_box_space_name](rules/lua/tarantool/tarantool_box_space_name.yaml) | Rules for object names. |
 | [tarantool_crypto_insecure_hash_algorithm](rules/lua/tarantool/tarantool_crypto_insecure_hash_algorithm.yaml) | Using insecure hash algorithm. |
-| [insecure-hash-algorithm-sha1](rules/lua/tarantool/tarantool_digest_insecure_hash_algorithm.yaml) |  |
+| [tarantool_deprecated_c_api](rules/lua/tarantool/tarantool_deprecated_api.yaml) | Using deprecated C/C++ function(s). |
+| [tarantool_deprecated_lua_api](rules/lua/tarantool/tarantool_deprecated_api.yaml) | Using deprecated Tarantool Lua function(s). |
 | [tarantool_digest_insecure_hash_algorithm](rules/lua/tarantool/tarantool_digest_insecure_hash_algorithm.yaml) | Using insecure hash algorithm. |
 | [tarantool_digest_insecure_hash_algorithm](rules/lua/tarantool/tarantool_digest_insecure_hash_algorithm.yaml) |  |
+| [tarantool_insecure-hash-algorithm-sha1](rules/lua/tarantool/tarantool_digest_insecure_hash_algorithm.yaml) |  |
 | [tarantool_fiber_missed_name](rules/lua/tarantool/tarantool_fiber_missed_name.yaml) | Fiber name is not set. |
 | [tarantool_fiber_missed_testcancel](rules/lua/tarantool/tarantool_fiber_missed_testcancel.yaml) | Fiber method `:testcancel()` is missed. |
 | [tarantool_fiber_missed_timeout](rules/lua/tarantool/tarantool_fiber_missed_timeout.yaml) | Timeout is missed in a fiber method. |
@@ -107,10 +109,11 @@ $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources
 | [tarantool_popen_use_fd_after_close](rules/lua/tarantool/tarantool_popen_use_fd_after_close.yaml) | Using file descriptor after close. |
 | [tarantool_socket_bind_to_all_interfaces](rules/lua/tarantool/tarantool_socket_bind_to_all_interfaces.yaml) | Socket bind to `0.0.0.0` or `::`. |
 | [tarantool_socket_fd_leak](rules/lua/tarantool/tarantool_socket_fd_leak.yaml) | File descriptor leaks. |
+| [tarantool_socket_fd_leak](rules/lua/tarantool/tarantool_socket_fd_leak.yaml) |  |
 | [tarantool_socket_missed_timeout](rules/lua/tarantool/tarantool_socket_missed_timeout.yaml) | Timeout is not set. |
 | [tarantool_socket_use_fd_after_close](rules/lua/tarantool/tarantool_socket_use_fd_after_close.yaml) | Using socket handler after close. |
-| [tarantool_bad_hash_func](rules/lua/tarantool/tarantool_vshard_bad_hash_func.yaml) | Sharding hash algorithm is bad. |
-| [tarantool_no_timeouts](rules/lua/tarantool/tarantool_vshard_missed_timeout.yaml) | Timeout is not set. |
+| [tarantool_vshard_bad_hash_func](rules/lua/tarantool/tarantool_vshard_bad_hash_func.yaml) | Sharding hash algorithm is bad. |
+| [tarantool_vshard_no_timeouts](rules/lua/tarantool/tarantool_vshard_missed_timeout.yaml) | Timeout is not set. |
 
 ### Flakiness
 

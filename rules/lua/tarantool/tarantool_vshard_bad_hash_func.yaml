@@ -1,5 +1,5 @@
 rules:
-  - id: tarantool_bad_hash_func
+  - id: tarantool_vshard_bad_hash_func
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       description: Sharding hash algorithm is bad.

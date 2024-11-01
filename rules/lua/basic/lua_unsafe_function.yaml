@@ -2,15 +2,28 @@ rules:
   - id: lua_unsafe_function
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
-    message: Using unsafe function.
+      description: Unsafe function.
+    message: |
+      Detected the use of loadstring(). loadstring() can be
+      dangerous if used to evaluate dynamic content. If this
+      content can be input from outside the program, this may be
+      a code injection vulnerability. Ensure evaluated content is
+      not definable by external sources.
+      Lua 5.2 does not have bytecode verification anymore. So,
+      all functions that load code (`load` and `loadfile`) are
+      potentially insecure when loading untrusted binary data.
+      (Actually, those functions were already insecure because of
+      flaws in the verification algorithm.) When in doubt, use
+      the mode argument of those functions to restrict them to
+      loading textual chunks.
     # https://fuzz-introspector.readthedocs.io/en/latest/user-guides/analyse-sink-function.html
     languages: [lua]
     severity: WARNING
     pattern-either:
-      - pattern: os.execute(...)
+      - pattern: dofile(...)
       - pattern: io.popen(...)
-      - pattern: loadstring(...)
       - pattern: load(...)
       - pattern: loadfile(...)
-      - pattern: dofile(...)
+      - pattern: loadstring(...)
+      - pattern: os.execute(...)
       - pattern: os.remove(...)

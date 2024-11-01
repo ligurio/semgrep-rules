@@ -3,6 +3,9 @@ rules:
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       description: Function may be JIT-compiled, depending on the circumstances.
+      references:
+        - https://github.com/tarantool/tarantool/wiki/LuaJIT-Not-Yet-Implemented
+        - http://web.archive.org/web/20220717120825/http://wiki.luajit.org/NYI
     pattern-either:
       - pattern: getfenv(...)         # 2.1 partial
       - pattern: next(...)            # 2.1 partial
@@ -26,7 +29,4 @@ rules:
       Function may be JIT-compiled, depending on the circumstances. Otherwise
       will fall back to the interpreter or stitch.
     languages: [lua]
-    metadata:
-      references:
-        - http://web.archive.org/web/20220717120825/http://wiki.luajit.org/NYI
     severity: INFO

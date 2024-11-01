@@ -18,3 +18,11 @@ dofile("")
 
 -- ruleid: lua_unsafe_function
 os.remove("")
+
+local c = "os.exec('cat /etc/passwd')"
+
+-- ruleid: lua_unsafe_function
+loadstring(c)
+
+-- ok: lua_unsafe_function
+loadstring("os.exec('cat /etc/passwd')")

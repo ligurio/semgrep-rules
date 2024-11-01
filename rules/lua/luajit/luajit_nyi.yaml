@@ -3,6 +3,9 @@ rules:
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       description: Function is not JIT-compiled.
+      references:
+        - https://github.com/tarantool/tarantool/wiki/LuaJIT-Not-Yet-Implemented
+        - http://web.archive.org/web/20220717120825/http://wiki.luajit.org/NYI
     pattern-either:
       - pattern: dofile(...)              # never 2.1 stitch
       - pattern: error(...)               # never
@@ -27,7 +30,4 @@ rules:
       This function is not JIT-compiled (yet), will always fall back to the
       interpreter or will not be JIT-compiled, even in future versions.
     languages: [lua]
-    metadata:
-      references:
-        - http://web.archive.org/web/20220717120825/http://wiki.luajit.org/NYI
     severity: INFO

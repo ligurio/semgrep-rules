@@ -3,6 +3,9 @@ rules:
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       description: Function is compiled starting with LuaJIT 2.1.
+      references:
+        - https://github.com/tarantool/tarantool/wiki/LuaJIT-Not-Yet-Implemented
+        - http://web.archive.org/web/20220717120825/http://wiki.luajit.org/NYI
     pattern-either:
       - pattern: collectgarbage()           # 2.1 stitch
       - pattern: gcinfo()                   # 2.1 stitch
@@ -45,7 +48,4 @@ rules:
 
       This function is compiled starting with LuaJIT 2.1.
     languages: [lua]
-    metadata:
-      references:
-        - http://web.archive.org/web/20220717120825/http://wiki.luajit.org/NYI
     severity: INFO
