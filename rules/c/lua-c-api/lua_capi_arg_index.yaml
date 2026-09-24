@@ -1,0 +1,37 @@
+# Lua stack indices are 1-based for absolute positions and negative
+# for positions relative to the top; the numeric index 0 is never a
+# valid stack index. Passing the literal 0 to an API that takes a
+# stack index is almost always a bug: the call either fails with
+# "index out of range" or silently operates on LUA_TNONE.
+#
+# The rule only flags the literal 0. It does not track computed
+# indices, and it deliberately ignores functions where 0 is valid
+# or where the argument is not a stack index: lua_settop,
+# lua_checkstack/luaL_checkstack, lua_call/lua_pcall (the second
+# argument is the number of arguments) and the lua_push* family
+# (the second argument is a value).
+
+rules:
+  - id: lua_capi_arg_index
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Lua C API call with a literal zero stack index.
+      confidence: HIGH
+      references:
+        - https://www.lua.org/manual/5.4/manual.html#4.1.3
+        - https://www.lua.org/manual/5.4/manual.html#lua_absindex
+    message: |
+      A Lua C API call uses the literal 0 as a stack index. Stack
+      indices are 1-based (absolute) or negative (relative to the
+      top); 0 is not a valid index and the call will fail or
+      operate on LUA_TNONE. Use 1 for the first value or a
+      negative index for values below the top.
+    languages:
+      - c
+      - cpp
+    severity: ERROR
+    patterns:
+      - pattern: $F($L, 0, ...)
+      - metavariable-regex:
+          metavariable: $F
+          regex: '(luaL_checkany|luaL_checktype|luaL_checknumber|luaL_checkinteger|luaL_checklstring|luaL_checkstring|luaL_checkoption|luaL_checkudata|luaL_testudata|luaL_optnumber|luaL_optinteger|luaL_optlstring|luaL_optstring|luaL_argerror|luaL_typeerror|lua_toboolean|lua_tocfunction|lua_tointeger|lua_tointegerx|lua_tolstring|lua_tonumber|lua_tonumberx|lua_topointer|lua_tostring|lua_tothread|lua_touserdata|lua_tolightuserdata|lua_isboolean|lua_iscfunction|lua_isfunction|lua_isinteger|lua_islightuserdata|lua_isnil|lua_isnone|lua_isnoneornil|lua_isnumber|lua_isstring|lua_istable|lua_isthread|lua_isuserdata|lua_type|lua_len|lua_rawlen|lua_objlen|lua_remove|lua_insert|lua_replace|lua_copy|lua_next|lua_gettable|lua_getfield|lua_geti|lua_getmetatable|lua_getuservalue|lua_getiuservalue|lua_getupvalue|lua_rawget|lua_rawgeti|lua_rawgetp|lua_settable|lua_setfield|lua_seti|lua_setmetatable|lua_setuservalue|lua_setiuservalue|lua_setupvalue|lua_rawset|lua_rawseti|lua_rawsetp|lua_compare|lua_rawequal|luaL_ref|luaL_unref|lua_absindex|lua_pushvalue)$'
