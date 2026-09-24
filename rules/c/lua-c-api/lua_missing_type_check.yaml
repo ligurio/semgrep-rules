@@ -1,0 +1,189 @@
+# Lua C API functions that silently return NULL/0 (or raise an
+# error) when the value on the stack has an unexpected type must
+# be guarded by a type check of the same value, for example:
+#
+#     if (!lua_isstring(L, i))
+#         return luaL_error(L, "string expected");
+#     const char *s = lua_tostring(L, i);
+#
+# The rule is flow-insensitive: it only verifies that a type check
+# of the same lua_State and the same stack index occurs in the
+# same block, either before the call or in an enclosing `if`.
+# Dominance across branches, checks hidden behind helpers or
+# wrappers, and `luaL_check*` calls that are nested inside an
+# expression are not tracked, so false positives are possible. A
+# plain `lua_type(L, i)` comparison suppresses the finding
+# regardless of the compared type constant, which may cause false
+# negatives.
+
+rules:
+  - id: lua_missing_type_check
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Lua C API call without a prior argument type check.
+      confidence: MEDIUM
+      references:
+        - https://www.lua.org/manual/5.4/manual.html#4.1.3
+        - https://www.lua.org/manual/5.4/manual.html#lua_tostring
+        - https://www.lua.org/manual/5.4/manual.html#lua_isstring
+        - https://cwe.mitre.org/data/definitions/754.html
+    message: |
+      Calling `$F()` without checking the type of the stack value at index
+      `$ARG` first. If the value has an unexpected type the function silently
+      returns NULL/0 (or raises a Lua error), which can lead to a NULL pointer
+      dereference later. Check the type with `lua_is*()`, `lua_type()` or
+      `luaL_check*()` before the call.
+    languages:
+      - c
+      - cpp
+    severity: WARNING
+    patterns:
+      - pattern: $F($L, $ARG, ...)
+      - metavariable-regex:
+          metavariable: $F
+          regex: '(lua_tostring|lua_tolstring|lua_tonumber|lua_tonumberx|lua_tointeger|lua_tointegerx|lua_touserdata|lua_tolightuserdata|lua_tothread|lua_tocfunction|lua_getfield|lua_gettable|lua_setfield|lua_settable|lua_rawget|lua_rawset|lua_geti|lua_seti|lua_rawgeti|lua_rawseti|lua_next|lua_len|luaL_len)$'
+      # lua_is*() / lua_type() guards around the call.
+      - pattern-not-inside: |
+          if (<... lua_isstring($L, $ARG) ...>) ...
+      - pattern-not-inside: |
+          if (<... lua_isnumber($L, $ARG) ...>) ...
+      - pattern-not-inside: |
+          if (<... lua_isinteger($L, $ARG) ...>) ...
+      - pattern-not-inside: |
+          if (<... lua_isuserdata($L, $ARG) ...>) ...
+      - pattern-not-inside: |
+          if (<... lua_islightuserdata($L, $ARG) ...>) ...
+      - pattern-not-inside: |
+          if (<... lua_isthread($L, $ARG) ...>) ...
+      - pattern-not-inside: |
+          if (<... lua_iscfunction($L, $ARG) ...>) ...
+      - pattern-not-inside: |
+          if (<... lua_istable($L, $ARG) ...>) ...
+      - pattern-not-inside: |
+          if (<... lua_isfunction($L, $ARG) ...>) ...
+      - pattern-not-inside: |
+          if (<... lua_type($L, $ARG) ...>) ...
+      - pattern-not-inside: |
+          if (<... luaL_checkudata($L, $ARG, ...) ...>) ...
+      - pattern-not-inside: |
+          if (<... luaL_testudata($L, $ARG, ...) ...>) ...
+      - pattern-not-inside: |
+          if (<... luaL_checkoption($L, $ARG, ...) ...>) ...
+      # lua_is*() / lua_type() checks before the call (e.g. early return).
+      - pattern-not-inside: |
+          if (<... lua_isstring($L, $ARG) ...>) ...
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          if (<... lua_isnumber($L, $ARG) ...>) ...
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          if (<... lua_isinteger($L, $ARG) ...>) ...
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          if (<... lua_isuserdata($L, $ARG) ...>) ...
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          if (<... lua_islightuserdata($L, $ARG) ...>) ...
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          if (<... lua_isthread($L, $ARG) ...>) ...
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          if (<... lua_iscfunction($L, $ARG) ...>) ...
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          if (<... lua_istable($L, $ARG) ...>) ...
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          if (<... lua_isfunction($L, $ARG) ...>) ...
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          if (<... lua_type($L, $ARG) ...>) ...
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          if (<... luaL_checkudata($L, $ARG, ...) ...>) ...
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          if (<... luaL_testudata($L, $ARG, ...) ...>) ...
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          if (<... luaL_checkoption($L, $ARG, ...) ...>) ...
+          ...
+          $F($L, $ARG, ...);
+      # luaL_check*()/luaL_opt*() called as a statement before the call.
+      - pattern-not-inside: |
+          luaL_checkstring($L, $ARG);
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          luaL_checklstring($L, $ARG);
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          luaL_checknumber($L, $ARG);
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          luaL_checkinteger($L, $ARG);
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          luaL_optstring($L, $ARG, ...);
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          luaL_optnumber($L, $ARG, ...);
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          luaL_optinteger($L, $ARG, ...);
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          luaL_checkudata($L, $ARG, ...);
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          luaL_testudata($L, $ARG, ...);
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          luaL_checktype($L, $ARG, LUA_TTABLE);
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          luaL_checktype($L, $ARG, LUA_TSTRING);
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          luaL_checktype($L, $ARG, LUA_TNUMBER);
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          luaL_checktype($L, $ARG, LUA_TUSERDATA);
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          luaL_checktype($L, $ARG, LUA_TLIGHTUSERDATA);
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          luaL_checktype($L, $ARG, LUA_TTHREAD);
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          luaL_checktype($L, $ARG, LUA_TFUNCTION);
+          ...
+          $F($L, $ARG, ...);
