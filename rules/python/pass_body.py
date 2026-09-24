@@ -2,13 +2,13 @@
 for i in range(100):
     pass
 
+# ruleid: pass_body
 def foo_function():
-    # ruleid: pass_body
     pass
 
 class foo_class:
+    # ruleid: pass_body
     def somemethod():
-        # ruleid: pass_body
         pass
 
 
