@@ -1,0 +1,38 @@
+# lua_pcall/lua_pcallk and luaL_dofile/luaL_dostring report errors
+# through their return value. Calling them as a bare expression
+# statement discards the status, so a failed protected call is
+# silently ignored and the program continues with an inconsistent
+# stack. Check the result or explicitly discard it with a (void)
+# cast.
+
+rules:
+  - id: lua_pcall_result_unused
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Result of a protected call is ignored.
+      confidence: MEDIUM
+      references:
+        - https://www.lua.org/manual/5.4/manual.html#lua_pcall
+        - https://www.lua.org/manual/5.4/manual.html#luaL_dofile
+    message: |
+      The status returned by `$F` is ignored. A failed protected call
+      leaves an error object on the stack and returns a non-zero
+      status code; ignoring it hides the error. Check the returned
+      status or cast the call to `(void)` if the result is
+      intentionally discarded.
+    languages:
+      - c
+      - cpp
+    severity: WARNING
+    patterns:
+      - pattern-either:
+          - pattern: lua_pcall($L, ...);
+          - pattern: lua_pcallk($L, ...);
+          - pattern: luaL_dofile($L, ...);
+          - pattern: luaL_dostring($L, ...);
+      - pattern-not-inside: (void) lua_pcall($L, ...);
+      - pattern-not-inside: (void) lua_pcallk($L, ...);
+      - pattern-not-inside: (void) luaL_dofile($L, ...);
+      - pattern-not-inside: (void) luaL_dostring($L, ...);
+      - pattern-not-inside: $X = $Y;
+      - pattern-not-inside: return $X;
