@@ -1,2 +1,2 @@
--- ruleid: luajit_jit_off
+-- # ruleid: luajit_jit_off
 jit.off()

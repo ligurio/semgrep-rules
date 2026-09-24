@@ -18,6 +18,7 @@ rules:
       - pattern: ffi.metatype(...)        # never 2.1 stitch
       - pattern: debug.$FUNC(...)         # never
       - pattern: jit.$FUNC(...)           # never
+      - pattern: jit.opt.start(...)       # never
       - pattern: os.$FUNC(...)            # never
       - pattern: package.$FUNC(...)       # never
       - pattern: coroutine.$FUNC(...)     # never
