@@ -24,6 +24,12 @@ To run a single coccinelle rule:
 $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources/tarantool/src/
 ```
 
+### C
+
+| ID | Description |
+| -- | ----------- |
+| [lua_missing_type_check](rules/c/lua-c-api/lua_missing_type_check.yaml) | Lua C API call without a prior argument type check. |
+
 ### Lua
 
 | ID | Description |
