@@ -1,0 +1,17 @@
+rules:
+  - id: tarantool_deprecated_c_api
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Using deprecated C/C++ function(s).
+      references:
+        # fiber_set_cancellable
+        - https://github.com/tarantool/doc/issues/3132
+    message: |
+      Using of method or field that is marked as deprecated. Use
+      of deprecated APIs is discouraged since they may have
+      performance or correctness issues, may result in unexpected
+      behavior, and could be removed in the future.
+    languages: [c, cpp]
+    severity: WARNING
+    pattern-either:
+      - pattern: fiber_set_cancellable(...)
