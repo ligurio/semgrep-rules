@@ -1,0 +1,22 @@
+rules:
+  - id: clock-bugs
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      references:
+        - https://www.cl.cam.ac.uk/~mgk25/posix-clocks.html
+        - https://developers.redhat.com/blog/2015/06/01/five-different-ways-handle-leap-seconds-ntp
+      confidence: MEDIUM
+    message: >-
+      The trouble with leap seconds on computers is that there is no room
+      for them in the standard Unix time. That is the time which is kept by the
+      CLOCK_REALTIME system clock and used by almost every application which
+      needs to know the current time. It's defined as number of seconds since
+      00:00:00 UTC on 1 January 1970, but without leap seconds. The system clock
+      cannot have time 23:59:60, every minute has 60 seconds and every day has
+      86400 seconds by definition.
+    severity: WARNING
+    languages:
+      - c
+      - cpp
+    pattern-either:
+      - pattern: clock_gettime(CLOCK_REALTIME, ...)
