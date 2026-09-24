@@ -9,7 +9,7 @@ rules:
     pattern-either:
       - pattern: collectgarbage()           # 2.1 stitch
       - pattern: gcinfo()                   # 2.1 stitch
-      - pattern: newproxy()                 # 2.1 stitch
+      - pattern: newproxy(...)              # 2.1 stitch
       - pattern: require(...)               # 2.1 stitch
       - pattern: setfenv(...)               # 2.1 stitch
       - pattern: unpack(...)                # 2.1 stitch
