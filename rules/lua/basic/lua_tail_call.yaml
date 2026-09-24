@@ -1,0 +1,26 @@
+rules:
+  - id: lua_tail_call
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Proper tail calls.
+      references:
+        - https://www.lua.org/pil/6.3.html
+        - http://lua-users.org/wiki/ProperTailRecursion
+        - https://en.wikipedia.org/wiki/Tail_call
+    message: |
+      Lua implements proper tail recursion. It means that for
+      a special pattern of function calls, an optimization is
+      done to save resources, namely the stack. This pattern is
+      so that every time a function ends by returning the value
+      of a function (including a recursive calls), the current
+      stack frame is reused without need for consumption of stack
+      resources.
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern: $FUNC(...)
+      - pattern-inside: |
+          function $FUNC(...)
+            ...
+          end
+      - pattern-not-inside: return $FUNC(...)

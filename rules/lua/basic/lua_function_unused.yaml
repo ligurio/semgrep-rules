@@ -1,0 +1,25 @@
+rules:
+  - id: lua_function_unused
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Unused function.
+    message: Unused function.
+    # https://fuzz-introspector.readthedocs.io/en/latest/user-guides/analyse-sink-function.html
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern: |
+          local function $F(...)
+            ...
+          end
+      - pattern-not-inside: |
+          local function $F(...)
+            ...
+          end
+          ...
+          $F(...)
+
+# While unused local variables could be useful for debugging, unused functions
+# usually contain dead code that was meant to be removed. Unused functions
+# clutter code, can be a result of typos similar to local variables, and can
+# mislead the reader into thinking that some functionality is supported.

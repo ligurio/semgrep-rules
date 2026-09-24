@@ -1,0 +1,29 @@
+# In Lua, it is valid to shadow locals and globals with a local
+# variable, including doing it in the same function. This can
+# result in subtle bugs, since the shadowing may not be obvious to
+# the reader. This warning detects cases where local variables
+# shadow other local variables in the same function, or global
+# variables used in the script.
+rules:
+  - id: lua_local_shadow
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Using local shadow.
+    message: Using local shadow.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - pattern: |
+          for $I = ..., ... do
+            ...
+            for $I = ..., ... do
+              ...
+            end
+            ...
+          end
+      - pattern: |
+          for $I = ..., ... do
+            ...
+            local $I = ...
+            ...
+          end

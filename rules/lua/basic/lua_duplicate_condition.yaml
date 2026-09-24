@@ -1,0 +1,17 @@
+rules:
+  - id: lua_duplicate_condition
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Duplicate conditions.
+    message: Using unsafe function.
+    # https://fuzz-introspector.readthedocs.io/en/latest/user-guides/analyse-sink-function.html
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - pattern: $A and $A
+      - pattern: $A or $A
+
+# When checking multiple conditions via and/or or if/elseif, a copy & paste error
+# may result in checking the same condition redundantly. This almost always
+# indicates a bug, so a warning is emitted when use of a duplicate condition is
+# detected.
