@@ -11,13 +11,12 @@ The `packs.yml` file contains rule packs.
 ```yaml
 packs:
   tarantool:
-    - box_cfg_raw_access
-    - grant_guest_full_access
-    - missed_if_not_exist
-    - set_trigger_once
-    - insecure-hash-algorithm
-    - insecure-hash-algorithm
-    - bad_hash_func
+    - T1008
+    - T1011
+    - T1014
+    - T1015
+    - T1016
+    - T1022
 ```
 
 The rule names must be the `id`s of the rules, *not* the filenames.
@@ -31,5 +30,5 @@ $ semgrep --config=http://localhost:8080/p/tarantool
 To serve and run an individual rule:
 
 ```sh
-$ semgrep --config=http://localhost:8080/r/box_cfg_raw_access
+$ semgrep --config=http://localhost:8080/r/T1015
 ```
