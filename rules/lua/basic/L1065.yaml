@@ -1,0 +1,23 @@
+rules:
+  - id: L1065
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: FFI bypasses Lua's memory safety.
+      references:
+        - https://luajit.org/ext_ffi_semantics.html
+        - https://luajit.org/ext_ffi_api.html#ffi_gc
+    message: |
+      FFI pointers and cdata are raw memory: indexing is not bounds-checked, a
+      null or invalid pointer is dereferenced without error, and a pointer can
+      outlive the object that owns the memory. Keep the length explicit,
+      validate what C returns, and tie the lifetime of allocated memory to a
+      cdata with ffi.gc.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - pattern: ffi.cast($T, 0)[...]
+      - patterns:
+          - pattern-inside: |
+              ffi.C.free($P)
+              ...
+          - pattern: $P[...]

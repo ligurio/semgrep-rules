@@ -1,0 +1,23 @@
+rules:
+  - id: T1032
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: io.* blocks the event loop; use fio.*
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/fio/
+    message: |
+      The standard io library performs blocking system calls and is not
+      fiber-aware, so a read or write in a request handler freezes every other
+      request. Use fio.* instead.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - pattern: io.open(...)
+      - pattern: io.read(...)
+      - pattern: io.write(...)
+      - pattern: io.lines(...)
+      - pattern: io.popen(...)
+      - pattern: io.input(...)
+      - pattern: io.output(...)
+      - pattern: io.close(...)
+      - pattern: io.flush(...)

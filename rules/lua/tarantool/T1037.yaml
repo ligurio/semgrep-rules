@@ -1,0 +1,32 @@
+rules:
+  - id: T1037
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Space operations return nil, err instead of raising.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/box_space/insert/
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/box_space/update/
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/box_error/error/
+    message: |
+      Data manipulation methods such as insert, replace, update and delete do
+      not throw on failure: they return nil, err. Code that ignores the return
+      value silently loses the failure.
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern: box.space.$SPACE:$OP(...)
+      - metavariable-regex:
+          metavariable: $OP
+          regex: (insert|replace|update|delete|upsert)
+      - pattern-not-inside: |
+          local $R, $E = box.space.$SPACE:$OP(...)
+      - pattern-not-inside: |
+          $R, $E = box.space.$SPACE:$OP(...)
+      - pattern-not-inside: |
+          local $R = box.space.$SPACE:$OP(...)
+      - pattern-not-inside: |
+          $R = box.space.$SPACE:$OP(...)
+      - pattern-not-inside: |
+          return box.space.$SPACE:$OP(...)
+      - pattern-not-inside: |
+          pcall(box.space.$SPACE:$OP, ...)

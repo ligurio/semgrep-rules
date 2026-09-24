@@ -1,0 +1,14 @@
+rules:
+  - id: T1036
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: box.schema.func.create calls have no declared type contract.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/box_schema/func_create/
+    message: |
+      A function registered with box.schema.func.create has no declaration of
+      its argument and return types, so a wrong number or type of arguments is
+      only discovered at runtime. Describe the contract explicitly.
+    languages: [lua]
+    severity: INFO
+    pattern: box.schema.func.create($NAME)

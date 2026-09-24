@@ -1,0 +1,15 @@
+rules:
+  - id: T1046
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: tonumber64() may return cdata and has platform-specific behavior.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/other/#lua-function.tonumber64
+    message: |
+      tonumber64() operates with C rules: it returns cdata, compares unsigned
+      and signed values unexpectedly (0ULL > -1LL is false) and produces odd
+      results for values outside the 64-bit integer range. Be careful when
+      mixing the result with ordinary Lua numbers.
+    languages: [lua]
+    severity: INFO
+    pattern: tonumber64(...)

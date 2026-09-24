@@ -1,0 +1,17 @@
+rules:
+  - id: T1027
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: box.NULL is truthy but compares equal to nil.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/box_constants/
+    message: |
+      box.NULL passes a boolean test, yet box.NULL == nil is true. Use an
+      explicit comparison against nil for presence checks.
+    languages: [lua]
+    severity: INFO
+    pattern-either:
+      - pattern: if box.NULL then ... end
+      - pattern: not box.NULL
+      - pattern: box.NULL and ...
+      - pattern: box.NULL or ...

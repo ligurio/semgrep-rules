@@ -1,0 +1,23 @@
+rules:
+  - id: L1087
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Out-of-range double passed to a function expecting an integer.
+      references:
+        - https://github.com/LuaJIT/LuaJIT/issues/674
+    message: |
+      LuaJIT converts Lua numbers to C integers in some library functions
+      (string.rep, string.sub, string.char, ...) by truncating to a 32-bit
+      integer. Passing a value outside the 32-bit range produces unexpected
+      results.
+    languages: [lua]
+    severity: INFO
+    patterns:
+      - pattern-either:
+          - pattern: string.rep($S, $N)
+          - pattern: string.sub($S, $N)
+          - pattern: string.sub($S, $N, ...)
+          - pattern: string.char($N)
+      - metavariable-regex:
+          metavariable: $N
+          regex: '[0-9]{10,}'

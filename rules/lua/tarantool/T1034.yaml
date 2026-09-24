@@ -1,0 +1,25 @@
+rules:
+  - id: T1034
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Allocation churn stresses the GC and the transaction thread.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/box_stat/
+        - https://www.lua.org/manual/5.4/manual.html#2.5
+    message: |
+      Every string/table/closure created in Lua becomes garbage sooner or
+      later, and the collector runs on the same single thread that serves
+      requests. Collect pieces and concatenate once, and reuse buffers/tables.
+    languages: [lua]
+    severity: INFO
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              for $I = $A, $B do
+                ...
+              end
+          - pattern-inside: |
+              for $K, $V in $T do
+                ...
+              end
+      - pattern: $X .. $Y
