@@ -1,0 +1,82 @@
+# Lua C API stack balance (underflow), heuristic.
+#
+# A call that consumes values from the Lua stack (lua_pop,
+# lua_remove, lua_replace, setters, lua_call/lua_pcall, ...)
+# is reported when the enclosing C function contains no call
+# that pushes values onto the same lua_State. The detector is
+# flow-insensitive: it does not count values, so it catches
+# only the coarse case "there is a consumer but not a single
+# producer in the function", not an off-by-one imbalance.
+# Producers anywhere in the function (including nested blocks
+# and expressions) suppress the finding.
+#
+# Known false positives:
+#  - functions that intentionally drop arguments passed by
+#    the caller (`lua_pop(L, 1)` on entry, where the value
+#    was pushed by the VM);
+#  - producer/consumer pairs hidden behind a helper call.
+# `lua_gettop`/`lua_settop`/`lua_checkstack` count as stack
+# management and suppress the finding.
+
+rules:
+  - id: lua_pop_without_push
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Lua C API stack value is consumed without a preceding push.
+      confidence: LOW
+      references:
+        - https://www.lua.org/manual/5.4/manual.html#4.1.3
+        - https://www.lua.org/manual/5.4/manual.html#lua_pop
+        - https://www.lua.org/manual/5.4/manual.html#lua_settop
+    message: |
+      A value is consumed from the Lua stack (e.g. `lua_pop`) but this function
+      never pushes anything onto the same `lua_State`. This may underflow the
+      stack: `lua_pop(L, n)` removes `n` values, and removing more values than
+      are present trips an assertion in a debug build and corrupts the stack
+      otherwise. Make sure the popped value was pushed first.
+    languages:
+      - c
+      - cpp
+    severity: WARNING
+    patterns:
+      - pattern-either:
+          - pattern: lua_pop($L, ...)
+          # lua_settop with a negative index pops values.
+          - patterns:
+              - pattern: lua_settop($L, $NSET)
+              - metavariable-regex:
+                  metavariable: $NSET
+                  regex: '^-'
+          - pattern: lua_remove($L, ...)
+          - pattern: lua_replace($L, ...)
+          - pattern: lua_xmove($L, ...)
+          - pattern: luaL_ref($L, ...)
+          - pattern: lua_concat($L, ...)
+          - pattern: lua_call($L, ...)
+          - pattern: lua_pcall($L, ...)
+          - pattern: lua_setfield($L, ...)
+          - pattern: lua_settable($L, ...)
+          - pattern: lua_rawset($L, ...)
+          - pattern: lua_rawseti($L, ...)
+          - pattern: lua_rawsetp($L, ...)
+          - pattern: lua_seti($L, ...)
+          - pattern: lua_setglobal($L, ...)
+          - pattern: lua_setmetatable($L, ...)
+          - pattern: lua_setuservalue($L, ...)
+          - pattern: lua_setiuservalue($L, ...)
+          - pattern: lua_setupvalue($L, ...)
+          - pattern: lua_setlocal($L, ...)
+          - pattern: lua_setfenv($L, ...)
+      # A producer on the same lua_State anywhere in the
+      # function suppresses the finding.
+      - pattern-not:
+          patterns:
+            - pattern-inside: |
+                $RET $FUNC(...) {
+                  ...
+                  $P($L, ...);
+                  ...
+                }
+            - metavariable-regex:
+                metavariable: $P
+                regex: '(lua_push|lua_get|lua_new|lua_createtable|lua_load|luaL_load|luaL_newmetatable|luaL_requiref|luaL_where|luaL_traceback|luaL_gsub|lua_checkstack|luaL_checkstack)'
