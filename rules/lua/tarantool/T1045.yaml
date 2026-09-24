@@ -1,0 +1,17 @@
+rules:
+  - id: T1045
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: The 'A' format specifier must be the last item in pickle.unpack.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/pickle/#lua-function.pickle.unpack
+    message: |
+      If the format specifier 'A' is used in pickle.unpack(), it must be the
+      last item, because it consumes the rest of the input.
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern: pickle.unpack($FMT, ...)
+      - metavariable-regex:
+          metavariable: $FMT
+          regex: '".*A[^"]'

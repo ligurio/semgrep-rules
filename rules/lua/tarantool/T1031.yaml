@@ -1,0 +1,21 @@
+rules:
+  - id: T1031
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Lua coroutines are not Tarantool fibers.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/fiber/
+        - https://www.lua.org/manual/5.4/manual.html#pdf-coroutine.create
+    message: |
+      Tarantool's scheduler works with fibers, not Lua coroutines. coroutine.*
+      does not cooperate with the event loop, so use fiber.* in server code.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - pattern: coroutine.create(...)
+      - pattern: coroutine.resume(...)
+      - pattern: coroutine.yield(...)
+      - pattern: coroutine.wrap(...)
+      - pattern: coroutine.status(...)
+      - pattern: coroutine.running(...)
+      - pattern: coroutine.isyieldable(...)

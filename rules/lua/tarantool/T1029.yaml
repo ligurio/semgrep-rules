@@ -1,0 +1,24 @@
+rules:
+  - id: T1029
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Lua errors are strings, box.error values are cdata with unpack().
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/box_error/
+        - https://www.lua.org/manual/5.4/manual.html#pdf-error
+    message: |
+      box.error raises a cdata object with :unpack(), while error raises a
+      string. Code that assumes one kind breaks on the other. Detect the kind
+      before inspecting the error.
+    languages: [lua]
+    severity: INFO
+    patterns:
+      - pattern-inside: |
+          $OK, $ERR = pcall(...)
+          ...
+      - pattern-either:
+          - pattern: $ERR:match(...)
+          - pattern: $ERR:find(...)
+          - pattern: $ERR:gsub(...)
+          - pattern: $ERR:sub(...)
+          - pattern: $ERR:gmatch(...)

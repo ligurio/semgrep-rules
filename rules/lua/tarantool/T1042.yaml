@@ -1,0 +1,21 @@
+rules:
+  - id: T1042
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Using the builtin assert() in a luatest test.
+      references:
+        - https://github.com/tarantool/luatest/
+    message: |
+      Use luatest assertion helpers instead of the builtin assert() so that a
+      failure is reported as a test failure with a message and a trace.
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern-inside: |
+          $G.$FN = function(...)
+            ...
+          end
+      - metavariable-regex:
+          metavariable: $FN
+          regex: 'test_.*'
+      - pattern: assert(...)
