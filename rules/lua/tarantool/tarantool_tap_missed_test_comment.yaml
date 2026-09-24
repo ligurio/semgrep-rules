@@ -1,0 +1,24 @@
+rules:
+  - id: tarantool_tap_missed_test_comment
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: The testcase description is missed.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/tap/
+    message:
+      The TAP helpers must contain a description.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - pattern: $T:ok($A)
+      - pattern: $T:is($A, $B)
+      - pattern: $T:isnt($A, $B)
+      - pattern: $T:is_deeply($A, $B)
+      - pattern: $T:like($A, $B)
+      - pattern: $T:unlike($A, $B)
+      - pattern: $T:isnil($A)
+      - pattern: $T:isstring($A)
+      - pattern: $T:isnumber($A)
+      - pattern: $T:istable($A)
+      - pattern: $T:isboolean($A)
+      - pattern: $T:isudata($A, $B)

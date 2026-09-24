@@ -1,0 +1,37 @@
+# TODO: io.popen()
+# TODO: io.lines()
+# TODO: io.close()
+# TODO: access functions
+# - io.flush ()
+# - io.input ([file])
+# - io.output ([file])
+# - io.read (···)
+# - io.write (···)
+# - file:flush ()
+# - file:lines ()
+# - file:read (···)
+# - file:seek ([whence] [, offset])
+# - file:setvbuf (mode [, size])
+
+rules:
+  - id: tarantool_fio_use_fd_after_close
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Using file descriptor after close.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/fio/
+    message: fio_use_fd_after_close
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              $FD:close()
+              ...
+          - pattern-inside: |
+              io.close($FD)
+              ...
+      - pattern: $FD:read(...)
+      - pattern-not-inside: |
+          $FD = ...
+          $FD:read(...)

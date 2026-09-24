@@ -1,0 +1,21 @@
+# fiber.self():name('non-interactive')
+
+rules:
+  - id: tarantool_fiber_missed_name
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Fiber name is not set.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_capi/fiber/
+    message: Fiber without name can lead to complicated debug.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - patterns:
+          - pattern: $F = require("fiber")
+          - pattern: $OBJ = $F.create(...)
+          - pattern-not: $OBJ:name(...)
+      - patterns:
+          - pattern: $F = require("fiber")
+          - pattern: $OBJ = fiber.new(...)
+          - pattern-not: $OBJ:name(...)

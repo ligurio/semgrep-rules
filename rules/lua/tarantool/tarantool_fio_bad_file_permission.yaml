@@ -1,0 +1,19 @@
+rules:
+  - id: tarantool_fio_bad_file_permission
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Bad file permissions.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/fio/
+    message:
+      Detected file permissions that are set to more than `0600` (user/owner
+      can read and write). Setting file permissions to higher than `0600` is most
+      likely unnecessary and violates the principle of least privilege. Instead, set
+      permissions to be `0600` or less for `fio.chmod()`.
+    severity: WARNING
+    languages: [lua]
+    patterns:
+      - pattern: fio.chmod($NAME, tonumber($PERM, 8))
+      - metavariable-comparison:
+          metavariable: $PERM
+          comparison: int($PERM) > 600

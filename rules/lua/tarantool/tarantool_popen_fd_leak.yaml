@@ -1,0 +1,15 @@
+rules:
+  - id: tarantool_popen_fd_leak
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: File descriptor leaks.
+    message:
+      The file object "$FD" opened without corresponding close.
+    languages: [lua]
+    severity: ERROR
+    patterns:
+      - pattern-inside: |
+          $M = require("popen")
+          ...
+      - pattern: $FD = $M.new(...)
+      - pattern-not: $FD:close()

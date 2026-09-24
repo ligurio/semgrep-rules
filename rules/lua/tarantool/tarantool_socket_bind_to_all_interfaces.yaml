@@ -1,0 +1,29 @@
+rules:
+  - id: tarantool_socket_bind_to_all_interfaces
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Socket bind to `0.0.0.0` or `::`.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/socket/
+    message: |
+      Running `socket.bind` to `0.0.0.0`, `::`, or empty string could
+      unexpectedly expose the server publicly as it binds to all available
+      interfaces. Consider instead getting correct address from an environment
+      variable or configuration file.
+    severity: WARNING
+    languages: [lua]
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              $S = socket.socket(...)
+              ...
+          - pattern-inside: |
+              $S = socket(...)
+              ...
+      - pattern-either:
+          - pattern: $S.bind("0.0.0.0", ...)
+          - pattern: $S.bind("::", ...)
+          - pattern: $S.bind("", ...)
+          - pattern: $S:bind("0.0.0.0", ...)
+          - pattern: $S:bind("::", ...)
+          - pattern: $S:bind("", ...)
