@@ -37,19 +37,16 @@ $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources
 | [lua_deprecated_global](rules/lua/basic/lua_deprecated_global.yaml) | Using deprecated globals. |
 | [lua_duplicate_condition](rules/lua/basic/lua_duplicate_condition.yaml) | Duplicate conditions. |
 | [lua_duplicate_function](rules/lua/basic/lua_duplicate_function.yaml) | Duplicate functions. |
-| [lua_unsafe_function](rules/lua/basic/lua_duplicate_local.yaml) | Duplicate locals. |
+| [lua_duplicate_local](rules/lua/basic/lua_duplicate_local.yaml) | Duplicate locals. |
 | [lua_fd_leak](rules/lua/basic/lua_fd_leak.yaml) | File descriptors leaks. |
 | [lua_for_range](rules/lua/basic/lua_for_range.yaml) | Incorrect `for` bounds. |
 | [lua_format_string](rules/lua/basic/lua_format_string.yaml) | Mistakes in a format string. |
 | [lua_func_inside_func](rules/lua/basic/lua_func_inside_func.yaml) | A function is defined inside another function. |
 | [lua_function_unused](rules/lua/basic/lua_function_unused.yaml) | Unused function. |
 | [lua_global_used_as_local](rules/lua/basic/lua_global_used_as_local.yaml) | Global is used as a local. |
-| [lua_implicit_return](rules/lua/basic/lua_implicit_return.yaml) | Implicit return. |
-| [lua_import_unused](rules/lua/basic/lua_import_unused.yaml) | Unused import. |
 | [lua_init_rng_without_seed](rules/lua/basic/lua_init_rng_without_seed.yaml) | math.random() is used without random seed. |
 | [lua_integer_parsing](rules/lua/basic/lua_integer_parsing.yaml) | Incorrect using integers. |
 | [lua_local_shadow](rules/lua/basic/lua_local_shadow.yaml) | Using local shadow. |
-| [lua_local_unused](rules/lua/basic/lua_local_unused.yaml) | Unused local. |
 | [lua_magic_number](rules/lua/basic/lua_magic_number.yaml) | Using magic numbers. |
 | [lua_misleading_and_or](rules/lua/basic/lua_misleading_and_or.yaml) | Misleading `and` and `or`. |
 | [lua_multi_line_statement](rules/lua/basic/lua_multi_line_statement.yaml) | Multiline statement. |
@@ -64,11 +61,9 @@ $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources
 | [lua_table_len](rules/lua/basic/lua_table_len.yaml) | Using `#` for a table length. |
 | [lua_table_literal](rules/lua/basic/lua_table_literal.yaml) | Table literal. |
 | [lua_table_operations](rules/lua/basic/lua_table_operations.yaml) | Table operations. |
-| [lua_unbalanced_assignment](rules/lua/basic/lua_unbalanced_assignment.yaml) | Unbalanced assignment. |
 | [lua_uninitialized_local](rules/lua/basic/lua_uninitialized_local.yaml) | Non-initialized local. |
 | [lua_unknown_global](rules/lua/basic/lua_unknown_global.yaml) | Using unknown global variable. |
 | [lua_unknown_type](rules/lua/basic/lua_unknown_type.yaml) | Unknown type. |
-| [lua_unreachable_code](rules/lua/basic/lua_unreachable_code.yaml) | Unreachable code. |
 | [lua_unsafe_function](rules/lua/basic/lua_unsafe_function.yaml) | Unsafe function. |
 | [lua_use_fd_after_close](rules/lua/basic/lua_use_fd_after_close.yaml) | File descriptors leak. |
 | [lua_writing_to_file_in_read_mode](rules/lua/basic/lua_writing_to_file_in_read_mode.yaml) | Writing to a file opened in read-only mode. |
@@ -88,9 +83,9 @@ $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources
 | [tarantool_crypto_insecure_hash_algorithm](rules/lua/tarantool/tarantool_crypto_insecure_hash_algorithm.yaml) | Using insecure hash algorithm. |
 | [tarantool_deprecated_c_api](rules/lua/tarantool/tarantool_deprecated_api.yaml) | Using deprecated C/C++ function(s). |
 | [tarantool_deprecated_lua_api](rules/lua/tarantool/tarantool_deprecated_api.yaml) | Using deprecated Tarantool Lua function(s). |
-| [tarantool_digest_insecure_hash_algorithm](rules/lua/tarantool/tarantool_digest_insecure_hash_algorithm.yaml) | Using insecure hash algorithm. |
-| [tarantool_digest_insecure_hash_algorithm](rules/lua/tarantool/tarantool_digest_insecure_hash_algorithm.yaml) |  |
-| [tarantool_insecure-hash-algorithm-sha1](rules/lua/tarantool/tarantool_digest_insecure_hash_algorithm.yaml) |  |
+| [tarantool_digest_insecure_hash_algorithm_md4](rules/lua/tarantool/tarantool_digest_insecure_hash_algorithm.yaml) | Using insecure hash algorithm. |
+| [tarantool_digest_insecure_hash_algorithm_md5](rules/lua/tarantool/tarantool_digest_insecure_hash_algorithm.yaml) | Using insecure hash algorithm. |
+| [tarantool_digest_insecure_hash_algorithm_sha1](rules/lua/tarantool/tarantool_digest_insecure_hash_algorithm.yaml) | Using insecure hash algorithm. |
 | [tarantool_fiber_missed_name](rules/lua/tarantool/tarantool_fiber_missed_name.yaml) | Fiber name is not set. |
 | [tarantool_fiber_missed_testcancel](rules/lua/tarantool/tarantool_fiber_missed_testcancel.yaml) | Fiber method `:testcancel()` is missed. |
 | [tarantool_fiber_missed_timeout](rules/lua/tarantool/tarantool_fiber_missed_timeout.yaml) | Timeout is missed in a fiber method. |
@@ -109,7 +104,6 @@ $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources
 | [tarantool_popen_use_fd_after_close](rules/lua/tarantool/tarantool_popen_use_fd_after_close.yaml) | Using file descriptor after close. |
 | [tarantool_socket_bind_to_all_interfaces](rules/lua/tarantool/tarantool_socket_bind_to_all_interfaces.yaml) | Socket bind to `0.0.0.0` or `::`. |
 | [tarantool_socket_fd_leak](rules/lua/tarantool/tarantool_socket_fd_leak.yaml) | File descriptor leaks. |
-| [tarantool_socket_fd_leak](rules/lua/tarantool/tarantool_socket_fd_leak.yaml) |  |
 | [tarantool_socket_missed_timeout](rules/lua/tarantool/tarantool_socket_missed_timeout.yaml) | Timeout is not set. |
 | [tarantool_socket_use_fd_after_close](rules/lua/tarantool/tarantool_socket_use_fd_after_close.yaml) | Using socket handler after close. |
 | [tarantool_vshard_bad_hash_func](rules/lua/tarantool/tarantool_vshard_bad_hash_func.yaml) | Sharding hash algorithm is bad. |
@@ -147,5 +141,7 @@ finds serious bugs in Java exception handler.
 - **Finding Error-Handling Bugs in Systems Code Using Static Analysis** - Cindy Rubio-González, Ben Liblit
 - **Simple Testing Can Prevent Most Critical Failures: An Analysis of Production Failures in Distributed Data-Intensive Systems** - Ding Yuan, Yu Luo, Xin Zhuang, Guilherme Renna Rodrigues, Xu Zhao, Yongle Zhang, Pranay U. Jain, and Michael Stumm, University of Toronto (USENIX)
 - **Improving the Quality of Error-Handling Code in Systems Software using Function-Local Information** - Suman Saha
+- **Static test flakiness prediction: How Far Can We Go?**,
+  https://link.springer.com/article/10.1007/s10664-022-10227-1
 
 </details>
