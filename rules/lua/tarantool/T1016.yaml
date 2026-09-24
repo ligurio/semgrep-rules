@@ -1,0 +1,12 @@
+rules:
+  - id: T1016
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Full access for a guest user to universe.
+      references:
+        - https://www.tarantool.io/ru/doc/latest/book/admin/access_control/
+    message: Пользователю guest предоставляют полный доступ на universe.
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern: box.schema.user.grant('guest', $PRIVELEGE, 'universe')

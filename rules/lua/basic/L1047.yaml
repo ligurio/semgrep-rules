@@ -1,0 +1,47 @@
+# Фалсит ужасно.
+# home.sergeyb.sources.semgrep-rules.rules.lua.tarantool.fio.use_fd_after_close
+#    use_fd_after_close
+
+#     10┆ endpoints = {string.format("http://%s:2379", os.getenv('ETCD_HOST') or 'etcd')};
+#      ⋮┆----------------------------------------
+#     10┆ endpoints = {string.format("http://%s:2379", os.getenv('ETCD_HOST') or 'etcd')};
+#      ⋮┆----------------------------------------
+#     10┆ endpoints = {string.format("http://%s:2379", os.getenv('ETCD_HOST') or 'etcd')};
+#      ⋮┆----------------------------------------
+#     10┆ endpoints = {string.format("http://%s:2379", os.getenv('ETCD_HOST') or 'etcd')};
+
+rules:
+  - id: L1047
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: File descriptors leak.
+    message: File descriptors leak.
+    languages: [lua]
+    severity: ERROR
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              $FD = io.open(...)
+              ...
+          - pattern-inside: |
+              $FD = io.popen(...)
+              ...
+          - pattern-inside: |
+              $FD = io.lines(...)
+              ...
+      - pattern-either:
+          - pattern-inside: |
+              $FD:close()
+              ...
+          - pattern-inside: |
+              io.close($FD)
+              ...
+      - pattern-either:
+          - pattern: $FD:read(...)
+          - pattern: $FD:write(...)
+          - pattern: $FD:seek(...)
+          - pattern: $FD:flush(...)
+          - pattern: $FD:setvbuf(...)
+          - pattern: io.flush($FD)
+          - pattern: io.read($FD)
+          - pattern: io.write($FD)

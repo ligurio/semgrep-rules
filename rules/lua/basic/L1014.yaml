@@ -1,0 +1,16 @@
+rules:
+  - id: L1014
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: setfenv(), getfenv() and loadstring() were removed in Lua 5.2.
+      references:
+        - https://www.lua.org/manual/5.2/manual.html#8.2
+    message: |
+      setfenv(), getfenv() and loadstring() were removed in Lua 5.2. Use the
+      _ENV upvalue and load() instead.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - pattern: setfenv(...)
+      - pattern: getfenv(...)
+      - pattern: loadstring(...)

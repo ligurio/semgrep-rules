@@ -1,0 +1,40 @@
+rules:
+  - id: T1008
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Using insecure hash algorithm.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/digest/
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/crypto/
+      cwe:
+        - "CWE-327: Use of a Broken or Risky Cryptographic Algorithm"
+      owasp:
+        - A03:2017 - Sensitive Data Exposure
+        - A02:2021 - Cryptographic Failures
+    message: |
+      Detected use of an insecure hash or cipher algorithm (MD4, MD5, SHA1 or
+      DES). These algorithms have known vulnerabilities. Use SHA256/SHA3 or
+      AES instead.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - patterns:
+          - pattern-inside: |
+              $M = require("digest")
+              ...
+          - pattern: $M.md4(...)
+      - patterns:
+          - pattern-inside: |
+              $M = require("digest")
+              ...
+          - pattern: $M.md5(...)
+      - patterns:
+          - pattern-inside: |
+              $M = require("digest")
+              ...
+          - pattern: $M.sha1(...)
+      - patterns:
+          - pattern-inside: |
+              $M = require("crypto")
+              ...
+          - pattern: $M.cipher.des.$MODE.encrypt(...)

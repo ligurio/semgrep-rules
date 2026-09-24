@@ -1,0 +1,24 @@
+rules:
+  - id: T1024
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: A test prefix is missed a test title.
+      references:
+        - https://github.com/tarantool/luatest/
+        - https://github.com/tarantool/luatest/issues/385
+    patterns:
+      - pattern-inside: |
+          $LUATEST = require('luatest')
+          ...
+          $TEST_GROUP = $LUATEST.group(...)
+          ...
+      - pattern-either:
+          - pattern: $TEST_GROUP.$TEST_FUNC(...)
+          - pattern: $TEST_GROUP.$TEST_FUNC = function(...) ... end
+      - metavariable-regex:
+          metavariable: $TEST_FUNC
+          regex: '^(?!test_|before_suite$|before_all$|before_each$|before_test$|after_suite$|after_all$|after_each$|after_test$).*'
+    message: The prefix `test_` is required in luatest's test functions.
+    languages:
+      - lua
+    severity: WARNING

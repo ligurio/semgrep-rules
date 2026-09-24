@@ -1,0 +1,15 @@
+rules:
+  - id: L1024
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: math.log10() and math.mod() were removed in Lua 5.2.
+      references:
+        - https://www.lua.org/manual/5.2/manual.html#8.2
+    message: |
+      math.log10() and math.mod() were removed in Lua 5.2. Use math.log(x, 10)
+      and math.fmod() instead.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - pattern: math.log10(...)
+      - pattern: math.mod(...)

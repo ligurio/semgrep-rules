@@ -1,0 +1,19 @@
+# Lua parses hexadecimal and binary literals as 64-bit integers
+# before converting them to Lua numbers. As a result, numbers that
+# exceed 2^64 are silently truncated to 2^64, which can result in
+# unexpected program behavior. This warning flags literals that
+# are truncated.
+#
+# Lua numbers are represented as double precision IEEE754 floating
+# point numbers; they can represent integers up to 2^53 exactly,
+# but larger integers may lose precision. This warning also flags
+# literals that are parsed with a precision loss.
+rules:
+  - id: L1061
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Incorrect using integers.
+    message: Incorrect using integers.
+    languages: [lua]
+    severity: WARNING
+    pattern-regex: '0x[0-9a-fA-F]{17,}'

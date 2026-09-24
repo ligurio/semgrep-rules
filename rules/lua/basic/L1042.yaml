@@ -1,0 +1,9 @@
+rules:
+  - id: L1042
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Use pcall(self.func, self).
+    message: Use pcall(self.func, self).
+    languages: [lua]
+    severity: WARNING
+    pattern: pcall($OBJ.$F)

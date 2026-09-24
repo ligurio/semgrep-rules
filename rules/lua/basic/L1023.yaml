@@ -1,0 +1,16 @@
+rules:
+  - id: L1023
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: table.maxn(), table.foreach() and table.foreachi() were removed in Lua 5.2.
+      references:
+        - https://www.lua.org/manual/5.2/manual.html#8.2
+    message: |
+      table.maxn(), table.foreach() and table.foreachi() were removed in
+      Lua 5.2. Use a `for` loop with pairs()/ipairs() and `#` instead.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - pattern: table.maxn(...)
+      - pattern: table.foreach(...)
+      - pattern: table.foreachi(...)

@@ -1,0 +1,19 @@
+rules:
+  - id: T1025
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Rules for object names.
+      references:
+        - https://www.tarantool.io/en/doc/latest/platform/app/lua_tips/#rules-for-object-names
+    message: |
+      Database objects have loose rules for names. Almost any
+      legal Unicode character is allowed, including spaces,
+      ideograms and punctuation.
+      Disallowed characters which are unassigned code points,
+      line and paragraph separators, control characters,
+      the replacement character (U+FFFD). Not recommended
+      characters which cannot be displayed.
+    languages: [lua]
+    severity: WARNING
+    pattern: box.schema.space_create($SPACE_NAME)
+    # ['1*A !@$%^&*()_+12345678901234567890']

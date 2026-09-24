@@ -1,0 +1,9 @@
+rules:
+  - id: L1051
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: math.random() is used without random seed.
+    message: math.random() is used without random seed.
+    languages: [lua]
+    severity: INFO
+    pattern: math.randomseed()
