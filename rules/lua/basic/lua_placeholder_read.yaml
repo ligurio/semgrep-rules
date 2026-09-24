@@ -1,0 +1,16 @@
+rules:
+  - id: lua_placeholder_write
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Placeholder read.
+    message: Placeholder read.
+    # https://fuzz-introspector.readthedocs.io/en/latest/user-guides/analyse-sink-function.html
+    languages: [lua]
+    severity: WARNING
+    pattern: return _
+
+# _ variable name is commonly used as a placeholder to discard function results.
+# The linter follows this convention and doesn’t warn about the use of _ in
+# various cases where a different name would cause a warning otherwise. To make
+# sure the placeholder is only used to write values to it, this warning detects
+# the cases where it’s read instead:

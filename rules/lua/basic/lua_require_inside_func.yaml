@@ -7,16 +7,14 @@ rules:
       Function "require()" shouldn't  be used inside functions.
     languages: [lua]
     severity: INFO
-    pattern-either:
-      - pattern: |
-          function(...)
-          ...
-          require($M)
-          ...
-          end
-      - pattern: |
-          function $NAME(...)
-          ...
-          require($M)
-          ...
-          end
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              function $NAME(...)
+                ...
+              end
+          - pattern-inside: |
+              $NAME = function(...)
+                ...
+              end
+      - pattern: require(...)

@@ -1,0 +1,25 @@
+# By default, variables in Lua are global (this is inherited from
+# Lua 5.x and can't be changed because of backwards compatibility).
+# This means that typos in identifiers are invisible to the
+# parser, and often break at runtime. For this reason, the linter
+# considers all globals that aren't part of the builtin global
+# table and aren't explicitly defined in the script "unknown":
+#
+# Note that injecting globals via setfenv can produce this
+# warning in correct code; global injection is incompatible with
+# type checking and has performance implications so we recommend
+# against it and in favor of using require with correctly scoped
+#identifiers.
+rules:
+  - id: lua_unknown_global
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Using unknown global variable.
+    message: Using unknown global variable.
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern: $F($X)
+      - metavariable-regex:
+          metavariable: $X
+          regex: '^[A-Za-z_][A-Za-z0-9_]*$'

@@ -9,10 +9,10 @@ rules:
     severity: ERROR
     languages: [lua]
     patterns:
-      - pattern: |
+      - pattern-inside: |
           $FD = io.open($NAME, $MODE)
           ...
-          $FD:write(...)
+      - pattern: $FD:write(...)
       - metavariable-pattern:
           metavariable: $MODE
           pattern-regex: "r"

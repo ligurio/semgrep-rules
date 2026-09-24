@@ -1,0 +1,36 @@
+# Lua has standard library functions that expect a format string
+# that specifies the behavior for the function. These format
+# strings follow a specific syntax that depends on the question;
+# mistakes in these strings can lead to runtime errors or
+# unexpected behavior of the code.
+
+# To help make sure that the strings used for these functions are
+# correct, semgrep rule checks calls to these functions.
+# Note, that with the exception of `string.format` this only works
+# when the function is called via the library, not via the method
+# call (so prefer `string.match(s, "pattern")` to
+# `s:match("pattern")`).
+
+rules:
+  - id: lua_format_string
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Mistakes in a format string.
+      references:
+        - https://cwe.mitre.org/data/definitions/134
+        - https://julianor.tripod.com/bc/formatstring-1.2.pdf
+    message: >-
+      The software uses a function that accepts a format string as
+      an argument, but the format string originates from an
+      external source. This can lead to buffer overflows, denial
+      of service, or data representation problems.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - pattern-either:
+        - pattern: string.find(...)
+        - pattern: string.format(...)
+        - pattern: string.gmatch(...)
+        - pattern: string.gsub(...)
+        - pattern: string.match(...)
+        - pattern: os.date(...)

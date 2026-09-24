@@ -6,12 +6,4 @@ rules:
     message: math.random() is used without random seed.
     languages: [lua]
     severity: INFO
-    patterns:
-      - pattern: |
-          ...
-          math.random(...)
-          ...
-      - pattern-not: |
-          ...
-          math.random()
-          ...
+    pattern: math.randomseed()

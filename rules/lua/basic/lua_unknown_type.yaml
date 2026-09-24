@@ -1,0 +1,21 @@
+# Lua provides several functions to get the value type as a string
+# (type, typeof). This warning detects incorrect use of the type
+# names by checking the string literals used in type comparisons
+# and function calls.
+rules:
+  - id: lua_unknown_type
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Unknown type.
+    message: Unknown type.
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern-either:
+          - pattern: type($X) == $T
+          - pattern: $T == type($X)
+          - pattern: type($X) ~= $T
+          - pattern: $T ~= type($X)
+      - metavariable-regex:
+          metavariable: $T
+          regex: '"[A-Z].*"'

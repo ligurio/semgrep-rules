@@ -1,2 +1,2 @@
--- ruleid: lua_debug_enabled
+-- # ruleid: lua_debug_enabled
 debug.sethook(...)

@@ -1,0 +1,31 @@
+# While the sandboxing model of Lua prevents overwriting built-in
+# globals such as table for the entire program, it's still valid
+# to reassign these globals - this results in "global shadowing",
+# where the script’s global table contains a custom version of
+# table after writing to it. This is problematic because it
+# disables some optimizations, and can result in misleading code.
+# When shadowing built-in globals, use locals instead.
+
+rules:
+  - id: lua_builtin_global_write
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Global write.
+      references:
+        - https://luacheck.readthedocs.io/en/stable/warnings.html#read-only-globals
+    message: Global write.
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern-either:
+          - pattern: math = $X
+          - pattern: table = $X
+          - pattern: string = $X
+          - pattern: os = $X
+          - pattern: io = $X
+          - pattern: coroutine = $X
+          - pattern: debug = $X
+          - pattern: package = $X
+          - pattern: utf8 = $X
+          - pattern: bit32 = $X
+      - pattern-not: local $G = $X
