@@ -28,9 +28,11 @@ $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources
 
 | ID | Description |
 | -- | ----------- |
+| [lua_deprecated_c_api](rules/c/lua-c-api/lua_deprecated_c_api.yaml) | Using deprecated Lua C API function(s). |
 | [lua_missing_type_check](rules/c/lua-c-api/lua_missing_type_check.yaml) | Lua C API call without a prior argument type check. |
 | [lua_pop_without_push](rules/c/lua-c-api/lua_pop_without_push.yaml) | Consuming a Lua stack value without a preceding push. |
 | [lua_push_without_pop](rules/c/lua-c-api/lua_push_without_pop.yaml) | Pushing a Lua stack value that is never consumed. |
+| [lua_unsafe_c_api](rules/c/lua-c-api/lua_unsafe_c_api.yaml) | Using unsafe Lua C API function(s). |
 
 ### Lua
 

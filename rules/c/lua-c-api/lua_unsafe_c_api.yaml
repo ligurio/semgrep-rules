@@ -1,0 +1,63 @@
+# Usage of Lua C API calls that are unsafe when they process
+# untrusted input:
+#  - loading a chunk in binary mode. Starting with Lua 5.2 the
+#    bytecode verifier was removed, so running a maliciously
+#    crafted binary chunk can crash the interpreter. Pass the
+#    "t" mode to accept textual chunks only.
+#  - passing a non-constant format string to lua_pushfstring()
+#    or luaL_error(), which may be a format string vulnerability.
+#
+# The rule only flags an explicit binary mode or a missing mode
+# (NULL/0/"") and a clearly non-literal format. A mode or format
+# held in a variable is not tracked.
+
+rules:
+  - id: lua_unsafe_c_api
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Using unsafe Lua C API function(s).
+      confidence: MEDIUM
+      references:
+        - https://www.lua.org/manual/5.4/manual.html#pdf-load
+        - https://www.lua.org/manual/5.4/manual.html#8.3
+        - https://cwe.mitre.org/data/definitions/134.html
+        - https://cwe.mitre.org/data/definitions/502.html
+    message: |
+      Using an unsafe Lua C API call. Loading a chunk in binary
+      mode lets an attacker run maliciously crafted bytecode that
+      Lua does not verify and that can crash the interpreter; pass
+      "t" as the mode to accept textual chunks only. Passing a
+      non-constant format string to lua_pushfstring()/luaL_error()
+      may be a format string vulnerability; prefer a literal
+      format.
+    languages:
+      - c
+      - cpp
+    severity: ERROR
+    patterns:
+      - pattern-either:
+          - patterns:
+              - pattern: lua_load($L, $READER, $DATA, $NAME, $MODE)
+              - metavariable-regex:
+                  metavariable: $MODE
+                  regex: '(.*b.*|NULL|0|"")'
+          - patterns:
+              - pattern: luaL_loadbufferx($L, $BUF, $SZ, $NAME, $MODE)
+              - metavariable-regex:
+                  metavariable: $MODE
+                  regex: '(.*b.*|NULL|0|"")'
+          - patterns:
+              - pattern: luaL_loadfilex($L, $FILE, $MODE)
+              - metavariable-regex:
+                  metavariable: $MODE
+                  regex: '(.*b.*|NULL|0|"")'
+          - patterns:
+              - pattern: lua_pushfstring($L, $FMT, ...)
+              - metavariable-regex:
+                  metavariable: $FMT
+                  regex: '(?!")'
+          - patterns:
+              - pattern: luaL_error($L, $FMT, ...)
+              - metavariable-regex:
+                  metavariable: $FMT
+                  regex: '(?!")'
