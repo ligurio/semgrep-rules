@@ -1,0 +1,22 @@
+rules:
+  - id: tarantool_popen_use_fd_after_close
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Using file descriptor after close.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/popen/
+    message: Use file descriptor after close.
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              $FD:close()
+              ...
+          - pattern-inside: |
+              io.close($FD)
+              ...
+      - pattern: $FD:read(...)
+      - pattern-not-inside: |
+          $FD = ...
+          $FD:read(...)

@@ -1,0 +1,19 @@
+rules:
+  - id: tarantool_socket_missed_timeout
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Timeout is not set.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/socket/
+    message: Все асинхронные вызовы должны иметь таймауты.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - pattern: socket.tcp_connect($H, $P)
+      - pattern: socket.getaddrinfo($H, $P, $O)
+      - pattern: socket.tcp_server($H, $P, $O)
+      - pattern: $S:read($A)
+      - pattern: $S:readable()
+      - pattern: $S:writable()
+      - pattern: $S:wait()
+      - pattern: socket.iowait($A, $B)

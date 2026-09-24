@@ -1,0 +1,19 @@
+rules:
+  - id: tarantool_net_box_missed_timeout
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Timeout is not set.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/net_box/
+        - https://github.com/tarantool/vshard/issues/517
+    message: no_timeouts
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern-either:
+          - pattern: $CONN = net_box.connect(...)
+          - pattern: $CONN = net_box.new(...)
+      - pattern-not-inside: |
+          $CONN = ...
+          ...
+          $CONN:timeout(...)

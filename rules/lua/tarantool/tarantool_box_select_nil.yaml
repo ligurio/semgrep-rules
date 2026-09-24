@@ -1,0 +1,20 @@
+rules:
+  - id: tarantool_box_select_nil
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Using `nil` in `:select()`.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/box_space/select/
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/box_index/select/
+    # https://github.com/tarantool/trainings/blob/master/public/content/conclusion/conclusion.md
+    message: |
+      `select()` может привести к полному проходу по всем данным. На большом
+      количестве данных это окажется тяжелой операцией. Используйте `pairs()`
+      или `select()` с ограничениями.
+      - Не использовать функцию `box.space.<name>:select`
+      - Использовать `box.space.<name>:pairs`
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern: box.$SPACE.$NAME:select(nil, ...)
+      - pattern: box.$SPACE[$NAME]:select(nil, ...)

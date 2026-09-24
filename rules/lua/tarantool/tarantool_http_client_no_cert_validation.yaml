@@ -1,0 +1,15 @@
+rules:
+  - id: tarantool_http_client_no_cert_validation
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Certificate validation is disabled.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/http/
+    message: no_cert_validation
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern-either:
+          - pattern: verify_host = false
+          - pattern: verify_peer = false
+      - pattern-inside: $C:$M(...)

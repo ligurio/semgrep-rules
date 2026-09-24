@@ -7,10 +7,10 @@ rules:
         - https://www.tarantool.io/ru/doc/latest/reference/reference_rock/vshard/vshard_router/#lua-function.vshard.router.bucket_id_strcrc32
         - https://github.com/tarantool/doc/issues/1153
     patterns:
-      - pattern: |
+      - pattern-inside: |
           $M = require("vshard")
           ...
-          $M.router.$F(...)
+      - pattern: $M.router.$F(...)
       - metavariable-regex:
           metavariable: '$F'
           regex: '.*(bucket_id_strcrc32).*'
