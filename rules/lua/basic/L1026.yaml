@@ -1,0 +1,13 @@
+rules:
+  - id: L1026
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: The bit32 library was removed in Lua 5.4.
+      references:
+        - https://www.lua.org/manual/5.4/manual.html#8.2
+    message: |
+      The bit32 library was removed in Lua 5.4. Use the native bitwise
+      operators instead.
+    languages: [lua]
+    severity: WARNING
+    pattern: bit32.$FUNC(...)

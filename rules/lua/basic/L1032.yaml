@@ -1,0 +1,16 @@
+# In Lua, there is no first-class ternary operator but it can be
+# emulated via `a and b or c` pattern. However, due to how boolean
+# evaluation works, if `b` is `false` or `nil`, the resulting
+# expression evaluates to `c` regardless of the value of `a`.
+# This statement can be rewritten as `if a then b else c expression`.
+rules:
+  - id: L1032
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Misleading `and` and `or`.
+    message: Misleading `and` and `or`.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - pattern: $A and false or $B
+      - pattern: $A and nil or $B

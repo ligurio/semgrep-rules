@@ -1,0 +1,15 @@
+rules:
+  - id: T1033
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Fiber yield is missed.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_capi/fiber/
+    message: Missed yield.
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern: |
+          for $K, $V in box.space.$SPACE:pairs() do
+            ...
+          end

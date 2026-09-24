@@ -1,0 +1,20 @@
+rules:
+  - id: L1056
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Import is used inside a function.
+    message: |
+      Function "require()" shouldn't  be used inside functions.
+    languages: [lua]
+    severity: INFO
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              function $NAME(...)
+                ...
+              end
+          - pattern-inside: |
+              $NAME = function(...)
+                ...
+              end
+      - pattern: require(...)

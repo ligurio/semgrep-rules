@@ -1,0 +1,14 @@
+rules:
+  - id: L1001
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Global unpack() was removed in Lua 5.2.
+      references:
+        - https://www.lua.org/manual/5.2/manual.html#8.2
+    message: |
+      The global unpack() was moved to table.unpack() in Lua 5.2. Use
+      table.unpack() or the portable `local unpack = table.unpack or unpack`
+      idiom.
+    languages: [lua]
+    severity: WARNING
+    pattern: unpack(...)

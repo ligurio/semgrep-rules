@@ -1,0 +1,19 @@
+rules:
+  - id: T1011
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: box.once() and set_trigger() apply their effect only once.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/box_once/
+        - https://www.tarantool.io/en/doc/latest/concepts/triggers/
+    message: |
+      box.once() runs its body only on the first bootstrap, and
+      space:before_replace() replaces the existing trigger unless the old
+      trigger is passed as the second argument.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - pattern: box.once($NAME, $FN)
+      - patterns:
+          - pattern: box.$SPACE:before_replace(...)
+          - pattern-not: box.$SPACE:before_replace($NEW, $OLD)

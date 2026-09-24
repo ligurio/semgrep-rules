@@ -1,0 +1,13 @@
+rules:
+  - id: L1022
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: module() was removed in Lua 5.2.
+      references:
+        - https://www.lua.org/manual/5.2/manual.html#8.2
+    message: |
+      module() and package.seeall() were removed in Lua 5.2. Return a table
+      from the module instead.
+    languages: [lua]
+    severity: WARNING
+    pattern: module(...)

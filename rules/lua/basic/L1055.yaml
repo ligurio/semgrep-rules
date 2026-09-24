@@ -1,0 +1,19 @@
+# Table literals are often used in Lua to create objects or
+# specify data. The syntax for table literals is rich but invites
+# mistakes, for example it allows duplicate keys or redundant
+# index specification for values already present in the list form.
+# This warning is emitted for cases where some entries in the
+# table literal are ignored at runtime as they're duplicate:
+rules:
+  - id: L1055
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Table literal.
+    message: Table literal.
+    languages: [lua]
+    severity: WARNING
+    pattern: |
+      {
+        $K = $V,
+        $K = $W
+      }
