@@ -45,9 +45,15 @@ void text_mode_file(lua_State *L)
 	luaL_loadfilex(L, "file.lua", "t");
 }
 
-void unsafe_format(lua_State *L, const char *msg)
+void unsafe_format(lua_State *L)
 {
 	// ruleid: lua_capi_unsafe
+	lua_pushfstring(L, lua_tostring(L, -1));
+}
+
+void safe_format_identifier(lua_State *L, const char *msg)
+{
+	// ok: lua_capi_unsafe
 	lua_pushfstring(L, msg);
 }
 
@@ -57,9 +63,15 @@ void safe_format(lua_State *L)
 	lua_pushfstring(L, "%s", "x");
 }
 
-void unsafe_error(lua_State *L, const char *msg)
+void unsafe_error(lua_State *L)
 {
 	// ruleid: lua_capi_unsafe
+	luaL_error(L, lua_tostring(L, -1));
+}
+
+void safe_error_identifier(lua_State *L, const char *msg)
+{
+	// ok: lua_capi_unsafe
 	luaL_error(L, msg);
 }
 
