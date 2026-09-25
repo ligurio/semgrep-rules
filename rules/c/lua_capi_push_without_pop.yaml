@@ -14,7 +14,7 @@
 #  - a consumer hidden behind a helper function call.
 
 rules:
-  - id: lua_push_without_pop
+  - id: lua_capi_push_without_pop
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       description: Lua C API pushes a value that is never consumed.

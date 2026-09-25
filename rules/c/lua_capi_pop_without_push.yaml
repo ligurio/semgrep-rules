@@ -19,7 +19,7 @@
 # management and suppress the finding.
 
 rules:
-  - id: lua_pop_without_push
+  - id: lua_capi_pop_without_push
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       description: Lua C API stack value is consumed without a preceding push.
