@@ -14,3 +14,8 @@ socket_object:sysconnect('unix/', unix_socket_path)
 local console = require('console')
 -- # ruleid: T1021
 console.listen(unix_socket_path)
+
+local ffi = require('ffi')
+-- The low-level C bind is not a socket path.
+-- # ok: T1021
+ffi.C.bind(0, nil, 0)

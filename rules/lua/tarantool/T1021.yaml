@@ -19,6 +19,5 @@ rules:
     severity: WARNING
     pattern-either:
       - pattern: socket.bind(...)
-      - pattern: $S:bind(...)
       - pattern: console.listen(...)
       - pattern: box.cfg({listen = $PATH})
