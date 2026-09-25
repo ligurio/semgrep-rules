@@ -6,6 +6,10 @@ end
 function obj:method(self) -- Function parameter 'self' already defined implicitly
 end
 
+-- # ok: L1074
+function a.b(self) -- Not a method definition, 'self' is a regular parameter
+end
+
 -- # ruleid: L1074
 local x, y, x = v:GetComponents() -- Variable 'x' already defined on column 7
 -- Variable 'i' shadows previous declaration in the enclosing loop
