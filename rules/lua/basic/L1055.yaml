@@ -12,8 +12,4 @@ rules:
     message: Table literal.
     languages: [lua]
     severity: WARNING
-    pattern: |
-      {
-        $K = $V,
-        $K = $W
-      }
+    pattern-regex: '\{\s*([A-Za-z_]\w*)\s*=\s*[^,}]*,\s*\1\s*='
