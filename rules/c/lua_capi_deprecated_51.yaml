@@ -1,0 +1,28 @@
+# Lua C API functions that were replaced, deprecated or removed in
+# Lua 5.1 (relative to Lua 5.0). Use this rule when the code must
+# build and run against Lua 5.1 / LuaJIT.
+
+rules:
+  - id: lua_capi_deprecated_51
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Using Lua C API function(s) deprecated in Lua 5.1.
+      confidence: HIGH
+      references:
+        - https://www.lua.org/manual/5.1/manual.html#7.3
+        - https://www.lua.org/manual/5.0/manual.html
+    message: |
+      Using a Lua C API function that is deprecated or removed in Lua 5.1.
+      Port the call to the current API: lua_newstate/luaL_newstate instead of
+      lua_open, luaL_register instead of luaL_openlib, lua_objlen instead of
+      luaL_getn/luaL_setn/lua_strlen.
+    languages:
+      - c
+      - cpp
+    severity: WARNING
+    pattern-either:
+      - pattern: lua_open(...)
+      - pattern: luaL_getn(...)
+      - pattern: luaL_setn(...)
+      - pattern: luaL_openlib(...)
+      - pattern: lua_strlen(...)

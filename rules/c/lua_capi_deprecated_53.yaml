@@ -1,0 +1,36 @@
+# Lua C API functions that were deprecated or removed in Lua 5.3
+# (relative to Lua 5.2). This rule is for code being migrated to
+# Lua 5.3; it is not relevant when the target is Lua 5.1 / LuaJIT,
+# where these functions do not exist at all.
+
+rules:
+  - id: lua_capi_deprecated_53
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Using Lua C API function(s) deprecated in Lua 5.3.
+      confidence: LOW
+      references:
+        - https://www.lua.org/manual/5.3/manual.html#8.3
+        - https://www.lua.org/manual/5.3/manual.html#8.2
+    message: |
+      Using a Lua C API function that is deprecated or removed in Lua 5.3.
+      Lua 5.3 has a single integer type, so the unsigned helpers
+      (lua_pushunsigned/lua_tounsigned/lua_tounsignedx/luaL_checkunsigned/
+      luaL_optunsigned) and the int/long aliases (luaL_checkint/luaL_optint/
+      luaL_checklong/luaL_optlong) should be replaced with their lua_Integer
+      equivalents and a cast. lua_getctx was removed.
+    languages:
+      - c
+      - cpp
+    severity: INFO
+    pattern-either:
+      - pattern: lua_getctx(...)
+      - pattern: lua_pushunsigned(...)
+      - pattern: lua_tounsigned(...)
+      - pattern: lua_tounsignedx(...)
+      - pattern: luaL_checkunsigned(...)
+      - pattern: luaL_optunsigned(...)
+      - pattern: luaL_checkint(...)
+      - pattern: luaL_optint(...)
+      - pattern: luaL_checklong(...)
+      - pattern: luaL_optlong(...)
