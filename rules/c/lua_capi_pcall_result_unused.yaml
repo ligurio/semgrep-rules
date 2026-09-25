@@ -6,7 +6,7 @@
 # cast.
 
 rules:
-  - id: lua_pcall_result_unused
+  - id: lua_capi_pcall_result_unused
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       description: Result of a protected call is ignored.

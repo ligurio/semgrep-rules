@@ -2,12 +2,12 @@
 
 void realtime_clock(struct timespec *ts)
 {
-	// ruleid: clock-bugs
+	// ruleid: libc_clock
 	clock_gettime(CLOCK_REALTIME, ts);
 }
 
 void monotonic_clock(struct timespec *ts)
 {
-	// ok: clock-bugs
+	// ok: libc_clock
 	clock_gettime(CLOCK_MONOTONIC, ts);
 }

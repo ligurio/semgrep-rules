@@ -1,5 +1,5 @@
 rules:
-  - id: clock-bugs
+  - id: libc_clock
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       references:

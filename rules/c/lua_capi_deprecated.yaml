@@ -5,7 +5,7 @@
 # API.
 
 rules:
-  - id: lua_deprecated_c_api
+  - id: lua_capi_deprecated
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       description: Using deprecated Lua C API function(s).

@@ -12,7 +12,7 @@
 # held in a variable is not tracked.
 
 rules:
-  - id: lua_unsafe_c_api
+  - id: lua_capi_unsafe
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       description: Using unsafe Lua C API function(s).

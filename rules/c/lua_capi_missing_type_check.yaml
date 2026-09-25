@@ -17,7 +17,7 @@
 # negatives.
 
 rules:
-  - id: lua_missing_type_check
+  - id: lua_capi_missing_type_check
     metadata:
       author: Sergey Bronnikov <estetus@gmail.com>
       description: Lua C API call without a prior argument type check.
