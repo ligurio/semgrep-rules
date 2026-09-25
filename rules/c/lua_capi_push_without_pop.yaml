@@ -30,7 +30,7 @@ rules:
     languages:
       - c
       - cpp
-    severity: WARNING
+    severity: INFO
     patterns:
       - pattern: $P($L, ...)
       - metavariable-regex:
