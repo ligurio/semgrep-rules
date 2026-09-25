@@ -6,7 +6,7 @@ rules:
     message: Non-initialized local.
     languages: [lua]
     severity: WARNING
-    pattern: local $X
+    pattern-regex: '(?m)^[ \t]*local\s+[A-Za-z_]\w*[ \t]*(--.*)?$'
 
 # It’s easy to forget to initialize a local variable and then proceed to use it
 # regardless. This can happen due to a typo, or sometimes it can happen because
