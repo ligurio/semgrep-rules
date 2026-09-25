@@ -22,4 +22,6 @@ rules:
               for $K, $V in $T do
                 ...
               end
-      - pattern: $X .. $Y
+      - pattern-either:
+          - pattern: $S = $S .. $X
+          - pattern: $S = $S .. $X .. $Y

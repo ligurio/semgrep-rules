@@ -8,3 +8,9 @@ for i = 1, 100 do
 end
 
 print(table.concat(parts))
+
+for i = 1, 100 do
+  -- # ok: T1034
+  local msg = "item: " .. i
+  parts[i] = msg
+end
