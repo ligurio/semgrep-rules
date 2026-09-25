@@ -13,12 +13,12 @@ rules:
     languages: [lua]
     severity: INFO
     patterns:
-      - pattern-inside: |
-          $OK, $ERR = pcall(...)
-          ...
       - pattern-either:
           - pattern: $ERR:match(...)
           - pattern: $ERR:find(...)
           - pattern: $ERR:gsub(...)
           - pattern: $ERR:sub(...)
           - pattern: $ERR:gmatch(...)
+      - pattern-inside: |
+          local $OK, $ERR = pcall(...)
+          ...
