@@ -1,0 +1,33 @@
+# Lua C API functions, constants and GC options that were replaced,
+# deprecated or removed in Lua 5.4 (relative to Lua 5.3). This rule
+# is for code being migrated to Lua 5.4; it is not relevant when the
+# target is Lua 5.1 / LuaJIT, where these names denote the normal API.
+
+rules:
+  - id: lua_capi_deprecated_54
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Using Lua C API function(s) deprecated in Lua 5.4.
+      confidence: LOW
+      references:
+        - https://www.lua.org/manual/5.4/manual.html#8.3
+        - https://www.lua.org/manual/5.4/manual.html#4.6
+    message: |
+      Using a Lua C API function, constant or GC option that is deprecated or
+      removed in Lua 5.4. Use lua_newuserdatauv instead of lua_newuserdata,
+      lua_setiuservalue/lua_getiuservalue instead of
+      lua_setuservalue/lua_getuservalue, lua_closethread instead of
+      lua_resetthread, and the LUA_GCINC option instead of
+      LUA_GCSETPAUSE/LUA_GCSETSTEPMUL.
+    languages:
+      - c
+      - cpp
+    severity: INFO
+    pattern-either:
+      - pattern: lua_newuserdata(...)
+      - pattern: lua_getuservalue(...)
+      - pattern: lua_setuservalue(...)
+      - pattern: lua_resetthread(...)
+      - pattern: lua_gc($L, LUA_GCSETPAUSE, ...)
+      - pattern: lua_gc($L, LUA_GCSETSTEPMUL, ...)
+      - pattern: LUA_ERRGCMM

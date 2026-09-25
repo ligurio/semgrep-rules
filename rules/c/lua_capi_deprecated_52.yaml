@@ -1,0 +1,41 @@
+# Lua C API functions and pseudoindices that were removed, renamed or
+# deprecated in Lua 5.2 (relative to Lua 5.1). This rule is for code
+# being migrated to Lua 5.2; it is not relevant when the target is
+# Lua 5.1 / LuaJIT, where most of these symbols are still valid.
+
+rules:
+  - id: lua_capi_deprecated_52
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Using Lua C API function(s) deprecated in Lua 5.2.
+      confidence: LOW
+      references:
+        - https://www.lua.org/manual/5.2/manual.html#8.3
+        - https://www.lua.org/manual/5.2/manual.html#8.2
+    message: |
+      Using a Lua C API function or pseudoindex that is removed or deprecated
+      in Lua 5.2. Port the call to the current API: lua_rawlen instead of
+      lua_objlen, lua_getuservalue/lua_setuservalue instead of
+      lua_getfenv/lua_setfenv, lua_compare instead of lua_equal/lua_lessthan,
+      lua_pcall instead of lua_cpcall, luaL_setfuncs/luaL_newlib instead of
+      luaL_register, and read the global environment from the registry instead
+      of LUA_GLOBALSINDEX/LUA_ENVIRONINDEX.
+    languages:
+      - c
+      - cpp
+    severity: INFO
+    pattern-either:
+      - pattern: lua_objlen(...)
+      - pattern: lua_getfenv(...)
+      - pattern: lua_setfenv(...)
+      - pattern: luaL_typerror(...)
+      - pattern: luaL_register(...)
+      - pattern: lua_cpcall(...)
+      - pattern: lua_equal(...)
+      - pattern: lua_lessthan(...)
+      - pattern: luaL_getn(...)
+      - pattern: luaL_setn(...)
+      - pattern: luaL_openlib(...)
+      - pattern: lua_setlevel(...)
+      - pattern: LUA_GLOBALSINDEX
+      - pattern: LUA_ENVIRONINDEX
