@@ -7,10 +7,7 @@ rules:
     # https://fuzz-introspector.readthedocs.io/en/latest/user-guides/analyse-sink-function.html
     languages: [lua]
     severity: WARNING
-    pattern: |
-      for $I = #$T, $END do
-        ...
-      end
+    pattern-regex: 'for\s+[A-Za-z_]\w*\s*=\s*#\w+\s*,\s*[^,\n]+do'
 
 # When using a numeric for, it’s possible to make various mistakes when
 # specifying the for bounds. For example, to iterate through the table backwards,
