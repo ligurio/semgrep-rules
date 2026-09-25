@@ -137,3 +137,7 @@ local res = object:wait()
 local file = {read = function() end}
 -- # ok: T1004
 local line = file:read("*line")
+
+-- A connection timeout in the connect options is enough.
+-- # ok: T1004
+local conn4 = net_box.connect("localhost:3301", {connect_timeout = 5})
