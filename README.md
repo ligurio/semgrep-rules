@@ -18,6 +18,13 @@ To run all semgrep rules:
 $ semgrep --config rules/<lang>/
 ```
 
+Rules marked with `severity: INFO` are heuristics that may report false
+positives. To see only actionable findings, filter them out:
+
+```
+$ semgrep --config rules/<lang>/ --severity ERROR --severity WARNING .
+```
+
 To run a single coccinelle rule:
 
 ```
@@ -30,7 +37,10 @@ $ spatch --sp-file coccinelle/mmap_map_failed.cocci --very-quiet --dir ~/sources
 | -- | ----------- |
 | [libc_clock](rules/c/libc_clock.yaml) | Using CLOCK_REALTIME clock affected by leap seconds. |
 | [lua_capi_arg_index](rules/c/lua_capi_arg_index.yaml) | Lua C API call with a literal zero stack index. |
-| [lua_capi_deprecated](rules/c/lua_capi_deprecated.yaml) | Using deprecated Lua C API function(s). |
+| [lua_capi_deprecated_51](rules/c/lua_capi_deprecated_51.yaml) | Using Lua C API function(s) deprecated in Lua 5.1. |
+| [lua_capi_deprecated_52](rules/c/lua_capi_deprecated_52.yaml) | Using Lua C API function(s) deprecated in Lua 5.2. |
+| [lua_capi_deprecated_53](rules/c/lua_capi_deprecated_53.yaml) | Using Lua C API function(s) deprecated in Lua 5.3. |
+| [lua_capi_deprecated_54](rules/c/lua_capi_deprecated_54.yaml) | Using Lua C API function(s) deprecated in Lua 5.4. |
 | [lua_capi_missing_type_check](rules/c/lua_capi_missing_type_check.yaml) | Lua C API call without a prior argument type check. |
 | [lua_capi_pcall_result_unused](rules/c/lua_capi_pcall_result_unused.yaml) | Result of a protected call is ignored. |
 | [lua_capi_pop_without_push](rules/c/lua_capi_pop_without_push.yaml) | Consuming a Lua stack value without a preceding push. |
