@@ -47,10 +47,6 @@ rules:
               - pattern: local $FH = popen.new(...)
               - pattern: $FH = socket(...)
               - pattern: local $FH = socket(...)
-              - pattern: $FH = net_box.new(...)
-              - pattern: local $FH = net_box.new(...)
-              - pattern: $FH = net_box.connect(...)
-              - pattern: local $FH = net_box.connect(...)
           - pattern-not-inside: |
               $FH = ...
               ...
