@@ -11,6 +11,19 @@ rules:
       > a[0] -- null
     languages: [lua]
     severity: WARNING
-    pattern-either:
-      - pattern: $T[0]
-      - pattern: $T[0] = ...
+    patterns:
+      - pattern-either:
+          - pattern: $T[0]
+          - pattern: $T[0] = ...
+      - pattern-not-inside: |
+          $T = ffi.new(...)
+          ...
+      - pattern-not-inside: |
+          $T = ffi.cast(...)
+          ...
+      - pattern-not-inside: |
+          $T = ffi.string(...)
+          ...
+      - metavariable-regex:
+          metavariable: $T
+          regex: '(?i)^(?!.*(ffi|ptr|cdata|buf|addr|raw)).*$'
