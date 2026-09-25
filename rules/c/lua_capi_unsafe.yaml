@@ -8,8 +8,10 @@
 #    or luaL_error(), which may be a format string vulnerability.
 #
 # The rule only flags an explicit binary mode or a missing mode
-# (NULL/0/"") and a clearly non-literal format. A mode or format
-# held in a variable is not tracked.
+# (NULL/0/"") and a format argument that is itself a call, such as
+# lua_tostring(...) or a helper returning a string. A format held
+# in a plain variable or a string literal is not reported, which
+# avoids flagging constant format strings passed by name.
 
 rules:
   - id: lua_capi_unsafe
@@ -51,13 +53,5 @@ rules:
               - metavariable-regex:
                   metavariable: $MODE
                   regex: '(.*b.*|NULL|0|"")'
-          - patterns:
-              - pattern: lua_pushfstring($L, $FMT, ...)
-              - metavariable-regex:
-                  metavariable: $FMT
-                  regex: '(?!")'
-          - patterns:
-              - pattern: luaL_error($L, $FMT, ...)
-              - metavariable-regex:
-                  metavariable: $FMT
-                  regex: '(?!")'
+          - pattern: lua_pushfstring($L, $F(...), ...)
+          - pattern: luaL_error($L, $F(...), ...)
