@@ -1,20 +1,27 @@
-# Lua C API functions that silently return NULL/0 (or raise an
-# error) when the value on the stack has an unexpected type must
-# be guarded by a type check of the same value, for example:
+# Lua C API conversion functions that silently return NULL/0 (or
+# raise an error) when the value on the stack has an unexpected type
+# must be guarded by a type check of the same value, for example:
 #
 #     if (!lua_isstring(L, i))
 #         return luaL_error(L, "string expected");
 #     const char *s = lua_tostring(L, i);
 #
+# The rule targets the Lua 5.1 / LuaJIT API, so only conversion
+# functions available there are considered (lua_tostring,
+# lua_tonumber, lua_tointeger, lua_touserdata, ...). Table accessors
+# such as lua_getfield/lua_setfield are intentionally not covered:
+# their index argument denotes a table, not a value whose type can
+# be checked with lua_is*.
+#
 # The rule is flow-insensitive: it only verifies that a type check
-# of the same lua_State and the same stack index occurs in the
-# same block, either before the call or in an enclosing `if`.
-# Dominance across branches, checks hidden behind helpers or
-# wrappers, and `luaL_check*` calls that are nested inside an
-# expression are not tracked, so false positives are possible. A
-# plain `lua_type(L, i)` comparison suppresses the finding
-# regardless of the compared type constant, which may cause false
-# negatives.
+# of the same lua_State and the same stack index occurs in the same
+# block, either before the call or in an enclosing `if`.
+# Dominance across branches, guards expressed with `switch
+# (lua_type(...)) { case ...: }`, checks hidden behind helpers or
+# wrappers, and `luaL_check*` calls nested inside an expression are
+# not tracked, so false positives are possible. A plain
+# `lua_type(L, i)` comparison suppresses the finding regardless of
+# the compared type constant, which may cause false negatives.
 
 rules:
   - id: lua_capi_missing_type_check
@@ -41,7 +48,7 @@ rules:
       - pattern: $F($L, $ARG, ...)
       - metavariable-regex:
           metavariable: $F
-          regex: '(lua_tostring|lua_tolstring|lua_tonumber|lua_tonumberx|lua_tointeger|lua_tointegerx|lua_touserdata|lua_tolightuserdata|lua_tothread|lua_tocfunction|lua_getfield|lua_gettable|lua_setfield|lua_settable|lua_rawget|lua_rawset|lua_geti|lua_seti|lua_rawgeti|lua_rawseti|lua_next|lua_len|luaL_len)$'
+          regex: '(lua_tostring|lua_tolstring|lua_tonumber|lua_tointeger|lua_touserdata|lua_tolightuserdata|lua_tothread|lua_tocfunction)$'
       # lua_is*() / lua_type() guards around the call.
       - pattern-not-inside: |
           if (<... lua_isstring($L, $ARG) ...>) ...
@@ -130,7 +137,11 @@ rules:
           ...
           $F($L, $ARG, ...);
       - pattern-not-inside: |
-          luaL_checklstring($L, $ARG);
+          luaL_checklstring($L, $ARG, ...);
+          ...
+          $F($L, $ARG, ...);
+      - pattern-not-inside: |
+          luaL_optlstring($L, $ARG, ...);
           ...
           $F($L, $ARG, ...);
       - pattern-not-inside: |
@@ -162,30 +173,6 @@ rules:
           ...
           $F($L, $ARG, ...);
       - pattern-not-inside: |
-          luaL_checktype($L, $ARG, LUA_TTABLE);
-          ...
-          $F($L, $ARG, ...);
-      - pattern-not-inside: |
-          luaL_checktype($L, $ARG, LUA_TSTRING);
-          ...
-          $F($L, $ARG, ...);
-      - pattern-not-inside: |
-          luaL_checktype($L, $ARG, LUA_TNUMBER);
-          ...
-          $F($L, $ARG, ...);
-      - pattern-not-inside: |
-          luaL_checktype($L, $ARG, LUA_TUSERDATA);
-          ...
-          $F($L, $ARG, ...);
-      - pattern-not-inside: |
-          luaL_checktype($L, $ARG, LUA_TLIGHTUSERDATA);
-          ...
-          $F($L, $ARG, ...);
-      - pattern-not-inside: |
-          luaL_checktype($L, $ARG, LUA_TTHREAD);
-          ...
-          $F($L, $ARG, ...);
-      - pattern-not-inside: |
-          luaL_checktype($L, $ARG, LUA_TFUNCTION);
+          luaL_checktype($L, $ARG, ...);
           ...
           $F($L, $ARG, ...);

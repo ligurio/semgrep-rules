@@ -37,12 +37,39 @@ void guarded_by_lua_type(lua_State *L)
 	}
 }
 
+void guarded_by_switch(lua_State *L)
+{
+	switch (lua_type(L, 1)) {
+	case LUA_TSTRING:
+		// ruleid: lua_capi_missing_type_check
+		use(lua_tostring(L, 1));
+		break;
+	default:
+		break;
+	}
+}
+
 void guarded_by_checkstring(lua_State *L)
 {
 	luaL_checkstring(L, 1);
 	// ok: lua_capi_missing_type_check
 	const char *s = lua_tostring(L, 1);
 	use(s);
+}
+
+void guarded_by_checklstring(lua_State *L)
+{
+	luaL_checklstring(L, 1, NULL);
+	// ok: lua_capi_missing_type_check
+	const char *s = lua_tolstring(L, 1, NULL);
+	use(s);
+}
+
+void guarded_by_checktype(lua_State *L)
+{
+	luaL_checktype(L, 2, LUA_TNUMBER);
+	// ok: lua_capi_missing_type_check
+	use_int(lua_tointeger(L, 2));
 }
 
 void unchecked_wrong_index(lua_State *L)
@@ -84,28 +111,11 @@ void guarded_userdata(lua_State *L)
 	}
 }
 
-void unchecked_getfield(lua_State *L)
+void table_accessor_is_not_a_conversion(lua_State *L)
 {
-	// ruleid: lua_capi_missing_type_check
-	lua_getfield(L, 1, "key");
-	lua_pop(L, 1);
-}
-
-void guarded_getfield_checktype(lua_State *L)
-{
-	luaL_checktype(L, 1, LUA_TTABLE);
 	// ok: lua_capi_missing_type_check
 	lua_getfield(L, 1, "key");
 	lua_pop(L, 1);
-}
-
-void guarded_getfield_istable(lua_State *L)
-{
-	if (lua_istable(L, 1)) {
-		// ok: lua_capi_missing_type_check
-		lua_getfield(L, 1, "key");
-		lua_pop(L, 1);
-	}
 }
 
 void not_an_api_conversion(lua_State *L)
