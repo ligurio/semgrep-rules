@@ -13,17 +13,43 @@ rules:
     languages: [lua]
     severity: WARNING
     pattern-either:
-      - pattern: $F:join()
-      - pattern: $CH:put($V)
-      - pattern: $CH:get($V)
-      - pattern: $C:wait()
+      - patterns:
+          - pattern: $F:join()
+          - pattern-either:
+              - pattern-inside: |
+                  $F = fiber.create(...)
+                  ...
+              - pattern-inside: |
+                  $F = fiber.new(...)
+                  ...
+      - patterns:
+          - pattern-either:
+              - pattern: $CH:put($V)
+              - pattern: $CH:get($V)
+          - pattern-inside: |
+              $CH = fiber.channel(...)
+              ...
+      - patterns:
+          - pattern: $C:wait()
+          - pattern-inside: |
+              $C = fiber.cond()
+              ...
+      - patterns:
+          - pattern-either:
+              - pattern: $S:read($A)
+              - pattern: $S:readable()
+              - pattern: $S:writable()
+              - pattern: $S:wait()
+          - pattern-either:
+              - pattern-inside: |
+                  $S = socket.tcp_connect(...)
+                  ...
+              - pattern-inside: |
+                  $S = socket.tcp_server(...)
+                  ...
       - pattern: socket.tcp_connect($H, $P)
       - pattern: socket.getaddrinfo($H, $P, $O)
       - pattern: socket.tcp_server($H, $P, $O)
-      - pattern: $S:read($A)
-      - pattern: $S:readable()
-      - pattern: $S:writable()
-      - pattern: $S:wait()
       - pattern: socket.iowait($A, $B)
       - pattern: vshard.router.bootstrap({if_not_bootstrapped = true})
       - pattern: vshard.router.call(100, {mode='write'}, $FUNC, args, {})

@@ -118,3 +118,22 @@ vshard.router.callbre(100, 'function_name', args, {})
 vshard.router.map_callrw('function_name', args, {timeout = 5})
 -- # ruleid: T1004
 vshard.router.map_callrw('function_name', args, {})
+
+-- Receivers that are not sockets, channels, conditions or fibers must not
+-- be reported even though they have methods with the same names.
+
+local configdata = {get = function() end}
+-- # ok: T1004
+local id = configdata:get("id")
+
+local space = {get = function() end}
+-- # ok: T1004
+local tuple = space:get({0})
+
+local object = {wait = function() end}
+-- # ok: T1004
+local res = object:wait()
+
+local file = {read = function() end}
+-- # ok: T1004
+local line = file:read("*line")
