@@ -14,7 +14,7 @@ rules:
     severity: WARNING
     pattern-either:
       - pattern-regex: '(local\s+(?!_)(?P<A>\w+)\s*,\s*\w+\s*,\s*(?P=A)\s*=)|(function\s+[^(\s]+\s*\(\s*(?!_)(?P<B>\w+)\s*,\s*\w+\s*,\s*(?P=B)\s*\))'
-      - pattern: function $O:$M(self) ... end
+      - pattern-regex: 'function\s+[\w.]+\s*:\s*\w+\s*\(\s*self\s*\)'
       - pattern: |
           for $I = ..., ... do
             ...
