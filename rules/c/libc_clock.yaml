@@ -14,7 +14,7 @@ rules:
       00:00:00 UTC on 1 January 1970, but without leap seconds. The system clock
       cannot have time 23:59:60, every minute has 60 seconds and every day has
       86400 seconds by definition.
-    severity: WARNING
+    severity: INFO
     languages:
       - c
       - cpp

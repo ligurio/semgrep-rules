@@ -37,7 +37,7 @@ rules:
     languages:
       - c
       - cpp
-    severity: WARNING
+    severity: INFO
     patterns:
       - pattern-either:
           - pattern: lua_pop($L, ...)
