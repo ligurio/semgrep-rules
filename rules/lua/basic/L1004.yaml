@@ -10,7 +10,7 @@ rules:
       a table `t` is defined to be any integer index `n` such that `t[n]` is not
       `nil` and `t[n+1]` is nil.
     languages: [lua]
-    severity: WARNING
+    severity: INFO
     pattern-either:
       - pattern: "#$T"
       - pattern: "# $T"
