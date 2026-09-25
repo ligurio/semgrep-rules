@@ -5,3 +5,9 @@ for _, tuple in box.space.test:pairs() do
     fiber.yield()
   end
 end
+
+-- System spaces are small, a scan over them does not need a yield.
+-- # ok: T1033
+for _, tuple in box.space._space:pairs() do
+  print(tuple)
+end

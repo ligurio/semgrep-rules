@@ -13,3 +13,6 @@ rules:
           for $K, $V in box.space.$SPACE:pairs() do
             ...
           end
+      - metavariable-regex:
+          metavariable: $SPACE
+          regex: '^[^_]'
