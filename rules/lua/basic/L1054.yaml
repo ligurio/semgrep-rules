@@ -1,0 +1,16 @@
+rules:
+  - id: L1054
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Code after error() is unreachable.
+      references:
+        - https://www.lua.org/manual/5.4/manual.html#3.3.4
+        - https://luacheck.readthedocs.io/en/stable/warnings.html#unreachable-code
+    message: |
+      Statements that follow an unconditional error() in the same block can
+      never run. Remove the dead code or restructure the function.
+    languages: [lua]
+    severity: INFO
+    pattern: |
+      error(...)
+      $S

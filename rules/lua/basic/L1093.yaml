@@ -1,0 +1,14 @@
+rules:
+  - id: L1093
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Using ffi.stash.
+      references:
+        - https://luajit.org/ext_ffi_api.html
+    message: |
+      ffi.stash stores an object in a global stash keyed by a name and is
+      intended for libraries; using it in application code hides ownership and
+      makes the lifetime of the object hard to follow.
+    languages: [lua]
+    severity: INFO
+    pattern: ffi.stash(...)

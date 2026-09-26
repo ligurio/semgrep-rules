@@ -1,0 +1,22 @@
+rules:
+  - id: L1025
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: math.pow(), math.atan2() and hyperbolic functions were removed in Lua 5.4.
+      references:
+        - https://www.lua.org/manual/5.4/manual.html#8.2
+    message: |
+      math.pow(), math.atan2(), math.cosh(), math.sinh(), math.tanh(),
+      math.frexp() and math.ldexp() were removed in Lua 5.4. Use the `^`
+      operator, math.atan(x, y), the corresponding math functions or
+      implement the operation in Lua.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - pattern: math.atan2(...)
+      - pattern: math.cosh(...)
+      - pattern: math.frexp(...)
+      - pattern: math.ldexp(...)
+      - pattern: math.pow(...)
+      - pattern: math.sinh(...)
+      - pattern: math.tanh(...)

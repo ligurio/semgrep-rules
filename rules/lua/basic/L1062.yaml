@@ -1,0 +1,23 @@
+rules:
+  - id: L1062
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: math.* does not accept cdata.
+      references:
+        - https://luajit.org/ext_ffi_semantics.html
+        - https://www.lua.org/manual/5.4/manual.html#6.7
+    message: |
+      The math library expects Lua numbers. Passing a 64-bit cdata integer
+      (uint64_t/int64_t) raises "number expected, got cdata". Use arithmetic
+      operators on the cdata or convert with tonumber() when the value fits a
+      double.
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern: math.$F($X, ...)
+      - pattern-inside: |
+          $X = ffi.new($T, ...)
+          ...
+      - metavariable-regex:
+          metavariable: $T
+          regex: '"u?int64_t"'

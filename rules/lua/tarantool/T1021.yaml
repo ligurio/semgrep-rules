@@ -1,0 +1,23 @@
+rules:
+  - id: T1021
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Length of a Unix socket path is exceeded of max length.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/configuration/#cfg-basic-listen
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/socket/#socket-socket
+        - https://www.tarantool.io/en/doc/latest/reference/reference_rock/luatest/classes/luatest.server/#server-make-socketdir
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/console/#lua-function.console.listen
+        - https://man7.org/linux/man-pages/man2/socket.2.html
+    message: |
+      The length of a Unix socket path is limited to about 108
+      bytes (including the terminating NUL). A socket path passed
+      to socket.bind(), console.listen() or the box.cfg{listen=...}
+      option that exceeds this limit is silently truncated or makes
+      the call fail. Keep the path short or use an abstract socket.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - pattern: socket.bind(...)
+      - pattern: console.listen(...)
+      - pattern: box.cfg({listen = $PATH})

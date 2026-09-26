@@ -1,0 +1,49 @@
+rules:
+  - id: L1043
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Ignoring `pcall` results handling.
+    message: Ignoring `pcall` results handling.
+    languages: [lua]
+    severity: INFO
+    patterns:
+      - pattern: $RES, $ERR = pcall(...)
+      - pattern-not-inside: |
+          $RES, $ERR = pcall(...)
+          ...
+          if $RES then ... end
+          if $ERR then ... end
+      - pattern-not-inside: |
+          $RES, $ERR = pcall(...)
+          ...
+          if $RES then
+            ...
+          else
+            ...
+          end
+      - pattern-not-inside: |
+          $RES, $ERR = pcall(...)
+          ...
+          if not $RES then
+            ...
+          else
+            ...
+          end
+      - pattern-not-inside: |
+          $RES, $ERR = pcall(...)
+          ...
+          if not $RES then
+            ...
+          end
+      - pattern-not-inside: |
+          $RES, $ERR = pcall(...)
+          ...
+          assert($RES, ...)
+      - pattern-not-inside: |
+          $RES, $ERR = pcall(...)
+          ...
+          return $RES, $ERR
+      - pattern-not-inside: |
+          $RES, $ERR = pcall(...)
+          ...
+          return $RES

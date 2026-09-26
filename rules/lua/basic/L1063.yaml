@@ -1,0 +1,17 @@
+rules:
+  - id: L1063
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: __pairs and __ipairs are ignored in LuaJIT.
+      references:
+        - https://www.lua.org/manual/5.2/manual.html#pdf-ipairs
+        - http://luajit.org/status.html
+    message: |
+      LuaJIT implements the Lua 5.1 behaviour and never calls the __pairs and
+      __ipairs metamethods, so pairs() and ipairs() iterate the raw contents.
+      Provide an explicit iterator instead.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - pattern-regex: '__pairs\s*='
+      - pattern-regex: '__ipairs\s*='

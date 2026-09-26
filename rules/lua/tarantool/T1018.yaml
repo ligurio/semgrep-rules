@@ -1,0 +1,53 @@
+rules:
+  - id: T1018
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: File descriptor leaks.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/fio/
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/net_box/
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/popen/
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/socket/
+    message:
+      The file object "$FD" opened without corresponding close.
+    languages: [lua]
+    severity: ERROR
+    pattern-either:
+      - patterns:
+          - pattern: $FD = $M.open(...)
+          - pattern-inside: |
+              $M = require("fio")
+              ...
+              $FD = $M.open(...)
+          - pattern-not-inside: |
+              $FD = $M.open(...)
+              ...
+              $FD:close()
+      - patterns:
+          - pattern-inside: |
+              $M = require("net.box")
+              ...
+          - pattern-either:
+              - pattern: $FD = $M.new(...)
+              - pattern: $FD = $M.connect(...)
+          - pattern-not: $FD:close()
+      - patterns:
+          - pattern-inside: |
+              $M = require("popen")
+              ...
+          - pattern: $FD = $M.new(...)
+          - pattern-not: $FD:close()
+      - patterns:
+          - pattern-either:
+              - pattern: $FH = fio.open(...)
+              - pattern: local $FH = fio.open(...)
+              - pattern: $FH = io.open(...)
+              - pattern: local $FH = io.open(...)
+              - pattern: $FH = popen.new(...)
+              - pattern: local $FH = popen.new(...)
+              - pattern: $FH = socket(...)
+              - pattern: local $FH = socket(...)
+          - pattern-not-inside: |
+              $FH = ...
+              ...
+              $FH:close()

@@ -1,0 +1,18 @@
+rules:
+  - id: L1052
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Unbalanced assignment fills missing values with nil.
+      references:
+        - https://www.lua.org/manual/5.4/manual.html#3.3.3
+        - https://luacheck.readthedocs.io/en/stable/warnings.html#unbalanced-assignments
+    message: |
+      The number of literal values on the right-hand side differs from the
+      number of variables. Missing values become nil and extra values are
+      discarded.
+    languages: [lua]
+    severity: INFO
+    pattern-either:
+      - pattern-regex: 'local\s+\w+\s*=\s*[-0-9][^,()\n]*\s*,\s*[-0-9][^,()\n]*'
+      - pattern-regex: 'local\s+\w+\s*,\s*\w+\s*=\s*[-0-9][^,()\n]*\s*,\s*[-0-9][^,()\n]*\s*,\s*[-0-9][^,()\n]*'
+      - pattern-regex: 'local\s+\w+\s*,\s*\w+\s*,\s*\w+\s*=\s*[-0-9][^,()\n]*\s*,\s*[-0-9][^,()\n]*'

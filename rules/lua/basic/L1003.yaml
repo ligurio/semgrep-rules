@@ -1,0 +1,29 @@
+rules:
+  - id: L1003
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Using index 0 in tables.
+      references:
+        - http://www.lua.org/manual/5.4/manual.html#3.3.5
+    message: |
+      Lua table indices start at 1.
+      > a = {1, 2, 3}
+      > a[0] -- null
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern-either:
+          - pattern: $T[0]
+          - pattern: $T[0] = ...
+      - pattern-not-inside: |
+          $T = ffi.new(...)
+          ...
+      - pattern-not-inside: |
+          $T = ffi.cast(...)
+          ...
+      - pattern-not-inside: |
+          $T = ffi.string(...)
+          ...
+      - metavariable-regex:
+          metavariable: $T
+          regex: '(?i)^(?!.*(ffi|ptr|cdata|buf|addr|raw)).*$'

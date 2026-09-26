@@ -1,0 +1,28 @@
+rules:
+  - id: T1043
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Parametrizing luatest tests with a loop.
+      references:
+        - https://github.com/tarantool/luatest/
+        - https://github.com/tarantool/luatest/issues/385
+    message: |
+      Tests defined inside a loop share the loop variable and are hard to
+      filter and debug. Define tests explicitly or use luatest's
+      parametrization.
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern-either:
+          - pattern-inside: |
+              for $I = $A, $B do
+                ...
+              end
+          - pattern-inside: |
+              for $K, $V in $T do
+                ...
+              end
+      - pattern-either:
+          - pattern: it(...)
+          - pattern: describe(...)
+          - pattern: $G.test_$NAME = function(...) ... end

@@ -1,0 +1,27 @@
+rules:
+  - id: T1009
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Shell is enabled in `popen`.
+      references:
+        - https://bandit.readthedocs.io/en/latest/plugins/b603_subprocess_without_shell_equals_true.html
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/popen/
+    message: |
+      Found "popen" function with "$CMD" and option "shell = true". This is dangerous
+      because this call will spawn the command using a shell process. Doing so
+      propagates current shell settings and variables, which makes it much easier for
+      a malicious actor to execute commands. Use "shell=false" instead.
+    languages: [lua]
+    severity: WARNING
+    patterns:
+      - pattern-either:
+          - pattern: $P.new($CMD, { shell = true })
+          - pattern: $P.new($CMD, { shell = true, $A = $B })
+          - pattern: $P.new($CMD, { $A = $B, shell = true })
+          - pattern: $P.new($CMD, { shell = true, $A = $B, $C = $D })
+          - pattern: $P.new($CMD, { $A = $B, shell = true, $C = $D })
+          - pattern: $P.new($CMD, { $A = $B, $C = $D, shell = true })
+      - pattern-inside: |
+          $P = require("popen")
+          ...
+          $P.new(...)

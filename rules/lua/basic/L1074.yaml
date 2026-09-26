@@ -1,0 +1,31 @@
+# Lua allows to reuse the same name for different parameters of a
+# function, for several local variables declared in the same statement,
+# and for a local declared inside a scope where a variable with the same
+# name already exists. This is error prone and hides copy-paste
+# mistakes, so a warning is emitted unless the duplicate name is the
+# placeholder `_`.
+rules:
+  - id: L1074
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Duplicate locals and shadowing.
+    message: Duplicate locals or local shadowing.
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - pattern-regex: '(local\s+(?!_)(?P<A>\w+)\s*,\s*\w+\s*,\s*(?P=A)\s*=)|(function\s+[^(\s]+\s*\(\s*(?!_)(?P<B>\w+)\s*,\s*\w+\s*,\s*(?P=B)\s*\))'
+      - pattern-regex: 'function\s+[\w.]+\s*:\s*\w+\s*\(\s*self\s*\)'
+      - pattern: |
+          for $I = ..., ... do
+            ...
+            for $I = ..., ... do
+              ...
+            end
+            ...
+          end
+      - pattern: |
+          for $I = ..., ... do
+            ...
+            local $I = ...
+            ...
+          end

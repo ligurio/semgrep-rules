@@ -1,0 +1,70 @@
+rules:
+  - id: T1023
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Fiber name or fiber.testcancel() is missed.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/fiber/
+        - https://confluence.vk.team/pages/viewpage.action?pageId=697245471
+    message: |
+      A fiber without a name is hard to debug, and functions running inside
+      client fibers should check fiber.testcancel().
+    languages: [lua]
+    severity: WARNING
+    pattern-either:
+      - patterns:
+          - pattern: $F = require("fiber")
+          - pattern: $OBJ = $F.create(...)
+          - pattern-not: $OBJ:name(...)
+      - patterns:
+          - pattern: $F = require("fiber")
+          - pattern: $OBJ = fiber.new(...)
+          - pattern-not: $OBJ:name(...)
+      - patterns:
+          - pattern-either:
+              - patterns:
+                  - pattern: fiber.new($F)
+                  - pattern-inside: |
+                      $F = function(...)
+                        ...
+                      end
+                      ...
+                      fiber.new($F)
+              - patterns:
+                  - pattern: fiber.new($F)
+                  - pattern-inside: |
+                      local function $F(...)
+                        ...
+                      end
+                      ...
+                      fiber.new($F)
+              - patterns:
+                  - pattern: fiber.create($F)
+                  - pattern-inside: |
+                      $F = function(...)
+                        ...
+                      end
+                      ...
+                      fiber.create($F)
+              - patterns:
+                  - pattern: fiber.create($F)
+                  - pattern-inside: |
+                      local function $F(...)
+                        ...
+                      end
+                      ...
+                      fiber.create($F)
+          - pattern-not-inside: |
+              $F = function(...)
+                ...
+                fiber.testcancel()
+                ...
+              end
+              ...
+          - pattern-not-inside: |
+              local function $F(...)
+                ...
+                fiber.testcancel()
+                ...
+              end
+              ...

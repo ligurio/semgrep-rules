@@ -1,0 +1,19 @@
+rules:
+  - id: T1044
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: fiber.yield() and fiber.sleep() can fail.
+      references:
+        - https://www.tarantool.io/en/doc/latest/reference/reference_lua/fiber/#example-of-yield-failure
+    message: |
+      fiber.yield() and any function that implicitly yields (such as sleep())
+      can fail and raise an exception, for example when the fiber is
+      cancelled. Handle the failure or wrap the call in pcall().
+    languages: [lua]
+    severity: INFO
+    patterns:
+      - pattern-either:
+          - pattern: fiber.yield()
+          - pattern: fiber.sleep(...)
+      - pattern-not-inside: |
+          pcall(...)

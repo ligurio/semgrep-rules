@@ -1,0 +1,94 @@
+# All aspects of Lua are implemented in LuaJIT's interpreter, but not
+# all of them are implemented in LuaJIT's JIT compiler. This rule
+# collects calls that always abort a trace (not-yet-implemented), calls
+# that abort only in some circumstances (partial compilation), calls
+# that are compiled only starting with LuaJIT 2.1, and an explicit
+# disabling of the JIT.
+rules:
+  - id: L1058
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: Function is not JIT-compiled under LuaJIT.
+      references:
+        - https://github.com/tarantool/tarantool/wiki/LuaJIT-Not-Yet-Implemented
+        - http://web.archive.org/web/20220717120825/http://wiki.luajit.org/NYI
+        - https://luajit.org/ext_jit.html
+    message: |
+      All aspects of Lua are implemented in LuaJIT's interpreter, but not all
+      of them are implemented in LuaJIT's JIT compiler. This call is not
+      JIT-compiled, may fall back to the interpreter or stitch, is compiled
+      only starting with LuaJIT 2.1, or JIT compilation is turned off
+      explicitly.
+    languages: [lua]
+    severity: INFO
+    pattern-either:
+      # Not JIT-compiled (not-yet-implemented).
+      - pattern: dofile(...)
+      - pattern: error(...)
+      - pattern: load(...)
+      - pattern: loadfile(...)
+      - pattern: loadstring(...)
+      - pattern: string.dump(...)
+      - pattern: ffi.cdef(...)
+      - pattern: ffi.load(...)
+      - pattern: ffi.metatype(...)
+      - pattern: debug.$FUNC(...)
+      - pattern: jit.$FUNC(...)
+      - pattern: jit.opt.start(...)
+      - pattern: os.$FUNC(...)
+      - pattern: package.$FUNC(...)
+      - pattern: coroutine.$FUNC(...)
+      - pattern: buffer.encode(...)
+      - pattern: buffer.decode(...)
+      # Partially compiled, depending on the circumstances.
+      - pattern: getfenv(...)
+      - pattern: next(...)
+      - pattern: print(...)
+      - pattern: select(...)
+      - pattern: tonumber(...)
+      - pattern: tostring(...)
+      - pattern: xpcall(...)
+      - pattern: string.find(...)
+      - pattern: string.format(...)
+      - pattern: table.insert(...)
+      - pattern: ffi.cast(...)
+      - pattern: ffi.errno(...)
+      - pattern: ffi.new(...)
+      - pattern: ffi.sizeof(...)
+      - pattern: ffi.typeof(...)
+      # Compiled starting with LuaJIT 2.1.
+      - pattern: collectgarbage()
+      - pattern: gcinfo()
+      - pattern: newproxy(...)
+      - pattern: require(...)
+      - pattern: setfenv(...)
+      - pattern: unpack(...)
+      - pattern: string.char(...)
+      - pattern: string.gmatch(...)
+      - pattern: string.gsub(...)
+      - pattern: string.lower(...)
+      - pattern: string.match(...)
+      - pattern: string.rep(...)
+      - pattern: string.reverse(...)
+      - pattern: string.upper(...)
+      - pattern: table.concat(...)
+      - pattern: table.foreachi(...)
+      - pattern: table.maxn(...)
+      - pattern: table.pack(...)
+      - pattern: table.remove(...)
+      - pattern: table.sort(...)
+      - pattern: table.unpack(...)
+      - pattern: math.fmod(...)
+      - pattern: math.frexp(...)
+      - pattern: math.randomseed(...)
+      - pattern: io.close(...)
+      - pattern: io.input(...)
+      - pattern: io.lines(...)
+      - pattern: io.open(...)
+      - pattern: io.output(...)
+      - pattern: io.popen(...)
+      - pattern: io.read(...)
+      - pattern: io.tmpfile()
+      - pattern: io.type(...)
+      - pattern: bit.tohex(...)
+      - pattern: ffi.gc(...)

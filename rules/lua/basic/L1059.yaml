@@ -1,0 +1,27 @@
+rules:
+  - id: L1059
+    metadata:
+      author: Sergey Bronnikov <estetus@gmail.com>
+      description: A null cdata compares equal to nil but is truthy.
+      references:
+        - https://luajit.org/ext_ffi_semantics.html
+        - https://www.lua.org/manual/5.4/manual.html#3.4.4
+    message: |
+      A null cdata (for example a null pointer from ffi.cast) compares equal
+      to nil but is truthy, because only false and nil are falsy. Do not test a
+      pointer or nullable cdata with a boolean test; compare with nil
+      explicitly.
+    languages: [lua]
+    severity: INFO
+    patterns:
+      - pattern-either:
+          - pattern: if $P then ... end
+          - pattern: if not $P then ... end
+          - pattern: not not $P
+      - pattern-inside: |
+          $P = ffi.cast(...)
+          ...
+      - pattern-not: if $P == nil then ... end
+      - pattern-not: if nil == $P then ... end
+      - pattern-not: if $P ~= nil then ... end
+      - pattern-not: if nil ~= $P then ... end
